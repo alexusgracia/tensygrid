@@ -7,7 +7,7 @@ import time
 
 # Configuration
 check = 0  # 0 = sparse/scalable/fast | 1 = full (only for checks)
-test = False
+test = True
 test_zeros = False
 debug = True
 # %% Define problem
@@ -38,32 +38,32 @@ if test:
 
     # Linearization point
     if not test_zeros:
-        dx = np.ones((n, 1))                 # state derivative 
+        dx = np.ones((n, 1))    # state derivative 
     else:
-        dx = np.zeros((n, 1))               # state derivative (CONFLICTIVE CASE) #TODO: Develop
-    x = 2*np.ones((n, 1))                  # state
-    u = np.ones((m, 1))                  # input
-    y = np.ones((p, 1))                  # output
+        dx = np.zeros((n, 1))   # (CONFLICTIVE CASE) state derivative (TODO: Develop)
+    x = 2*np.ones((n, 1))       # state
+    u = np.ones((m, 1))         # input
+    y = np.ones((p, 1))         # output
 
 else:
-    n = 2               # number of states
-    m = 1               # number of inputs
-    p = 0               # number of outputs
-    q = n               # number of equations
-    N = 2 * n + m + p   # total number of signals
-    r = 6               # rank (number of non-zero elements in the structure matrix)
-    S = np.random.rand(N, r) # Structure matrix
+    n = 2                       # number of states
+    m = 1                       # number of inputs
+    p = 0                       # number of outputs
+    q = n                       # number of equations
+    N = 2 * n + m + p           # total number of signals
+    r = 6                       # rank (number of non-zero elements in the structure matrix)
+    S = np.random.rand(N, r)    # Structure matrix
     S = np.round(2*S-1)
-    P = np.random.rand(q, r) # Parameter matrix
+    P = np.random.rand(q, r)    # Parameter matrix
     P = P*(P<0.3)
     S = sp.sparse.csr_matrix(S)
     P = sp.sparse.csr_matrix(P)
+
     # linearization point
-    # Valores aleatorios entre 0 y 1 (como en MATLAB rand(n,1))
-    dx = np.random.rand(n, 1)                 # state derivative 
-    x = np.random.rand(n, 1)                  # state
-    u = np.random.rand(m, 1)                  # input
-    y = np.random.rand(p, 1) if p > 0 else np.array([]).reshape((0, 1))  # output
+    dx = np.random.rand(n, 1)   # state derivative 
+    x = np.random.rand(n, 1)    # state
+    u = np.random.rand(m, 1)    # input
+    y = np.random.rand(p, 1)    # output
 
 # signal vector
 v = np.vstack([dx, x, u, y])        # signal vector
