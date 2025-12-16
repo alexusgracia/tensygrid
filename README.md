@@ -1,6 +1,6 @@
-# Python CPN Linearization for iMTI Models
+# Python CPN Linearization for MTI Models
 
-Linearization of iMTI (implicit Multi-Time-Invariant) models in CPN (Component-Port-Network) representation using sparse matrices.
+Linearization of MTI models in CPN  representation using sparse matrices.
 
 ## Requirements
 
