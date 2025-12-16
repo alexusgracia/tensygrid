@@ -1,70 +1,84 @@
 import numpy as np
 import scipy as sp
-from scipy import sparse
-from scipy.linalg import eig
-import sys
 import time
-import control as ct
-
 
 # %% Start file for TenSyGrid Hackathon 16.12.2025
 # Linearization for iMTI models in CPN representation (basic, functional)
 
 # Configuration
 check = 0  # 0 = sparse/scalable/fast | 1 = full (only for checks)
-
+test = False
+test_zeros = False
+debug = True
 # %% Define problem
 
-# Dimensions
-n = 2               # number of states
-m = 1               # number of inputs
-p = 0               # number of outputs
-
-q = n               # number of equations
-N = 2 * n + m + p   # total number of signals
 
 # iMTI model in CPN representation
+if test:
+    n = 2               # number of states
+    m = 1               # number of inputs
+    p = 0               # number of outputs
+    q = n               # number of equations
+    N = 2 * n + m + p   # total number of signals
 
-S = np.array([
-    [1, 0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0, 1],
-    [0, 0, 0, 1, 0, 1],
-    [0, 0, 0, 0, 1, 0],
-]) # Structure matrix
+    S = np.array([
+        [1, 0, 0, 0, 0, 0],
+        [0, 1, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 1],
+        [0, 0, 0, 1, 0, 1],
+        [0, 0, 0, 0, 1, 0],
+    ]) # Structure matrix
+    P = np.array([
+        [-1, 0, -1, 0, 1, 0],
+        [0, -1, 0, -1, 0, 1],
+    ]) # Parameter matrix
+    r = S.shape[1] # rank (number of non-zero elements in the structure matrix)
+    S= sp.sparse.csr_matrix(S)
+    P = sp.sparse.csr_matrix(P)
 
-r = S.shape[1] # rank (number of non-zero elements in the structure matrix)
-S= sparse.csr_matrix(S)
+    # Linearization point
+    if not test_zeros:
+        dx = np.ones((n, 1))                 # state derivative 
+    else:
+        dx = np.zeros((n, 1))               # state derivative (CONFLICTIVE CASE) #TODO: Develop
+    x = 2*np.ones((n, 1))                  # state
+    u = np.ones((m, 1))                  # input
+    y = np.ones((p, 1))                  # output
 
-P = np.array([
-    [-1, 0, -1, 0, 1, 0],
-    [0, -1, 0, -1, 0, 1],
-]) # Parameter matrix
+else:
+    n = 2               # number of states
+    m = 1               # number of inputs
+    p = 0               # number of outputs
+    q = n               # number of equations
+    N = 2 * n + m + p   # total number of signals
+    r = 6               # rank (number of non-zero elements in the structure matrix)
+    S = np.random.rand(N, r) # Structure matrix
+    S = np.round(2*S-1)
+    P = np.random.rand(q, r) # Parameter matrix
+    P = P*(P<0.3)
+    S = sp.sparse.csr_matrix(S)
+    P = sp.sparse.csr_matrix(P)
+    # linearization point
+    # Valores aleatorios entre 0 y 1 (como en MATLAB rand(n,1))
+    dx = np.random.rand(n, 1)                 # state derivative 
+    x = np.random.rand(n, 1)                  # state
+    u = np.random.rand(m, 1)                  # input
+    y = np.random.rand(p, 1) if p > 0 else np.array([]).reshape((0, 1))  # output
 
-P = sparse.csr_matrix(P)
-
-# linearization point
-# dx = np.ones((n, 1))                 # state derivative 
-dx = np.zeros((n, 1))                 # state derivative 
-x = 2*np.ones((n, 1))                  # state
-u = np.ones((m, 1))                  # input
-y = np.ones((p, 1))                  # output
-v = np.vstack([dx, x, u, y])         # signal vector
-
+# signal vector
+v = np.vstack([dx, x, u, y])        # signal vector
 
 tic = time.process_time()   # start the cputime clock
 # %% Linearization (Scalable = sparse & low rank)
-print(S.toarray())
+if debug: print(S.toarray())
 X = S.multiply(v) - abs(S)
-print(X.toarray())
+if debug: print(X.toarray())
 icrit = X == -1 # get numerical critical indices
 if icrit.nnz > 0:
     raise RuntimeError("specials to be implemented ?")
 
 X.data = X.data + 1.0 # add one only to the nonzero elements
 
-
-# puedes hacer un codigo para que en todas las posiciones de S que sean diferentes de 0 y en X sean 0 haya un 1, pero no queremos recorrer todas las posicones, porque es una sparse matrix. hazlo de la forma más eficiente posible
 # We want, for all S != 0 and X == 0, to set X to 1 efficiently (without full matrix loops).
 # Both S and X are sparse.
 # So: find the (i,j) where S is nonzero but X is 0, and efficiently set X[i,j]=1.
@@ -82,44 +96,35 @@ if to_add:  # if there are positions to modify
     rows, cols = zip(*to_add)
     data = np.ones(len(to_add))
     shape = X.shape
-    X_add = sparse.coo_matrix((data, (rows, cols)), shape=shape)
+    X_add = sp.sparse.coo_matrix((data, (rows, cols)), shape=shape)
     X = X + X_add
     X = X.tocsr()  # ensure CSR format for downstream code
 
-print(X.toarray())
+if debug: print(X.toarray())
 
 # get the indices and values of X
 rowi, coli = X.nonzero()
 val = X.data
-# print(rowi);
-# print(coli);
-# print(val);
 
 Y = np.zeros(r) # initialize product vector
 for c in range(r): # product over nonzero elements
     mask = coli == c # get the indices of the non-zero elements in the column c
     if np.any(mask): # if there are non-zero elements in the column c
         Y[c] = np.prod(val[mask]) # compute the product of the non-zero elements in the column c
-# print(Y);
 
 X.data = 1.0 / X.data # Invert only nonzero elements of X
-# print(X.toarray())
 F = S.multiply(Y).multiply(X)
-# print(F.toarray())
-# print(F.T.toarray())
 
 EABC = P*(F.T) 
-print(EABC.toarray())# Compute combined matrix
 E = -EABC[:, 0:n] # state matrix
-# print(E.toarray())
 A = EABC[:, n:2*n] # system matrix
-# print(A.toarray())
 B = EABC[:, 2*n:2*n+m] # input matrix
-# print(B.toarray())
 
 # Local stability: dominant (geralized) eigenvalues
 A_dense = A.toarray()
 E_dense = E.toarray()
 
-eigvals, eigvecs = eig(A_dense, E_dense)  # resuelve A v = λ E v
+eigvals, eigvecs = sp.linalg.eig(A_dense, E_dense)  # resuelve A v = λ E v
 print(eigvals)
+toc = time.process_time()
+print( "Time: ", toc-tic)
