@@ -197,6 +197,7 @@ where `E`, `A`, and `B` are extracted from the factor matrix `F` computed during
 - **Python Implementation**: Alexandre Gràcia i Calvo
 - **Original MATLAB**: Gerwald Lichtenberg (16.12.2025)
 - **Project**: TenSyGrid Hackathon 16.12.2025
+- **Update**: `cpn_linearize_basics2.py` 07.01.2026
 
 ## License
 
