@@ -2,7 +2,7 @@
 % linearization for iMTI models in CPN representation 
 % very basic, functional, MATLAB
 %
-% gerwald.de 16.2.2025
+% gerwald.de 16.12.2025
 
 % Configuration
 clear

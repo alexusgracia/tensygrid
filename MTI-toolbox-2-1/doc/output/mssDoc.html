@@ -1,0 +1,777 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>mss</title>
+<meta name="generator" content="MATLAB 25.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-10-14">
+<meta name="DC.source" content="mssDoc.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>mss</h1>
+<!--introduction-->
+<p>Multilinear state-space model (explicit)</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Description</a>
+</li>
+<li>
+<a href="#2">Creation</a>
+</li>
+<li>
+<a href="#3">Properties</a>
+</li>
+<li>
+<a href="#4">Object Functions</a>
+</li>
+<li>
+<a href="#5">Examples</a>
+</li>
+<li>
+<a href="#7">References</a>
+</li>
+<li>
+<a href="#8">See Also</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Description</h2>
+<p>Use <tt>mss</tt> to create an explicit real-valued multilinear time-invariant state-space model.</p>
+<p>A multilinear time-invariant (MTI) state-space model is a mathematical representation of a physical system as a set of input, output, and state variables related by first-order differential equations. The <tt>mss</tt> model object can represent SISO or MIMO MTI state-space models in continuous time or discrete time.</p>
+<p>A continuous-time explict MTI state-space model can be represented by contracted tensor products:</p>
+<p>
+<img src="mssDoc_eq15111581674113619918.png" alt="$$&#10;\dot{\mathbf{x}} = \left\langle \mathcal{F},&#10;\mathcal{M}\left(\mathbf{x},\mathbf{u}\right)\right\rangle ,&#10;$$" style="width:120px;height:15px;"></p>
+<p>
+<img src="mssDoc_eq15470411370929123568.png" alt="$$&#10;\mathbf{y} = \left\langle \mathcal{G},&#10;\mathcal{M}\left(\mathbf{x},\mathbf{u}\right)\right\rangle&#10;$$" style="width:111px;height:15px;"></p>
+<p>Here, <img src="mssDoc_eq11229773766654430573.png" alt="$\mathbf{x}\in\mathrm{R}^n$" style="width:43px;height:11px;">, <img src="mssDoc_eq01293240461611938355.png" alt="$\mathbf{u}\in\mathrm{R}^m$" style="width:47px;height:11px;">, and <img src="mssDoc_eq08982378271043140691.png" alt="$\mathbf{y}\in\mathbf{R}^p$" style="width:45px;height:13px;"> represent the states, inputs, and outputs of sizes <img src="mssDoc_eq17625707915612226655.png" alt="$n\in\mathbf{Z}_{>=0}$" style="width:58px;height:13px;">, <img src="mssDoc_eq02821698572857285106.png" alt="$m\in\mathbf{Z}_{>=0}$" style="width:62px;height:13px;">, and <img src="mssDoc_eq16757609033594355999.png" alt="$p\in\mathbf{Z}_{>=0}$" style="width:57px;height:13px;"> respectively, while <img src="mssDoc_eq17293283163261647945.png" alt="$\mathrm{F}\in\mathbf{R}^{\times^{(n+m)}2\times n}$" style="width:90px;height:15px;"> and <img src="mssDoc_eq15551273245905726513.png" alt="$\mathrm{G}\in\mathbf{R}^{\times^{(n+m)}2\times p}$" style="width:91px;height:15px;"> are the state-space parameter tensors. While <img src="mssDoc_eq01611002717919227034.png" alt="$\mathrm{F}$" style="width:9px;height:11px;"> and <img src="mssDoc_eq08652955032883390653.png" alt="$\mathrm{G}$" style="width:11px;height:11px;"> can have an arbitrary rank, monomial tensors are always rank 1, e.g., <img src="mssDoc_eq16799434469353077689.png" alt="$\mathrm{M}\left(\mathbf{x},\mathbf{u}\right)$" style="width:51px;height:15px;"> canonical polyadic decomposition is:</p>
+<p>
+<img src="mssDoc_eq08722220137429195979.png" alt="$$&#10;\mathrm{M}\left(\mathbf{x},\mathbf{u}\right) = \left[&#10;\left(\begin{array}{c}1\\x_1\end{array}\right),&#10;\cdots,&#10;\left(\begin{array}{c}1\\x_n\end{array}\right),&#10;\left(\begin{array}{c}1\\u_1\end{array}\right),&#10;\cdots,&#10;\left(\begin{array}{c}1\\u_m\end{array}\right)&#10;\right],&#10;$$" style="width:378px;height:35px;"></p>
+<p>where each factor has a single column, i.e., rank 1.</p>
+<p>Alternatively, <tt>mss</tt> also supports MTI state-space systems in matrix format:</p>
+<p>
+<img src="mssDoc_eq13185249124545716027.png" alt="$$&#10;\dot{\mathbf{x}} = \mathbf{F}&#10;\mathbf{m}\left(\mathbf{x},\mathbf{u}\right)&#10;$$" style="width:91px;height:15px;"></p>
+<p>
+<img src="mssDoc_eq15358423397925044054.png" alt="$$&#10;\mathbf{y} = \mathbf{G}&#10;\mathbf{m}\left(\mathbf{x},\mathbf{u}\right)&#10;$$" style="width:93px;height:15px;"></p>
+<p>Here, the parameter matrices are given as <img src="mssDoc_eq10565020556454665279.png" alt="$\mathrm{F}\in\mathbf{R}^{n\times 2^{(n+m)}}$" style="width:81px;height:15px;"> and <img src="mssDoc_eq00547461526897684696.png" alt="$\mathrm{G}\in\mathbf{R}^{p\times 2^{(n+m)}}$" style="width:81px;height:15px;">, and the monomial vector is</p>
+<p>
+<img src="mssDoc_eq02714777275839713392.png" alt="$$&#10;\mathbf{m}\left(\mathbf{x},\mathbf{u}\right) =&#10;\left(\begin{array}{c}1\\u_n\end{array}\right)\otimes&#10;\cdots\otimes&#10;\left(\begin{array}{c}1\\u_1\end{array}\right)\otimes&#10;\left(\begin{array}{c}1\\x_n\end{array}\right)\otimes&#10;\cdots\otimes&#10;\left(\begin{array}{c}1\\x_1\end{array}\right),&#10;$$" style="width:405px;height:35px;"></p>
+<p>where <img src="mssDoc_eq13544489859526495642.png" alt="$\otimes$" style="width:10px;height:10px;"> is the Kronecker product.</p>
+<p>For efficieny reasons, as seen from the size scaling of each format, <tt>mss</tt> handles all systems internally in the tensor format.</p>
+<p>You can create a MTI state-space model object by either specifying the system and output parameters or by converting a model of another type (such as a linear time-invariant state-space model <tt>ss</tt>) to MTI state-space form. You can use an <tt>mss</tt> model object to:</p>
+<div>
+<ul>
+<li>Simulate an MTI system</li>
+<li>Combine with other MTI models to represent a more complex system</li>
+<li>Linearize an MTI system</li>
+</ul>
+</div>
+<p>For further reference see [1].</p>
+<h2 id="2">Creation</h2>
+<p><h3>Syntax</h3></p>
+<pre class="language-matlab">|sys = mss(Ftens,Gtens)|
+|sys = mss(Fmat,Gmat)|
+|sys = mss(Ftens,Gtens,ts)|
+|sys = mss(Fmat,Gmat,ts)|
+</pre>
+<p><h2>Description</h2></p>
+<p>
+<tt>sys = mss(Ftens,Gtens)</tt> creates a continuous-time mutlilinear time-invariant state-space model object of the following form:</p>
+<p>
+<img src="mssDoc_eq17839214735665143324.png" alt="$$&#10;\dot{\mathbf{x}} = \left\langle \mathrm{F}_\mathrm{tens},&#10;\mathrm{M}\left(\mathbf{x},\mathbf{u}\right)\right\rangle ,&#10;$$" style="width:132px;height:15px;"></p>
+<p>
+<img src="mssDoc_eq13102957220621922045.png" alt="$$&#10;\mathbf{y} = \left\langle \mathrm{G}_\mathrm{tens},&#10;\mathrm{M}\left(\mathbf{x},\mathbf{u}\right)\right\rangle .&#10;$$" style="width:135px;height:15px;"></p>
+<p>For instance, consider a plant with <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> states, <img src="mssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> inputs, and <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> outputs. The state-space tensors are:</p>
+<div>
+<ul>
+<li>
+<img src="mssDoc_eq12858442835021189394.png" alt="$\mathrm{F}_\mathrm{tens}$" style="width:28px;height:13px;"> is a 2 by <img src="mssDoc_eq01516773966958095456.png" alt="$(n+m-1)$" style="width:73px;height:15px;"> times 2 by <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> tensor</li>
+<li>
+<img src="mssDoc_eq02963180425603683849.png" alt="$\mathrm{G}_\mathrm{tens}$" style="width:29px;height:13px;"> is a 2 by <img src="mssDoc_eq01516773966958095456.png" alt="$(n+m-1)$" style="width:73px;height:15px;"> times 2 by <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> tensor</li>
+</ul>
+</div>
+<p>Note that <tt>Gtens</tt> is an optional input.</p>
+<p>
+<tt>sys = mss(Fmat,Gmat)</tt> creates a continuous-time mutlilinear time-invariant state-space model object of the following form:</p>
+<p>
+<img src="mssDoc_eq06799401991149063832.png" alt="$$&#10;\dot{\mathbf{x}} = \mathbf{F}_\mathrm{mat}&#10;\mathbf{m}\left(\mathbf{x},\mathbf{u}\right) ,&#10;$$" style="width:115px;height:15px;"></p>
+<p>
+<img src="mssDoc_eq01185506535763679840.png" alt="$$&#10;\mathbf{y} = \mathbf{G}_\mathrm{mat}&#10;\mathbf{m}\left(\mathbf{x},\mathbf{u}\right) .&#10;$$" style="width:118px;height:15px;"></p>
+<p>For instance, consider a plant with <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> states, <img src="mssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> inputs, and <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> outputs. The state-space tensors are:</p>
+<div>
+<ul>
+<li>
+<img src="mssDoc_eq02520738323908127834.png" alt="$\mathbf{F}_\mathrm{mat}$" style="width:28px;height:13px;"> is a <img src="mssDoc_eq13705354417083499194.png" alt="$n \times 2^{(n+m)}$" style="width:64px;height:14px;"> matrix</li>
+<li>
+<img src="mssDoc_eq09641806295461764917.png" alt="$\mathbf{G}_\mathrm{mat}$" style="width:30px;height:13px;"> is a <img src="mssDoc_eq17502613636605755178.png" alt="$p \times 2^{(n+m)}$" style="width:63px;height:17px;"> matrix</li>
+</ul>
+</div>
+<p>Note that <tt>Gmat</tt> is an optional input with a default output <img src="mssDoc_eq07876071061185281611.png" alt="$\mathbf{y}=\mathbf{x}$" style="width:37px;height:10px;"></p>
+<p>
+<tt>sys = mss(Ftens,Gtens,ts)</tt> creates a discrete-time mutlilinear time-invariant state-space model object of the following form with the sample time <tt>ts</tt> (in seconds):</p>
+<p>
+<img src="mssDoc_eq04279950790585665827.png" alt="$$&#10;\mathbf{x}\left[k+1\right] = \left\langle \mathrm{F}_\mathrm{tens},&#10;\mathrm{M}\left(\mathbf{x}\left[k\right],\mathbf{u}\left[k\right]\right)\right\rangle&#10;$$" style="width:209px;height:15px;"></p>
+<p>
+<img src="mssDoc_eq17373283979185811135.png" alt="$$&#10;\mathbf{y}\left[k\right] = \left\langle \mathrm{G}_\mathrm{tens},&#10;\mathrm{M}\left(\mathbf{x}\left[k\right],\mathbf{u}\left[k\right]\right)\right\rangle&#10;$$" style="width:187px;height:15px;"></p>
+<p>with discrete time variable <img src="mssDoc_eq12829740475467572519.png" alt="$k$" style="width:7px;height:11px;">. For instance, consider a plant with <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> states, <img src="mssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> inputs, and <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> outputs. The state-space tensors are:</p>
+<div>
+<ul>
+<li>
+<img src="mssDoc_eq12858442835021189394.png" alt="$\mathrm{F}_\mathrm{tens}$" style="width:28px;height:13px;"> is a 2 by <img src="mssDoc_eq01516773966958095456.png" alt="$(n+m-1)$" style="width:73px;height:15px;"> times 2 by <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> tensor</li>
+<li>
+<img src="mssDoc_eq02963180425603683849.png" alt="$\mathrm{G}_\mathrm{tens}$" style="width:29px;height:13px;"> is a 2 by <img src="mssDoc_eq01516773966958095456.png" alt="$(n+m-1)$" style="width:73px;height:15px;"> times 2 by <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> tensor</li>
+</ul>
+</div>
+<p>Note that <tt>Gtens</tt> is an optional input.</p>
+<p>
+<tt>sys = mss(Fmat,Gmat,ts)</tt> creates a discrete-time mutlilinear time-invariant state-space model object of the following form with the sample time <tt>ts</tt> (in seconds):</p>
+<p>
+<img src="mssDoc_eq11147505553307428227.png" alt="$$&#10;\mathbf{x}\left[k+1\right] = \mathbf{F}_\mathrm{mat}&#10;\mathbf{m}\left(\mathbf{x}\left[k\right],\mathbf{u}\left[k\right]\right) ,&#10;$$" style="width:199px;height:15px;"></p>
+<p>
+<img src="mssDoc_eq02939490512086629945.png" alt="$$&#10;\mathbf{y}\left[k\right] = \mathbf{G}_\mathrm{mat}&#10;\mathbf{m}\left(\mathbf{x}\left[k\right],\mathbf{u}\left[k\right]\right)&#10;,&#10;$$" style="width:177px;height:15px;"></p>
+<p>with discrete time variable <img src="mssDoc_eq12829740475467572519.png" alt="$k$" style="width:7px;height:11px;">. For instance, consider a plant with <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> states, <img src="mssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> inputs, and <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> outputs. The state-space tensors are:</p>
+<div>
+<ul>
+<li>
+<img src="mssDoc_eq02520738323908127834.png" alt="$\mathbf{F}_\mathrm{mat}$" style="width:28px;height:13px;"> is a <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> by 2 to the power of <img src="mssDoc_eq04321699664313326817.png" alt="$(n+m)$" style="width:49px;height:15px;"> matrix</li>
+<li>
+<img src="mssDoc_eq09641806295461764917.png" alt="$\mathbf{G}_\mathrm{mat}$" style="width:30px;height:13px;"> is a <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> by 2 to the power of <img src="mssDoc_eq04321699664313326817.png" alt="$(n+m)$" style="width:49px;height:15px;"> matrix</li>
+</ul>
+</div>
+<p>Note that <tt>Gmat</tt> is an optional input.</p>
+<p><h2>Input Arguments</h2></p>
+<p><h3>Ftens - System tensor</h3></p>
+<p>System tensor, specified as a 2 by <img src="mssDoc_eq01516773966958095456.png" alt="$(n+m-1)$" style="width:73px;height:15px;"> times 2 by <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> tensor, where, <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> is the number of states and <img src="mssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> is the number of inputs. This input sets the value of property <tt>Ftens</tt>.</p>
+<p>
+<tt>Ftens</tt> accepts the following tensor formats:</p>
+<div>
+<ul>
+<li>multidimensional array</li>
+<li> <a href="CPN1Doc.html"><tt>CPN1</tt></a>
+</li>
+<li> <a href="otvlDoc.html"><tt>otvl</tt></a>
+</li>
+<li>
+<tt>ktensor</tt> from <a href="https://www.tensortoolbox.org/">Tensor Toolbox</a>
+</li>
+</ul>
+</div>
+<p><h3>Gtens - Output tensor</h3></p>
+<p>Output tensor, specified as a 2 by <img src="mssDoc_eq01516773966958095456.png" alt="$(n+m-1)$" style="width:73px;height:15px;"> times 2 by <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> tensor, where, <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> is the number of states, <img src="mssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> is the number of inputs, and <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> is the number of outputs. This input sets the value of property <tt>Gtens</tt>.</p>
+<p>
+<tt>Gtens</tt> accepts the following tensor formats:</p>
+<div>
+<ul>
+<li>multidimensional array</li>
+<li> <a href="CPN1Doc.html"><tt>CPN1</tt></a>
+</li>
+<li>
+<tt>ktensor</tt> from <a href="https://www.tensortoolbox.org/">Tensor Toolbox</a>
+</li>
+</ul>
+</div>
+<p><h3>Fmat - System matrix</h3></p>
+<p>System matrix, specified as a <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> by 2 to the power of <img src="mssDoc_eq04321699664313326817.png" alt="$(n+m)$" style="width:49px;height:15px;"> matrix, where, <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> is the number of states and <img src="mssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> is the number of inputs. This input sets the value of property <tt>Fmat</tt>.</p>
+<p><h3>Gmat - Output matrix</h3></p>
+<p>Output matrix, specified as a <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> by 2 to the power of <img src="mssDoc_eq04321699664313326817.png" alt="$(n+m)$" style="width:49px;height:15px;"> matrix, where, <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> is the number of states, <img src="mssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> is the number of inputs, and <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> is the number of outputs. This input sets the value of property <tt>Gmat</tt>.</p>
+<p><h3>ts - Sample time</h3></p>
+<p>Sample time in seconds, specified as a scalar.</p>
+<p><h2>Output Arguments</h2></p>
+<p><h3>sys - Output system model</h3></p>
+<p>Output system model returned as:</p>
+<div>
+<ul>
+<li>A multilinear time-invariant state-space (<tt>mss</tt>) model object, when the inputs <img src="mssDoc_eq01611002717919227034.png" alt="$\mathrm{F}$" style="width:9px;height:11px;"> and <img src="mssDoc_eq08652955032883390653.png" alt="$\mathrm{G}$" style="width:11px;height:11px;"> are numeric tensors (or matrices), or when converting from another model object type.</li>
+</ul>
+</div>
+<h2 id="3">Properties</h2>
+<p><h3>F - System tensor</h3></p>
+<p>System tensor, specified as a 2 by <img src="mssDoc_eq01516773966958095456.png" alt="$(n+m-1)$" style="width:73px;height:15px;"> times 2 by <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> tensor, where, <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> is the number of states and <img src="mssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> is the number of inputs. This property is internally stored in <a href="CPN1Doc.html"><tt>CPN1</tt></a> format.</p>
+<p><h3>G - Output tensor</h3></p>
+<p>Output tensor, specified as a 2 by <img src="mssDoc_eq01516773966958095456.png" alt="$(n+m-1)$" style="width:73px;height:15px;"> times 2 by <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> tensor, where, <img src="mssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> is the number of states, <img src="mssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> is the number of inputs, and <img src="mssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> is the number of outputs. This property is internally stored in <a href="CPN1Doc.html"><tt>CPN1</tt></a> format.</p>
+<p><h3>n - Number of states</h3></p>
+<p>Number of states, specified as an integer <img src="mssDoc_eq02959194361701386928.png" alt="$n\geq 0$" style="width:35px;height:12px;">.</p>
+<p><h3>m - Number of inputs</h3></p>
+<p>Number of inputs, specified as an integer <img src="mssDoc_eq18301692951429874271.png" alt="$m\geq 0$" style="width:39px;height:12px;">.</p>
+<p><h3>p - Number of outputs</h3></p>
+<p>Number of outputs, specified as an integer <img src="mssDoc_eq08936171062845004003.png" alt="$p\geq 0$" style="width:34px;height:13px;">.</p>
+<p><h3>ts - Sample time</h3></p>
+<p>Sample time in seconds, specified as a double <img src="mssDoc_eq08749708480994453631.png" alt="$ts\geq 0$" style="width:39px;height:12px;">.</p>
+<h2 id="4">Object Functions</h2>
+<p>The following lists contain a representative subset of the functions you can use with or in context of <tt>mss</tt> model objects.</p>
+<p><h3>Multilinear Simulation</h3></p>
+<p>
+<table border=1>
+<tr><td><tt><a href="msimDoc.html">msim</a></tt></td><td>Plot simulated time response of dynamic
+system to arbitrary inputs; simulated response data</td></tr>
+<tr><td><tt><a href="linearizeDoc.html">linearize</a></tt></td><td>Linearize an explicit multilinear model around an operating point</td></tr>
+<tr><td><tt><a href="mlinearizeDoc.html">mlinearize</a></tt></td><td>Obtains a continuous or discrete multilinear time-invariant state-space
+model, within an operating domain, of a Simulink model.</td></tr>
+<tr><td><tt><a href="timeseries2CpnAlsDoc.html">mlgreyest</a></tt></td><td>GreyBox parameter identification of MTI model from input-output data in time domain</td></tr>
+<tr><td><tt><a href="rmssDoc.html">rmss</a></tt></td><td>Generate a random continuous multilinear states-space model</td></tr>
+<tr><td><tt><a href="c2dDoc.html">c2d</a></tt></td><td>Transform continous time to discrete time mti system</td></tr>
+<tr><td><tt><a href="MEXaccelerateDoc.html">c2d</a></tt></td><td>Enable MEX acceleration (experimental)</td></tr>
+</table>
+</p>
+<h2 id="5">Examples</h2>
+<p><h3>SISO Multilinear Time-Invariant State-Space Model</h3></p>
+<p>Create a SISO MTI state-space model defined by the following system equations:</p>
+<p>
+<img src="mssDoc_eq07100314948173429127.png" alt="$$&#10;\dot{x_1} = x_1 x_2 + 0.5 u&#10;$$" style="width:107px;height:12px;"></p>
+<p>
+<img src="mssDoc_eq10676319678468208941.png" alt="$$&#10;\dot{x_2} = 2 x_1 u + 7&#10;$$" style="width:89px;height:12px;"></p>
+<p>
+<img src="mssDoc_eq06495427959011847092.png" alt="$$&#10;y = 3 x_1 x_2 u +5&#10;$$" style="width:96px;height:13px;"></p>
+<p>The model has the following parameter matrices</p>
+<p>
+<img src="mssDoc_eq14538747122355390815.png" alt="$$&#10;\mathbf{F} = \left(\begin{array}{cccccccc}&#10;0 &amp; 0 &amp; 0 &amp; 1 &amp; 0.5 &amp; 0 &amp; 0 &amp; 0 \\&#10;7 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 2 &amp; 0 &amp; 0&#10;\end{array}\right),&#10;$$" style="width:245px;height:35px;"></p>
+<p>
+<img src="mssDoc_eq17045091351529292182.png" alt="$$&#10;\mathbf{G} = \left(\begin{array}{cccccccc}&#10;5 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 3&#10;\end{array}\right),&#10;$$" style="width:227px;height:18px;"></p>
+<p>and monomial vector</p>
+<p>
+<img src="mssDoc_eq09723674506184480531.png" alt="$$&#10;\mathbf{m}\left(x_1,x_2,u\right) = \left(\begin{array}{c}&#10;1 \\ x_1 \\ x_2 \\ x_1 x_2 \\ u \\ x_1 u \\ x_2 u \\ x_1 x_2 u&#10;\end{array}\right).&#10;$$" style="width:180px;height:141px;"></p>
+<p>Specify the <img src="mssDoc_eq03148538246847756930.png" alt="$\mathbf{F}$" style="width:10px;height:11px;"> and <img src="mssDoc_eq06760590799423181100.png" alt="$\mathbf{G}$" style="width:12px;height:11px;"> matrices, and create the MTI state-space model.</p>
+<pre class="codeinput">F = [ 0  0  0  1  0.5 0  0  0 ;
+      7  0  0  0  0   2  0  0];
+G = [ 5  0  0  0  0   0  0  3 ;];
+sys = mss(F, G)
+</pre>
+<pre class="codeoutput">
+sys = 
+
+  mss with properties:
+
+        F: [1&times;1 CPN1]
+        G: [1&times;1 CPN1]
+        n: 2
+        m: 1
+        p: 1
+    ntype: '1'
+       ts: 0
+
+</pre>
+<p>The same system can be represented in <a href="CPN1Doc.html"><tt>CPN1</tt></a> format:</p>
+<p>
+<img src="mssDoc_eq03301401330063812438.png" alt="$$&#10;\mathbf{F}_\mathrm{U} = \left(\begin{array}{cccc}&#10;1 &amp; 0 &amp; 1 &amp; 0 \\&#10;1 &amp; 0 &amp; 0 &amp; 0 \\&#10;0 &amp; 1 &amp; 1 &amp; 0&#10;\end{array}\right),&#10;$$" style="width:157px;height:53px;"></p>
+<p>
+<img src="mssDoc_eq06355519878435534161.png" alt="$$&#10;\mathbf{F}_\mathrm{phi} = \left(\begin{array}{cccc}&#10;1 &amp; 0.5 &amp; 0 &amp; 0 \\&#10;0 &amp; 0 &amp; 2 &amp; 7&#10;\end{array}\right),&#10;$$" style="width:171px;height:35px;"></p>
+<p>
+<img src="mssDoc_eq10736081557520958546.png" alt="$$&#10;\mathbf{G}_\mathrm{U} = \left(\begin{array}{cc}&#10;1 &amp; 0 \\&#10;1 &amp; 0 \\&#10;1 &amp; 0&#10;\end{array}\right),&#10;$$" style="width:116px;height:53px;"></p>
+<p>
+<img src="mssDoc_eq03599720958505818956.png" alt="$$&#10;\mathbf{G}_\mathrm{phi} = \left(\begin{array}{cc}&#10;3 &amp; 5&#10;\end{array}\right).&#10;$$" style="width:110px;height:18px;"></p>
+<p>Initialize the <img src="mssDoc_eq01611002717919227034.png" alt="$\mathrm{F}$" style="width:9px;height:11px;"> and <img src="mssDoc_eq08652955032883390653.png" alt="$\mathrm{G}$" style="width:11px;height:11px;"> tensors in <a href="CPN1Doc.html"><tt>CPN1</tt></a> format , and create the MTI state-space model.</p>
+<pre class="codeinput">F_U = [1  0  1  0;
+       1  0  0  0;
+       0  1  1  0];
+F_phi = [1  0.5 0  0;
+         0  0   2  7];
+F=CPN1(F_U,F_phi);
+G_U = [1  0;
+       1  0;
+       1  0];
+G_phi = [3  5];
+G=CPN1(G_U,G_phi);
+sys = mss(F, G)
+</pre>
+<pre class="codeoutput">
+sys = 
+
+  mss with properties:
+
+        F: [1&times;1 CPN1]
+        G: [1&times;1 CPN1]
+        n: 2
+        m: 1
+        p: 1
+    ntype: '1'
+       ts: 0
+
+</pre>
+<h2 id="7">References</h2>
+<p>[1] Lichtenberg, Gerwald; Pangalos, Georg; Cateriano Y&aacute;&ntilde;ez, Carlos; Luxa, Aline; J&ouml;res, Niklas; Schnelle, Leona; Kaufmann, Christoph (2022): Implicit multilinear modeling. In at - Automatisierungstechnik 70 (1), pp.&nbsp;13&ndash;30. DOI: 10.1515/auto-2021-0133.</p>
+<h2 id="8">See Also</h2>
+<p>msim</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2025b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% mss
+% Multilinear state-space model (explicit)
+
+%% Description
+% Use |mss| to create an explicit real-valued multilinear time-invariant 
+% state-space model.
+%
+% A multilinear time-invariant (MTI) state-space model is a mathematical
+% representation of a physical system as a set of input, output, and state
+% variables related by first-order differential equations. The |mss| model 
+% object can represent SISO or MIMO MTI state-space 
+% models in continuous time or discrete time.
+%
+% A continuous-time explict MTI state-space model can be
+% represented by contracted tensor products:
+%
+% $$
+% \dot{\mathbf{x}} = \left\langle \mathcal{F},
+% \mathcal{M}\left(\mathbf{x},\mathbf{u}\right)\right\rangle ,
+% $$
+% 
+% $$
+% \mathbf{y} = \left\langle \mathcal{G},
+% \mathcal{M}\left(\mathbf{x},\mathbf{u}\right)\right\rangle
+% $$
+%
+% Here, $\mathbf{x}\in\mathrm{R}^n$, $\mathbf{u}\in\mathrm{R}^m$, and 
+% $\mathbf{y}\in\mathbf{R}^p$ represent the states, inputs, and outputs of 
+% sizes $n\in\mathbf{Z}_{>=0}$, $m\in\mathbf{Z}_{>=0}$, and $p\in\mathbf{Z}_{>=0}$
+% respectively, while $\mathrm{F}\in\mathbf{R}^{\times^{(n+m)}2\times n}$ and
+% $\mathrm{G}\in\mathbf{R}^{\times^{(n+m)}2\times p}$ are the state-space 
+% parameter tensors. While $\mathrm{F}$ and $\mathrm{G}$ can have an
+% arbitrary rank, monomial tensors are always rank 1, e.g., 
+% $\mathrm{M}\left(\mathbf{x},\mathbf{u}\right)$ canonical
+% polyadic decomposition is:
+%
+% $$
+% \mathrm{M}\left(\mathbf{x},\mathbf{u}\right) = \left[
+% \left(\begin{array}{c}1\\x_1\end{array}\right),
+% \cdots,
+% \left(\begin{array}{c}1\\x_n\end{array}\right),
+% \left(\begin{array}{c}1\\u_1\end{array}\right),
+% \cdots,
+% \left(\begin{array}{c}1\\u_m\end{array}\right)
+% \right],
+% $$
+%
+% where each factor has a single column, i.e., rank 1.
+% 
+% Alternatively, |mss| also supports MTI state-space
+% systems in matrix format:
+% 
+% $$
+% \dot{\mathbf{x}} = \mathbf{F}
+% \mathbf{m}\left(\mathbf{x},\mathbf{u}\right)
+% $$
+%
+% $$
+% \mathbf{y} = \mathbf{G}
+% \mathbf{m}\left(\mathbf{x},\mathbf{u}\right)
+% $$
+%
+% Here, the parameter matrices are given as $\mathrm{F}\in\mathbf{R}^{n\times 2^{(n+m)}}$ and
+% $\mathrm{G}\in\mathbf{R}^{p\times 2^{(n+m)}}$, and the monomial vector is
+% 
+% $$
+% \mathbf{m}\left(\mathbf{x},\mathbf{u}\right) =
+% \left(\begin{array}{c}1\\u_n\end{array}\right)\otimes
+% \cdots\otimes
+% \left(\begin{array}{c}1\\u_1\end{array}\right)\otimes
+% \left(\begin{array}{c}1\\x_n\end{array}\right)\otimes
+% \cdots\otimes
+% \left(\begin{array}{c}1\\x_1\end{array}\right),
+% $$
+% 
+% where $\otimes$ is the Kronecker product.
+%
+% For efficieny reasons, as seen from the size scaling of each format, 
+% |mss| handles all systems internally in the tensor format.
+%
+% You can create a MTI state-space model object by 
+% either specifying the system and output parameters or by converting a 
+% model of another type (such as a linear time-invariant state-space model 
+% |ss|) to  MTI state-space form. You can use an
+% |mss| model object to:
+%
+% * Simulate an MTI system
+% * Combine with other MTI models to represent a more complex system
+% * Linearize an MTI system
+% 
+% For further reference see [1].
+% 
+%% Creation
+% <html><h3>Syntax</h3></html> 
+% 
+%   |sys = mss(Ftens,Gtens)|
+%   |sys = mss(Fmat,Gmat)|
+%   |sys = mss(Ftens,Gtens,ts)|
+%   |sys = mss(Fmat,Gmat,ts)|
+% 
+% <html><h2>Description</h2></html>
+% 
+% |sys = mss(Ftens,Gtens)| creates a continuous-time mutlilinear
+% time-invariant state-space model object of the following form:
+% 
+% $$
+% \dot{\mathbf{x}} = \left\langle \mathrm{F}_\mathrm{tens},
+% \mathrm{M}\left(\mathbf{x},\mathbf{u}\right)\right\rangle ,
+% $$
+%
+% $$
+% \mathbf{y} = \left\langle \mathrm{G}_\mathrm{tens},
+% \mathrm{M}\left(\mathbf{x},\mathbf{u}\right)\right\rangle .
+% $$
+% 
+% For instance, consider a plant with $n$ states, $m$ inputs, and $p$
+% outputs. The state-space tensors are:
+% 
+% * $\mathrm{F}_\mathrm{tens}$ is a 2 by $(n+m-1)$ times 2 by $n$ tensor
+% * $\mathrm{G}_\mathrm{tens}$ is a 2 by $(n+m-1)$ times 2 by $p$ tensor
+%
+% Note that |Gtens| is an optional input.
+% 
+% |sys = mss(Fmat,Gmat)| creates a continuous-time mutlilinear
+% time-invariant state-space model object of the following form:
+% 
+% $$
+% \dot{\mathbf{x}} = \mathbf{F}_\mathrm{mat}
+% \mathbf{m}\left(\mathbf{x},\mathbf{u}\right) ,
+% $$
+%
+% $$
+% \mathbf{y} = \mathbf{G}_\mathrm{mat}
+% \mathbf{m}\left(\mathbf{x},\mathbf{u}\right) .
+% $$
+% 
+% For instance, consider a plant with $n$ states, $m$ inputs, and $p$
+% outputs. The state-space tensors are:
+% 
+% * $\mathbf{F}_\mathrm{mat}$ is a $n \times 2^{(n+m)}$ matrix
+% * $\mathbf{G}_\mathrm{mat}$ is a $p \times 2^{(n+m)}$ matrix
+% 
+% Note that |Gmat| is an optional input with a 
+% default output $\mathbf{y}=\mathbf{x}$
+% 
+% |sys = mss(Ftens,Gtens,ts)| creates a discrete-time mutlilinear
+% time-invariant state-space model object of the following form with the 
+% sample time |ts| (in seconds):
+% 
+% $$
+% \mathbf{x}\left[k+1\right] = \left\langle \mathrm{F}_\mathrm{tens},
+% \mathrm{M}\left(\mathbf{x}\left[k\right],\mathbf{u}\left[k\right]\right)\right\rangle
+% $$
+%
+% $$
+% \mathbf{y}\left[k\right] = \left\langle \mathrm{G}_\mathrm{tens},
+% \mathrm{M}\left(\mathbf{x}\left[k\right],\mathbf{u}\left[k\right]\right)\right\rangle
+% $$
+% 
+% with discrete time variable $k$. For instance, consider a plant with $n$ 
+% states, $m$ inputs, and $p$ outputs. The state-space tensors are:
+% 
+% * $\mathrm{F}_\mathrm{tens}$ is a 2 by $(n+m-1)$ times 2 by $n$ tensor
+% * $\mathrm{G}_\mathrm{tens}$ is a 2 by $(n+m-1)$ times 2 by $p$ tensor
+%
+% Note that |Gtens| is an optional input.
+%
+% |sys = mss(Fmat,Gmat,ts)| creates a discrete-time mutlilinear
+% time-invariant state-space model object of the following form with the 
+% sample time |ts| (in seconds):
+% 
+% $$
+% \mathbf{x}\left[k+1\right] = \mathbf{F}_\mathrm{mat}
+% \mathbf{m}\left(\mathbf{x}\left[k\right],\mathbf{u}\left[k\right]\right) ,
+% $$
+%
+% $$
+% \mathbf{y}\left[k\right] = \mathbf{G}_\mathrm{mat}
+% \mathbf{m}\left(\mathbf{x}\left[k\right],\mathbf{u}\left[k\right]\right)
+% ,
+% $$
+% 
+% with discrete time variable $k$. For instance, consider a plant with $n$ 
+% states, $m$ inputs, and $p$ outputs. The state-space tensors are:
+% 
+% * $\mathbf{F}_\mathrm{mat}$ is a $n$ by 2 to the power of $(n+m)$ matrix
+% * $\mathbf{G}_\mathrm{mat}$ is a $p$ by 2 to the power of $(n+m)$ matrix
+% 
+% Note that |Gmat| is an optional input.
+%
+% <html><h2>Input Arguments</h2></html>
+%
+% <html><h3>Ftens - System tensor</h3></html> 
+% 
+% System tensor, specified as a 2 by $(n+m-1)$ times 2 by $n$ tensor,
+% where, $n$ is the number of states and $m$ is the number of inputs. This
+% input sets the value of property |Ftens|.
+%
+% |Ftens| accepts the following tensor formats:
+%
+% * multidimensional array 
+% * <CPN1Doc.html |CPN1|>
+% * <otvlDoc.html |otvl|>
+% * |ktensor| from <https://www.tensortoolbox.org/ Tensor Toolbox>
+%
+% <html><h3>Gtens - Output tensor</h3></html> 
+% 
+% Output tensor, specified as a 2 by $(n+m-1)$ times 2 by $p$ tensor,
+% where, $n$ is the number of states, $m$ is the number of inputs, and $p$ 
+% is the number of outputs. This input sets the value of property |Gtens|.
+%
+% |Gtens| accepts the following tensor formats:
+%
+% * multidimensional array 
+% * <CPN1Doc.html |CPN1|>
+% * |ktensor| from <https://www.tensortoolbox.org/ Tensor Toolbox>
+%
+% <html><h3>Fmat - System matrix</h3></html> 
+% 
+% System matrix, specified as a $n$ by 2 to the power of $(n+m)$ matrix,
+% where, $n$ is the number of states and $m$ is the number of inputs. This
+% input sets the value of property |Fmat|.
+%
+% <html><h3>Gmat - Output matrix</h3></html> 
+% 
+% Output matrix, specified as a $p$ by 2 to the power of $(n+m)$ matrix,
+% where, $n$ is the number of states, $m$ is the number of inputs, and $p$ 
+% is the number of outputs. This input sets the value of property |Gmat|.
+%
+% <html><h3>ts - Sample time</h3></html> 
+% 
+% Sample time in seconds, specified as a scalar.
+%
+% <html><h2>Output Arguments</h2></html>
+%
+% <html><h3>sys - Output system model</h3></html> 
+%
+% Output system model returned as:
+%
+% * A multilinear time-invariant state-space (|mss|) model object, when the
+% inputs $\mathrm{F}$ and $\mathrm{G}$ are numeric tensors (or matrices), 
+% or when converting from another model object type.
+%
+%% Properties
+% 
+% <html><h3>F - System tensor</h3></html> 
+% 
+% System tensor, specified as a 2 by $(n+m-1)$ times 2 by $n$ tensor,
+% where, $n$ is the number of states and $m$ is the number of inputs. This 
+% property is internally stored in <CPN1Doc.html |CPN1|>
+% format.
+%
+% <html><h3>G - Output tensor</h3></html> 
+% 
+% Output tensor, specified as a 2 by $(n+m-1)$ times 2 by $p$ tensor,
+% where, $n$ is the number of states, $m$ is the number of inputs, and $p$ 
+% is the number of outputs. This property is internally stored in <CPN1Doc.html |CPN1|>
+% format.
+%
+% <html><h3>n - Number of states</h3></html> 
+% 
+% Number of states, specified as an integer $n\geq 0$.
+%
+% <html><h3>m - Number of inputs</h3></html> 
+% 
+% Number of inputs, specified as an integer $m\geq 0$.
+%
+% <html><h3>p - Number of outputs</h3></html> 
+% 
+% Number of outputs, specified as an integer $p\geq 0$.
+%
+% <html><h3>ts - Sample time</h3></html> 
+% 
+% Sample time in seconds, specified as a double $ts\geq 0$.
+%
+%% Object Functions
+% The following lists contain a representative subset of the functions you
+% can use with or in context of |mss| model objects.
+%
+% <html><h3>Multilinear Simulation</h3></html> 
+% 
+% <html>
+% <table border=1>
+% <tr><td><tt><a href="msimDoc.html">msim</a></tt></td><td>Plot simulated time response of dynamic 
+% system to arbitrary inputs; simulated response data</td></tr>
+% <tr><td><tt><a href="linearizeDoc.html">linearize</a></tt></td><td>Linearize an explicit multilinear model around an operating point</td></tr>
+% <tr><td><tt><a href="mlinearizeDoc.html">mlinearize</a></tt></td><td>Obtains a continuous or discrete multilinear time-invariant state-space
+% model, within an operating domain, of a Simulink model.</td></tr>
+% <tr><td><tt><a href="timeseries2CpnAlsDoc.html">mlgreyest</a></tt></td><td>GreyBox parameter identification of MTI model from input-output data in time domain</td></tr>
+% <tr><td><tt><a href="rmssDoc.html">rmss</a></tt></td><td>Generate a random continuous multilinear states-space model</td></tr>
+% <tr><td><tt><a href="c2dDoc.html">c2d</a></tt></td><td>Transform continous time to discrete time mti system</td></tr>
+% <tr><td><tt><a href="MEXaccelerateDoc.html">c2d</a></tt></td><td>Enable MEX acceleration (experimental)</td></tr>
+% </table>
+% </html>
+%
+%% Examples
+%
+% <html><h3>SISO Multilinear Time-Invariant State-Space Model</h3></html>
+%
+% Create a SISO MTI state-space model defined by the following system
+% equations:
+%
+% $$
+% \dot{x_1} = x_1 x_2 + 0.5 u
+% $$
+%
+% $$
+% \dot{x_2} = 2 x_1 u + 7
+% $$
+%
+% $$
+% y = 3 x_1 x_2 u +5
+% $$
+%
+% The model has the following parameter matrices
+%
+% $$
+% \mathbf{F} = \left(\begin{array}{cccccccc}
+% 0 & 0 & 0 & 1 & 0.5 & 0 & 0 & 0 \\ 
+% 7 & 0 & 0 & 0 & 0 & 2 & 0 & 0
+% \end{array}\right),
+% $$
+%
+% $$
+% \mathbf{G} = \left(\begin{array}{cccccccc}
+% 5 & 0 & 0 & 0 & 0 & 0 & 0 & 3
+% \end{array}\right),
+% $$
+%
+% and monomial vector
+% 
+% $$
+% \mathbf{m}\left(x_1,x_2,u\right) = \left(\begin{array}{c}
+% 1 \\ x_1 \\ x_2 \\ x_1 x_2 \\ u \\ x_1 u \\ x_2 u \\ x_1 x_2 u
+% \end{array}\right).
+% $$
+%
+% Specify the $\mathbf{F}$ and $\mathbf{G}$ matrices, and create the MTI
+% state-space model.
+%
+F = [ 0  0  0  1  0.5 0  0  0 ;
+      7  0  0  0  0   2  0  0];
+G = [ 5  0  0  0  0   0  0  3 ;];
+sys = mss(F, G)
+%%
+% The same system can be represented in
+% <CPN1Doc.html |CPN1|> format:
+%
+% $$
+% \mathbf{F}_\mathrm{U} = \left(\begin{array}{cccc}
+% 1 & 0 & 1 & 0 \\ 
+% 1 & 0 & 0 & 0 \\
+% 0 & 1 & 1 & 0
+% \end{array}\right),
+% $$
+%
+% $$
+% \mathbf{F}_\mathrm{phi} = \left(\begin{array}{cccc}
+% 1 & 0.5 & 0 & 0 \\ 
+% 0 & 0 & 2 & 7
+% \end{array}\right),
+% $$
+%
+% $$
+% \mathbf{G}_\mathrm{U} = \left(\begin{array}{cc}
+% 1 & 0 \\ 
+% 1 & 0 \\
+% 1 & 0
+% \end{array}\right),
+% $$
+%
+% $$
+% \mathbf{G}_\mathrm{phi} = \left(\begin{array}{cc}
+% 3 & 5
+% \end{array}\right).
+% $$
+%
+% Initialize the $\mathrm{F}$ and $\mathrm{G}$ tensors in <CPN1Doc.html |CPN1|>
+% format , and create the MTI state-space model.
+%
+F_U = [1  0  1  0;
+       1  0  0  0;
+       0  1  1  0];
+F_phi = [1  0.5 0  0;
+         0  0   2  7];
+F=CPN1(F_U,F_phi);
+G_U = [1  0;
+       1  0;
+       1  0];
+G_phi = [3  5];
+G=CPN1(G_U,G_phi);
+sys = mss(F, G)
+%% References
+%
+% [1] Lichtenberg, Gerwald; Pangalos, Georg; Cateriano Yáñez, Carlos; Luxa,
+% Aline; Jöres, Niklas; Schnelle, Leona; Kaufmann, Christoph (2022): 
+% Implicit multilinear modeling. In at - Automatisierungstechnik 70 (1), 
+% pp. 13–30. DOI: 10.1515/auto-2021-0133.
+%
+%% See Also
+%
+% msim
+##### SOURCE END #####
+-->
+</body>
+</html>

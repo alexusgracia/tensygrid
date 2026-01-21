@@ -1,0 +1,306 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>d2c</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-06-24">
+<meta name="DC.source" content="d2cDoc.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>d2c</h1>
+<!--introduction-->
+<p>Converts discrete-time dynamic iMTI system to continuous-time.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Syntax</a>
+</li>
+<li>
+<a href="#2">Description</a>
+</li>
+<li>
+<a href="#3">Examples</a>
+</li>
+<li>
+<a href="#9">References</a>
+</li>
+<li>
+<a href="#10">See also</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Syntax</h2>
+<p>SYSC = d2c(SYSD,TS) computes a continuous-time model with using one step forward euler approximation.</p>
+<h2 id="2">Description</h2>
+<p>For the continuization the one step forward euler approximation is used: xd = (xp - x)/TS. The algorithm directly implements additional auxilary equations for all state derivatives and replaces the state predicitons by auxiliary variables by manipulation of the parameter tensor (the strucutre and parameter matrix of the CP decomposition). Afterwards it will be checked if those additional auxilary variables and equations can be reduced algebraicly, if so, they will be eliminated by algbraic elimination by direct manipulation of the parameter tensor (the strucutre and parameter matrix of the CP decomposition).</p>
+<h2 id="3">Examples</h2>
+<p>
+<b>Calculate continuous-time model of a 3 dimensional discrete-time lotka-volterra model:</b>
+</p>
+<p>The preditor-prey model from [1] can be described by the following differences equations</p>
+<pre class="codeinput">Eq = [<span class="string">"xp1 = x1 * (e1 + a1_1*x1 + a1_2*x2 + a1_3*x3)"</span>;<span class="keyword">...</span>
+    <span class="string">"xp2 = x2 * (e2 + a2_1*x1 + a2_2*x2 + a2_3*x3)"</span>;<span class="keyword">...</span>
+    <span class="string">"xp3 = x3 * (e3 + a3_1*x1 + a3_2*x2 + a3_3*x3)"</span>];
+</pre>
+<p>which can be converted into a continuous time dmss object</p>
+<pre class="codeinput">ts = 1;
+sysD = sym2dmss(Eq, ts);
+disp(sysD.symbolicEquations)
+</pre>
+<pre class="codeoutput">Reduced by 6 column(s) and 0 equation(s) with trivial Reduction due to duplications.
+xp1 - e1*x1 - a1_2*x1*x2 - a1_3*x1*x3 - a1_1*x1*y1 == 0
+xp2 - e2*x2 - a2_1*x1*x2 - a2_3*x2*x3 - a2_2*x2*y2 == 0
+xp3 - e3*x3 - a3_1*x1*x3 - a3_2*x2*x3 - a3_3*x3*y3 == 0
+                                           y1 - x1 == 0
+                                           y2 - x2 == 0
+                                           y3 - x3 == 0
+ 
+</pre>
+<p>For simulation the symbolic parameters should be replace by numeric values</p>
+<pre class="codeinput">e = sym([<span class="string">"e1"</span>, <span class="string">"e2"</span>, <span class="string">"e3"</span>]);
+a = reshape(sym(<span class="string">"a"</span>, [3,3]), 1,[]);
+symParameters = [e, a];
+numParameters = [2, 2, 2, -1, -0.5, 0.61, 0.61, -1, -0.5, -0.5, 0.61, -1];
+sysD = sysD.replaceSymbolicParameters(symParameters, numParameters);
+disp(sysD.symbolicEquations)
+</pre>
+<pre class="codeoutput">xp1 - 2*x1 - (61*x1*x2)/100 + (x1*x3)/2 + x1*y1 == 0
+xp2 - 2*x2 + (x1*x2)/2 - (61*x2*x3)/100 + x2*y2 == 0
+xp3 - 2*x3 - (61*x1*x3)/100 + (x2*x3)/2 + x3*y3 == 0
+                                        y1 - x1 == 0
+                                        y2 - x2 == 0
+                                        y3 - x3 == 0
+ 
+</pre>
+<p>The discrete-time system can be converted into a continuous-time system by</p>
+<pre class="codeinput">sysC = sysD.d2c();
+disp(sysC.symbolicEquations)
+</pre>
+<pre class="codeoutput">System reduced algebraicly by 3 algebraic variable(s) and 3 equation(s).
+xp1 - x1 - (61*x1*x2)/100 + (x1*x3)/2 + x1*y1 == 0
+xp2 - x2 + (x1*x2)/2 - (61*x2*x3)/100 + x2*y2 == 0
+xp3 - x3 - (61*x1*x3)/100 + (x2*x3)/2 + x3*y3 == 0
+                                      y1 - x1 == 0
+                                      y2 - x2 == 0
+                                      y3 - x3 == 0
+ 
+</pre>
+<p>Simulating the two system, their behaviour can be compared</p>
+<pre class="codeinput">x0 = [0.8 0.8 1.5];
+tend = 1e2;
+simoutD = dmsim(sysD, x0, [0:ts:tend]);
+
+simoutC = dmsim(sysC, x0, [0, tend]);
+
+figure()
+plot3(simoutC.x(:,1),simoutC.x(:,2),simoutC.x(:,3), <span class="string">"r-"</span>, LineWidth=0.01);
+hold <span class="string">on</span>
+plot3(simoutD.x(:,1),simoutD.x(:,2),simoutD.x(:,3), <span class="string">"k--"</span>, LineWidth=0.01);
+view([130, 15])
+grid <span class="string">on</span>
+legend([<span class="string">"continuous model"</span>, <span class="string">"discrete model"</span>], <span class="string">"Location"</span>,<span class="string">"southeast"</span>)
+xlabel(<span class="string">'x1'</span>)
+ylabel(<span class="string">'x2'</span>)
+zlabel(<span class="string">'x3'</span>)
+hold <span class="string">off</span>
+
+figure()
+plot(simoutC.tsim, nan(length(simoutC.tsim),1), <span class="string">"r-"</span>, LineWidth=0.01);
+hold <span class="string">on</span>
+plot(simoutD.tsim, nan(length(simoutD.tsim),1), <span class="string">"k--"</span>, LineWidth=0.01);
+plot(simoutC.tsim, simoutC.x, <span class="string">"r-"</span>, LineWidth=0.01);
+plot(simoutD.tsim, simoutD.x, <span class="string">"k--"</span>, LineWidth=0.01);
+grid <span class="string">on</span>
+legend([<span class="string">"continuous model"</span>, <span class="string">"discrete model"</span>], <span class="string">"Location"</span>,<span class="string">"southeast"</span>)
+xlabel(<span class="string">'time'</span>)
+ylabel(<span class="string">'x'</span>)
+hold <span class="string">off</span>
+</pre>
+<pre class="codeoutput">Seperation in 1 subset(s) with 6 subproblem(s), from which 6 are explicit solvable.</pre>
+<img vspace="5" hspace="5" src="d2cDoc_01.png" alt=""> <img vspace="5" hspace="5" src="d2cDoc_02.png" alt=""> <p>While the continuous-time system reaches a stable non-periodic trajectory, the discrete-time model reaches a 12-cycle.</p>
+<h2 id="9">References</h2>
+<p>[1] G.I. Bischi and F. Tramontana, "Three-dimensional discrete-time Lotka&ndash;Volterra models with an application to industrial clusters", Communications in Nonlinear Science and Numerical Simulation, 15(10), pp. 3000&ndash;3014., Oct. 2010. doi:10.1016/j.cnsns.2009.10.021.</p>
+<h2 id="10">See also</h2>
+<p>
+<a href="dmssc2dDoc.html">c2d</a>, <a href="d2dDoc.html">d2d</a>, <a href="dmssDoc.html">dmss</a>, <a href="dmsimDoc.html">dmsim</a>, <a href="sym2dmssDoc.html">sym2dmss</a>
+</p>
+<p>Author(s): Torben Warnecke</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% d2c
+% Converts discrete-time dynamic iMTI system to continuous-time.
+
+%% Syntax
+% SYSC = d2c(SYSD,TS) computes a continuous-time model with using one step
+% forward euler approximation.
+%
+%% Description
+% For the continuization the one step forward euler approximation is used: xd = (xp - x)/TS.
+% The algorithm directly implements additional auxilary equations for all state derivatives 
+% and replaces the state predicitons by auxiliary variables by manipulation
+% of the parameter tensor (the strucutre and parameter matrix of the CP
+% decomposition).
+% Afterwards it will be checked if those additional auxilary variables and
+% equations can be reduced algebraicly, if so, they will be eliminated by
+% algbraic elimination by direct manipulation of the parameter tensor 
+% (the strucutre and parameter matrix of the CP decomposition).
+%
+%% Examples
+% *Calculate continuous-time model of a 3 dimensional discrete-time lotka-volterra model:*
+%
+% The preditor-prey model from [1] can be described by the following
+% differences equations
+Eq = ["xp1 = x1 * (e1 + a1_1*x1 + a1_2*x2 + a1_3*x3)";...
+    "xp2 = x2 * (e2 + a2_1*x1 + a2_2*x2 + a2_3*x3)";...
+    "xp3 = x3 * (e3 + a3_1*x1 + a3_2*x2 + a3_3*x3)"];
+%%
+% which can be converted into a continuous time dmss object
+ts = 1;
+sysD = sym2dmss(Eq, ts);
+disp(sysD.symbolicEquations)
+%%
+% For simulation the symbolic parameters should be replace by numeric
+% values
+e = sym(["e1", "e2", "e3"]);
+a = reshape(sym("a", [3,3]), 1,[]);
+symParameters = [e, a];
+numParameters = [2, 2, 2, -1, -0.5, 0.61, 0.61, -1, -0.5, -0.5, 0.61, -1];
+sysD = sysD.replaceSymbolicParameters(symParameters, numParameters);
+disp(sysD.symbolicEquations)
+
+%%
+% The discrete-time system can be converted into a continuous-time system
+% by
+sysC = sysD.d2c();
+disp(sysC.symbolicEquations)
+
+%%
+% Simulating the two system, their behaviour can be compared
+x0 = [0.8 0.8 1.5];
+tend = 1e2;
+simoutD = dmsim(sysD, x0, [0:ts:tend]);
+
+simoutC = dmsim(sysC, x0, [0, tend]);
+
+figure()
+plot3(simoutC.x(:,1),simoutC.x(:,2),simoutC.x(:,3), "r-", LineWidth=0.01);
+hold on
+plot3(simoutD.x(:,1),simoutD.x(:,2),simoutD.x(:,3), "kREPLACE_WITH_DASH_DASH", LineWidth=0.01);
+view([130, 15])
+grid on
+legend(["continuous model", "discrete model"], "Location","southeast")
+xlabel('x1')
+ylabel('x2')
+zlabel('x3')
+hold off
+
+figure()
+plot(simoutC.tsim, nan(length(simoutC.tsim),1), "r-", LineWidth=0.01);
+hold on
+plot(simoutD.tsim, nan(length(simoutD.tsim),1), "kREPLACE_WITH_DASH_DASH", LineWidth=0.01);
+plot(simoutC.tsim, simoutC.x, "r-", LineWidth=0.01);
+plot(simoutD.tsim, simoutD.x, "kREPLACE_WITH_DASH_DASH", LineWidth=0.01);
+grid on
+legend(["continuous model", "discrete model"], "Location","southeast")
+xlabel('time')
+ylabel('x')
+hold off
+
+
+%%
+% While the continuous-time system reaches a stable non-periodic
+% trajectory, the discrete-time model reaches a 12-cycle.
+
+%% References
+% [1] G.I. Bischi and F. Tramontana, "Three-dimensional discrete-time Lotka–Volterra models with an application to industrial clusters", Communications in Nonlinear Science and Numerical Simulation, 15(10), pp. 3000–3014., Oct. 2010. doi:10.1016/j.cnsns.2009.10.021. 
+
+%% See also
+% <dmssc2dDoc.html c2d>,
+% <d2dDoc.html d2d>,
+% <dmssDoc.html dmss>,
+% <dmsimDoc.html dmsim>,
+% <sym2dmssDoc.html sym2dmss>
+%
+%
+% Author(s): Torben Warnecke
+##### SOURCE END #####
+-->
+</body>
+</html>

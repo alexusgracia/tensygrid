@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Getting Started with the MTI Toolbox</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-06-24">
+<meta name="DC.source" content="gettingStarted.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>Getting Started with the MTI Toolbox</h1>
+<!--introduction-->
+<p>Tools for Multilinear Modeling, Simulation, and Analysis</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Theory</a>
+</li>
+<li>
+<a href="#2">Syntax</a>
+</li>
+<li>
+<a href="#3">Applications</a>
+</li>
+<li>
+<a href="#4">References</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Theory</h2>
+<p>Multilinear functions are nonlinear, a subclass of polynomials and a superclass of linear as well as Boolean functions. Using these as right hand sides of nonlinear state space models, they can represent deterministic multi-valued or binary dynamics in the same way that linear time-invariant (LTI) models can be represented as matrices of their parameters and linear algebra is the mathematical theory behind them, the parameters of multilinear time-invariant (MTI) models can be represented as tensors and multilinear algebra holds the mathematical background, which was first introduced in [1].</p>
+<p>Early results showed that the dynamics of hybrid systems consisting of continuous-valued as well as a discrete-valued parts can be represented in an adquate way by MTI models and reduction methods can be applied [2].</p>
+<p>This allows the use of modern decomposition methods for the parameter tensors, like canonical polyadic (CP), which are sums of outer products. Because of the special size <img src="gettingStarted_eq14880351223109742904.png" alt="$n \times 2 \times 2 \times \cdots \times 2$" style="width:119px;height:11px;"> of the tensors, normalization of the factors leads to further reduced representations (CPN), first introduced in [3] and used throughout this toolbox.</p>
+<p>Moreover, new methods could be beneficially used in engineering applications like multilinearization of nonlinear models, first introduced in [4]. This technique allows the approximation of nonlinear dynanmic behaviour in within a operating region and not only a point as linearization does.</p>
+<p>The class of explict MTI models is not closed under composition, i.e. a connection of two MTI models might be no longer multilinear, but polynomial. In contrast, implicit MTI models, also called descriptor models are a closed class, [5]. Many engineering tasks already profit from implicit modeling, e.g. causality is not necessary to predefine, or conservation laws can be enforced. This comes with an increased complexity of the methods but still, a MTI descriptor model can be described by a single parameter tensor.</p>
+<p>Tensor decompositions show - starting in the decade 2010-2020 - their ability to break the curse of dimensionality for many relevant applications. MTI modeling enables high performance nonlinear modeling for large scale hybrid systems, for simulation, analysis and design. Don't confuse: Multilinear are not multi-linear models, the latter are multiple linear models, e.g. for every operating point an individual LTI model. These could also be represented as tensors and within the MTI toolbox, but suffer from the curse of dimensionality.</p>
+<h2 id="2">Syntax</h2>
+<p>Most of the MTI-Toolbox commands have the same or a similar syntax as the Control System Toolbox, some only differ by the prefix <tt>m</tt>, many are overloaded methods and share the exact syntax. Many basic commands are available, e.g.</p>
+<div>
+<ul>
+<li>defining a multilinear state space model <tt>msys = <a href="output/mssDoc.html">mss</a>(F,G,Ts)</tt> by transition and output tensor <tt>F</tt> and <tt>G</tt>, which works like <tt>lsys = ss(A,B,C,D,Ts)</tt>.</li>
+<li>simulating the model by <tt>[y,tOut,x] = <a href="output/msimDoc.html">msim</a>(msys,u,t,x0)</tt> similar to <tt>lsim</tt>.</li>
+<li>defining an implicit descriptor state space model <tt>dmsys = <a href="output/dmssDoc.html">dmss</a>(H)</tt> by the tensor <tt>H</tt>, comparable to <tt>dlsys = dss(A,B,C,D,E,Ts)</tt>.</li>
+<li>simulating this model by <tt>[y,tOut,x] = <a href="output/dmsimDoc.html">dmsim</a>(dmsys,u,t,x0)</tt> similar to <tt>lsim</tt>.</li>
+<li>state transformation <tt><a href="output/mss2mssDoc.html">mss2mss</a></tt> similar to <tt>ss2ss</tt>
+</li>
+<li>discretization w.r.t time by <tt><a href="output/dmssc2dDoc.html">c2d</a></tt> or the inverse by <tt><a href="output/d2cDoc.html">d2c</a></tt>
+</li>
+<li>linearization by <tt><a href="output/linearizeDoc.html">linearize</a></tt>, which have fast and sparse implementations</li>
+<li>grey box parameter estimation by <tt><a href="output/mlgreyestDoc.html">mlgreyest</a></tt>
+</li>
+</ul>
+</div>
+<p>Moreover, there are features exclusive for MTI models, e.g.</p>
+<div>
+<ul>
+<li>representation of CPN factors of parameter tensors as <tt><a href="output/CPN1Doc.html">CPN1</a></tt> for a 1-norm</li>
+<li>multilinearization by <tt><a href="output/mlinearizeDoc.html">mlinearize</a></tt>, i.e. a multilinear approximation of a SIMULINK block</li>
+<li>converting an LTI to a MTI model by <tt><a href="output/ss2mssDoc.html">ss2mss</a></tt> which allows factorized representations.</li>
+</ul>
+</div>
+<h2 id="3">Applications</h2>
+<p>Application of MTI models started with HVAC systems [2]. Within projects, even real-time applicabilty has been shown. New results show the applicability to power networks. This opens the door to large scale multi-energy systems. More information can be found on <a href="http://mti.systems">mti.systems</a>
+</p>
+<h2 id="4">References</h2>
+<p>[1] G. Lichtenberg (2012): Hybrid Tensor Systems, Habilitation, TU Hamburg.</p>
+<p>[2] G. Pangalos, A. Eichler, G. Lichtenberg (2015): Hybrid Multilinear Modeling and Applications, <a href="https://doi.org/10.1007/978-3-319-11457-6_5">https://doi.org/10.1007/978-3-319-11457-6_5</a>
+</p>
+<p>[3] K. Kruppa, G. Pangalos, G. Lichtenberg (2014): Multilinear approximation of nonlinear state space models, <a href="https://doi.org/10.3182/20140824-6-za-1003.00455">https://doi.org/10.3182/20140824-6-za-1003.00455</a>
+</p>
+<p>[4] L. Schnelle, G. Lichtenberg, C. Warnecke (2022): Using Low-rank Multilinear Parameter Identification for Anomaly Detection of Building Systems, <a href="https://doi.org/10.1016/j.ifacol.2022.07.173">https://doi.org/10.1016/j.ifacol.2022.07.173</a>
+</p>
+<p>[5] G. Lichtenberg, G. Pangalos, C. Cateriano Y&aacute;&ntilde;ez, A. Luxa, N. J&ouml;res, L. Schnelle, C. Kaufmann (2022): Implicit multilinear modeling: An introduction with application to energy systems <a href="https://doi.org/10.1515/auto-2021-0133">https://doi.org/10.1515/auto-2021-0133</a>
+</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% Getting Started with the MTI Toolbox
+% Tools for Multilinear Modeling, Simulation, and Analysis  
+%  
+%% Theory
+% 
+% Multilinear functions are nonlinear, a subclass of polynomials and a
+% superclass of linear as well as Boolean functions. 
+% Using these as right hand sides of nonlinear state space models, 
+% they can represent deterministic multi-valued or binary dynamics  
+% in the same way that linear time-invariant (LTI) models can be 
+% represented as matrices of their parameters 
+% and linear algebra is the mathematical theory behind them, 
+% the parameters of multilinear time-invariant (MTI) models 
+% can be represented as tensors 
+% and multilinear algebra holds the mathematical background, which was first introduced in [1].
+% 
+% Early results showed that the dynamics of hybrid systems consisting of 
+% continuous-valued as well as a discrete-valued parts can be represented 
+% in an adquate way by MTI models and reduction methods can be applied [2]. 
+%
+% This allows the use of modern decomposition methods for the parameter tensors, 
+% like canonical polyadic (CP), which are sums of outer products.  
+% Because of the special size $n \times 2 \times 2 \times \cdots \times 2$ of the tensors,
+% normalization of the factors leads to further reduced representations (CPN), 
+% first introduced in [3] and used throughout this toolbox.
+%
+% Moreover, new methods could be beneficially used in engineering applications like 
+% multilinearization of nonlinear models, first introduced in [4]. 
+% This technique allows the approximation of nonlinear dynanmic behaviour
+% in within a operating region and not only a point as linearization does.
+% 
+% The class of explict MTI models is not closed under composition, i.e. 
+% a connection of two MTI models might be no longer multilinear, but polynomial. 
+% In contrast, implicit MTI models, also called descriptor models are a closed class, [5]. 
+% Many engineering tasks already profit from implicit modeling, 
+% e.g. causality is not necessary to predefine, or conservation laws can be enforced.
+% This comes with an increased complexity of the methods but still, 
+% a MTI descriptor model can be described by a single parameter tensor.  
+%   
+% Tensor decompositions show - starting in the decade 2010-2020 - their ability 
+% to break the curse of dimensionality for many relevant applications. 
+% MTI modeling enables high performance nonlinear modeling for large scale hybrid systems, 
+% for simulation, analysis and design.   
+% Don't confuse: Multilinear are not multi-linear models, the latter are multiple linear
+% models, e.g. for every operating point an individual LTI model.  
+% These could also be represented as tensors and within the MTI toolbox, 
+% but suffer from the curse of dimensionality. 
+%% Syntax  
+% Most of the MTI-Toolbox commands have the same or a similar syntax 
+% as the Control System Toolbox, some only differ by the prefix |m|, 
+% many are overloaded methods and share the exact syntax. 
+% Many basic commands are available, e.g. 
+%
+% * defining a multilinear state space model |msys = <output/mssDoc.html  mss>(F,G,Ts)| by  
+% transition and output tensor |F| and |G|, 
+% which works like |lsys = ss(A,B,C,D,Ts)|.
+% * simulating the model by |[y,tOut,x] = <output/msimDoc.html  msim>(msys,u,t,x0)|
+% similar to |lsim|.
+% * defining an implicit descriptor state space model |dmsys = <output/dmssDoc.html  dmss>(H)| by the tensor |H|, 
+% comparable to |dlsys = dss(A,B,C,D,E,Ts)|.
+% * simulating this model by |[y,tOut,x] = <output/dmsimDoc.html dmsim>(dmsys,u,t,x0)|
+% similar to |lsim|.
+% * state transformation |<output/mss2mssDoc.html  mss2mss>| similar to |ss2ss|
+% * discretization w.r.t time by |<output/dmssc2dDoc.html  c2d>| or the inverse by |<output/d2cDoc.html d2c>|
+% * linearization by |<output/linearizeDoc.html linearize>|, which have fast and sparse implementations 
+% * grey box parameter estimation by |<output/mlgreyestDoc.html mlgreyest>|
+% 
+% Moreover, there are features exclusive for MTI models, e.g.
+%
+% * representation of CPN factors of parameter tensors as |<output/CPN1Doc.html CPN1>| for a 1-norm
+% * multilinearization by |<output/mlinearizeDoc.html mlinearize>|, i.e. a multilinear approximation of 
+% a SIMULINK block 
+% * converting an LTI to a MTI model by |<output/ss2mssDoc.html ss2mss>| which allows 
+% factorized representations.  
+%
+%% Applications
+% Application of MTI models started with HVAC systems [2].
+% Within projects, even real-time applicabilty has been shown. 
+% New results show the applicability to power networks. 
+% This opens the door to large scale multi-energy systems. 
+% More information can be found on <http://mti.systems mti.systems>
+%
+%
+%% References
+%
+% [1] G. Lichtenberg (2012): Hybrid Tensor Systems, Habilitation, TU
+% Hamburg.
+%
+% [2] G. Pangalos, A. Eichler, G. Lichtenberg (2015):  
+% Hybrid Multilinear Modeling and Applications,
+% https://doi.org/10.1007/978-3-319-11457-6_5 
+%
+% [3] K. Kruppa, G. Pangalos,  G. Lichtenberg (2014):  
+% Multilinear approximation of nonlinear state space models,
+% https://doi.org/10.3182/20140824-6-za-1003.00455
+% 
+% [4] L. Schnelle, G. Lichtenberg, C. Warnecke (2022): 
+% Using Low-rank Multilinear Parameter Identification for Anomaly Detection of Building Systems,
+% https://doi.org/10.1016/j.ifacol.2022.07.173
+%
+% [5] G. Lichtenberg, G. Pangalos, C. Cateriano Yáñez, A. Luxa, N. Jöres, L. Schnelle, C. Kaufmann (2022):
+% Implicit multilinear modeling: An introduction with application to energy systems
+% https://doi.org/10.1515/auto-2021-0133
+
+##### SOURCE END #####
+-->
+</body>
+</html>

@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding="utf-8"?>
+<toc version="2.0">
+
+<tocitem target="index.html" >MTI Toolbox
+
+    <tocitem target="gettingStarted.html" >Getting Started</tocitem>
+    <tocitem target="approximation.html">Approximation
+        <tocitem target="output/linearizeDoc.html">Linearization</tocitem>
+        <tocitem target="output/mlinearizeDoc.html">Multilinearization</tocitem>
+    </tocitem>
+    <tocitem target="identification.html">Identification
+        <tocitem target="output/mlgreyestDoc.html">BlackBox/GreyBox</tocitem>
+    </tocitem>
+
+    <tocitem target="demos/demolanding.html">Applications
+        <tocitem target="demos/oneTank/oneTankDemo.html">One Tank</tocitem>
+        <tocitem target="demos/ThreeTanks/threeTanksDemo.html">Three Water Tanks</tocitem>
+        <tocitem target="demos/HVAC/AirConditioningSystem/AirConditioningSystemDemo.html">Air Conditioning System</tocitem>
+        <tocitem target="demos/Power_Systems/NineBusNetwork/nine_bus_demo_dmss.html">Nine Bus Network</tocitem>
+        <tocitem target="demos/Power_Systems/SmallSignalAnalysis/DemoSSA.html">Small Signal Analysis</tocitem>
+        <tocitem target="demos/Power_Systems/MultilinearizeGFLcontrol/demo_mlinearize.html">Multilinearization</tocitem>
+        <tocitem target="demos/IdentificationGreyBox/Demo_GreyBoxIdentificationOTVL.html">OTVL Grey Box Identification</tocitem>
+        <tocitem target="demos/Linearization/Demo_Linearization.html">Linearization</tocitem>
+        <tocitem target="demos/IdentificationBlackBox/Demo_system_identification_Als.html">Black Box Identification 1</tocitem>
+        <tocitem target="demos/IdentificationBlackBox/Demo_system_identification_nonlin.html">Black Box Identification 2</tocitem>
+        <tocitem target="demos/District_Heating_Network/DistrictHeatingPipe/DistrictHeatingPipeDemo.html">District Heating Network 1</tocitem>
+        <tocitem target="demos/District_Heating_Network/DistrictHeatingPipe/DistrictHeatingPipe_ComponentBasedDemo.html">District Heating Network 2</tocitem>
+        
+    </tocitem>
+
+    <tocitem target="allClasses.html">All Classes and Functions
+        <tocitem target="output/mssDoc.html">mss
+            <tocitem target="output/linearizeDoc.html">linearize</tocitem>
+            <tocitem target="output/mlinearizeDoc.html">mlinearize</tocitem>
+            <tocitem target="output/rmssDoc.html">rmss</tocitem>
+            <tocitem target="output/c2dDoc.html">c2d</tocitem>
+            <tocitem target="output/mss2mssDoc.html">mss2mss</tocitem>
+            <tocitem target="output/MEXaccelerateDoc.html">MEXaccelerate</tocitem>
+        </tocitem>
+        <tocitem target="output/msimDoc.html">msim</tocitem>
+        <tocitem target="output/CPN1Doc.html">CPN1</tocitem>
+        <tocitem target="output/mlgreyestDoc.html">mlgreyest</tocitem>
+        <tocitem target="output/otvlTensDoc.html">otvlTens</tocitem>
+        <tocitem target="output/otvlDoc.html">otvl</tocitem>
+        <tocitem target="output/dmssDoc.html">dmss
+            <tocitem target="output/sym2dmssDoc.html">sym2dmss</tocitem>
+            <tocitem target="output/replaceSymbolicParametersDoc.html">replaceSymbolicParameters</tocitem>
+            <tocitem target="output/normalizeDoc.html">normalize</tocitem>
+            <tocitem target="output/dmssJacobianDoc.html">jacobian</tocitem>
+            <tocitem target="output/incidenceMatrixDoc.html">incidenceMatrix</tocitem>
+            <tocitem target="output/d2dDoc.html">d2d</tocitem>
+            <tocitem target="output/d2cDoc.html">d2c</tocitem>
+            <tocitem target="output/dmssc2dDoc.html">c2d</tocitem>
+            <tocitem target="output/connectDoc.html">connect</tocitem>
+            <tocitem target="output/appendDoc.html">append</tocitem>
+            <tocitem target="output/algebraicEliminationDoc.html">algebraicElimination</tocitem>        
+        </tocitem>
+        <tocitem target="output/dmsimDoc.html">dmsim</tocitem>
+        <tocitem target="output/hyCPN1Doc.html">hyCPN1</tocitem>
+        
+    </tocitem>
+</tocitem>
+</toc>

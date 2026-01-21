@@ -1,0 +1,512 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>mlinearize</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-06-24">
+<meta name="DC.source" content="mlinearizeDoc.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>mlinearize</h1>
+<!--introduction-->
+<p>Obtains a continuous or discrete multilinear time-invariant state-space model, within an operating domain, of a Simulink model.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Syntax</a>
+</li>
+<li>
+<a href="#2">Description</a>
+</li>
+<li>
+<a href="#3">Requirements</a>
+</li>
+<li>
+<a href="#4">Input Arguments</a>
+</li>
+<li>
+<a href="#5">Example</a>
+</li>
+<li>
+<a href="#10">References</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Syntax</h2>
+<p>
+<tt>[msys] = mlinearize(model,low_bnd,up_bnd,level,max_order)</tt>
+</p>
+<h2 id="2">Description</h2>
+<p>The function obtains an explicit MTI model approximation of a Simulink model using the projection approach given in [1] and sparse grid interpolation methods [2].</p>
+<p>The function requires a continuous or discrete nonlinear model in Simulink described as</p>
+<p>
+<img src="mlinearizeDoc_eq17200081562903939869.png" alt="$\mathbf{\dot{x}} = \mathbf{f}(\mathbf{x},\mathbf{u}) = (f_1(\mathbf{x},\mathbf{u}),...,f_n(\mathbf{x},\mathbf{u}))^{T}$" style="width:234px;height:17px;">,</p>
+<p>
+<img src="mlinearizeDoc_eq03263007006962747744.png" alt="$\mathbf{y} = \mathbf{g}(\mathbf{x},\mathbf{u}) = (g_1(\mathbf{x},\mathbf{u}),...,g_p(\mathbf{x},\mathbf{u}))^T$" style="width:235px;height:17px;">,</p>
+<p>where <img src="mlinearizeDoc_eq07075026945660584534.png" alt="$\mathbf{x} \in {R}^{n}$" style="width:44px;height:11px;"> are the states, <img src="mlinearizeDoc_eq00168331717169937098.png" alt="$\mathbf{u} \in {R}^{m}$" style="width:47px;height:11px;"> are the inputs, and <img src="mlinearizeDoc_eq01760602642934414067.png" alt="$\mathbf{y} \in {R}^{p}$" style="width:43px;height:13px;"> are the outputs.</p>
+<p>The model is approximated in the domain <img src="mlinearizeDoc_eq11414838477267473978.png" alt="$D$" style="width:12px;height:11px;">, bounded by the intervals of the operating range of the variables</p>
+<p>
+<img src="mlinearizeDoc_eq05467637222514901516.png" alt="$x_{i} \in [x_{i,l},x_{i,u}], i = 1,...,n, \quad u_{j} \in [u_{j,l},u_{j,u}], j = 1,...,m, \quad y_{k} \in [y_{k,l},y_{k,u}], k = 1,...,p.$" style="width:532px;height:15px;"></p>
+<p>The function returns a continuous or discrete <a href="mssDoc.html">mss</a> object as the multilinear approximation of the nonlinear model.</p>
+<h2 id="3">Requirements</h2>
+<p>Simulink</p>
+<div>
+<ul>
+<li>Inputs must be loaded from workspace as time series. This can be set in the Model Settings under Data Import/Export.</li>
+<li>Initial conditions must be entered at each integration (continuos or discrte) blocks.</li>
+<li>The order of the lower and upper bounds matters. For the state order, the function prints a message with the order in which Simulink arranages the states after execution. Inputs and outputs use the same order as the models.</li>
+<li>Hybrid continuous and discrete models are not yet allowed.</li>
+<li>Simscape blocks are not allowed.</li>
+<li>Use of accelerator and rapid accelerator modes is not supported.</li>
+</ul>
+</div>
+<p>External library</p>
+<div>
+<ul>
+<li>The function requires the <a href="https://sites.google.com/view/sparse-grids-kit">sparse grids MATLAB kit</a>, realse 23-5 ("Robert") or above, in the path.</li>
+</ul>
+</div>
+<h2 id="4">Input Arguments</h2>
+<div>
+<ul>
+<li>model (string) - Name of the model to be multilinearized,</li>
+<li>low_bnd (vector) - Lower limits of the intervals for the states, inputs and outputs, <img src="mlinearizeDoc_eq08278799531629161024.png" alt="$\qquad$" style="width:1px;height:1px;"> <img src="mlinearizeDoc_eq10596613042242019169.png" alt="$low\_bnd = [x_{1,l},...,x_{n,l},u_{1,l},...,u_{m,l},y_{1,l},...,y_{p,l}]$" style="width:290px;height:15px;">.</li>
+<li>up_bnd (vector) - Upper limits of the intervals for the states, inputs and outputs, <img src="mlinearizeDoc_eq08278799531629161024.png" alt="$\qquad$" style="width:1px;height:1px;"> <img src="mlinearizeDoc_eq09437035659565666622.png" alt="$up\_bnd = [x_{1,u},...,x_{n,u},u_{1,u},...,u_{m,u},y_{1,u},...,y_{p,u}]$" style="width:299px;height:15px;">.</li>
+<li>level (scalar) - Level of approximation <img src="mlinearizeDoc_eq14300649810239587055.png" alt="$(\mu)$" style="width:17px;height:15px;"> of the sparse grid [2]. The number of points in the grid grows polynomially in <img src="mlinearizeDoc_eq14300649810239587055.png" alt="$(\mu)$" style="width:17px;height:15px;"> with <img src="mlinearizeDoc_eq18357519380705432351.png" alt="$O((n+m)^{\mu})$" style="width:79px;height:15px;">.</li>
+<li>max_order (scalar) - Maximum multilinear order of the model (has only monomials with an order lower or equal to) [1].</li>
+</ul>
+</div>
+<h2 id="5">Example</h2>
+<p>This example shows how to obtain a multilinear approximation from the chemical system as presented in [1].</p>
+<p>
+<img vspace="5" hspace="5" src="simu_model.png" alt=""> </p>
+<p>The model represents a constant stirred tank reactor (CSTR) comprised of 4 states and 2 inputs</p>
+<p>
+<img src="mlinearizeDoc_eq00741929230620249334.png" alt="$\mathbf{x} = [c_A\quad c_B\quad T_r\quad T_j]^T, \qquad \mathbf{u} = [\dot{V}/V_r\quad \dot{Q}]^T$" style="width:287px;height:19px;">,</p>
+<p>where <img src="mlinearizeDoc_eq10611641415575893818.png" alt="$c_A$" style="width:14px;height:9px;"> and <img src="mlinearizeDoc_eq17882385262748097227.png" alt="$c_B$" style="width:14px;height:9px;"> are the concentrations of educts A and B respectively, <img src="mlinearizeDoc_eq06158147929377670702.png" alt="$T_r$" style="width:13px;height:13px;"> is the reactor temperature and <img src="mlinearizeDoc_eq03972972395587398374.png" alt="$T_j$" style="width:13px;height:15px;"> is the temperature of the jacket.</p>
+<p>Input <img src="mlinearizeDoc_eq07970940097796295191.png" alt="$u_1$" style="width:13px;height:9px;"> is the incoming flow <img src="mlinearizeDoc_eq04242660427209525258.png" alt="$\dot{V}$" style="width:11px;height:14px;"> related to the volume of the reactor <img src="mlinearizeDoc_eq01230314709107595711.png" alt="$V_r$" style="width:13px;height:13px;">. Input <img src="mlinearizeDoc_eq00548936361141861308.png" alt="$u_2$" style="width:13px;height:9px;"> is the cooling power of the jacket <img src="mlinearizeDoc_eq09994724002329657634.png" alt="$\dot{Q}$" style="width:11px;height:17px;">.</p>
+<p>The equations of the model are nonlinear and are described as, <img src="mlinearizeDoc_eq15382298653445055673.png" alt="$\mathbf{\dot{x}} = \mathbf{f}(\mathbf{x},\mathbf{u})$" style="width:70px;height:15px;">, the formulation of the equations and its parameters are presented in [1] and [3], respectively.</p>
+<p>Model parameters and initial conditions are declared next.</p>
+<pre class="codeinput">
+<span class="comment">% CSTR Initialization</span>
+<span class="comment">% Parameters</span>
+alpha = 30.828;
+delta = 3.556e-4;
+Hab = 4.2;
+beta = 86.688;
+gamma = 0.1;
+Hbc = -11;
+cin = 5.1e3;
+Tin = 104.9;
+Had = -41.85;
+T_k0 = 107.7; <span class="comment">%</span>
+E1 = 9758.3;
+k10 = 1.287e12;
+E2 = 8560;
+k20 = 9.043e6;
+
+<span class="comment">% Initial Conditions</span>
+cA0 = 0;
+cB0 = 0;
+Tr0 = 105;
+Tj0 = 105;
+
+x0 = [cA0;cB0;Tr0;Tj0];
+</pre>
+<p>The model name, input functions and domanin are declared next.</p>
+<pre class="codeinput">
+<span class="comment">% Model initialization</span>
+model = <span class="string">'cstr_modelTest'</span>;
+
+<span class="comment">% Simulation time (in hours) and input signal</span>
+ts = 1e-2;
+t = 0:ts:1.8;
+t = t';
+
+u = zeros(length(t),2);
+u(t&gt;0.5 &amp; t&lt;1.5,1) = 2.5;
+u(t&gt;=1.5,1) = 0.2;
+u(t&gt;=1.5,2) = -1000;
+
+<span class="comment">% Make sure that, in the Simulink configuration, under the</span>
+<span class="comment">% data import-export, the load from workspace is checked and</span>
+<span class="comment">% set as [t,u].</span>
+
+<span class="comment">% Domain</span>
+<span class="comment">% The domain bounds follow [ca, cb, Tr, Tj, u_1, u_2, y1, y2, y3, y4],</span>
+<span class="comment">% where in this case y = x.</span>
+up_bnd = [1000 750 116 116 2.5 0 1000 750 114 114];
+low_bnd = [0 0 104 104 0 -1000 0 0 104 104];
+</pre>
+<p>The mlinearize function is now called with a level of approximation of <img src="mlinearizeDoc_eq14872474635736176918.png" alt="$\mu = 6$" style="width:35px;height:13px;"> and a maximum multilinear order of 2. Here, make sure that the order of states in the domain bounds follow the order mlinearize printed.</p>
+<pre class="codeinput">level = 6;
+max_order = 2;
+MLStic=tic;
+[msys] = mss.mlinearize(model,low_bnd,up_bnd,level,max_order);
+MLStoc=toc(MLStic);
+fprintf(<span class="string">'%.2f sec - Multilinearization\n'</span>, MLStoc)
+</pre>
+<pre class="codeoutput">Order of states taken by  Simulink:
+    {'cstr_modelTest/cA_state'}
+    {'cstr_modelTest/cB_state'}
+    {'cstr_modelTest/Tr_state'}
+    {'cstr_modelTest/Tj_state'}
+
+6.23 sec - Multilinearization
+</pre>
+<p>The models can be now compared, by letting the simulation run for the nonlinear model and using the msim function on the mss object returned from mlinearize.</p>
+<pre class="codeinput">
+<span class="comment">% Simulations</span>
+out = sim(model);
+[~,tout,xout] = msim(msys,u,t,x0);
+</pre>
+<p>The results can be accessed and plotted by the outputs of the function msim.</p>
+<pre class="codeinput">
+<span class="comment">% Plots</span>
+figure(1)
+
+subplot(2,2,1)
+plot(t,out.yout(:,1)./1000)
+hold <span class="string">on</span>
+plot(tout,xout(:,1)./1000,<span class="string">'r'</span>)
+legend(<span class="string">'Nonlinear'</span>,<span class="string">'Multilinear'</span>)
+grid
+xlabel(<span class="string">'Time in h'</span>)
+ylabel(<span class="string">'Ca in kmol/l'</span>)
+
+subplot(2,2,2)
+plot(t,out.yout(:,2)./1000)
+hold <span class="string">on</span>
+plot(tout,xout(:,2)./1000,<span class="string">'r'</span>)
+grid
+xlabel(<span class="string">'Time in h'</span>)
+ylabel(<span class="string">'Cb in kmol/l'</span>)
+
+subplot(2,2,3)
+plot(t,out.yout(:,3))
+hold <span class="string">on</span>
+plot(tout,xout(:,3),<span class="string">'r'</span>)
+grid
+xlabel(<span class="string">'Time in h'</span>)
+ylabel(<span class="string">'Tr in &deg;C'</span>)
+
+subplot(2,2,4)
+plot(t,out.yout(:,4))
+hold <span class="string">on</span>
+plot(tout,xout(:,4),<span class="string">'r'</span>)
+grid
+xlabel(<span class="string">'Time in h'</span>)
+ylabel(<span class="string">'Tj in &deg;C'</span>)
+</pre>
+<img vspace="5" hspace="5" src="mlinearizeDoc_01.png" alt=""> <h2 id="10">References</h2>
+<p>[1] Kruppa, K., Pangalos, G., and Lichtenberg, G. Multilinear approximation of nonlinear state space models. IFAC Proceedings Volumes, 47(3):9474&ndash;9479. 19th IFAC World Congress, 2014.</p>
+<p>[2] C. Piazzola, L. Tamellini. The Sparse Grids Matlab kit - a Matlab implementation of sparse grids for high-dimensional function approximation and uncertainty quantification, ArXiv 2203.09314, 2023.</p>
+<p>[3] T. Utz, V. Hagenmeyer, Bernd Mahn, and M. Zeitz. Nonlinear Model Predictive and Flatness-based Two-degreeof-freedom Control Design: A Comparison Evaluation in View of Industrial Application. In International Conference on Control Applications, pages 217-223. IEEE, 2006</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% mlinearize
+% Obtains a continuous or discrete multilinear time-invariant state-space
+% model, within an operating domain, of a Simulink model.
+
+%% Syntax
+%
+% |[msys] = mlinearize(model,low_bnd,up_bnd,level,max_order)|
+%
+
+%% Description
+% The function obtains an explicit MTI model approximation of a Simulink 
+% model using the projection approach given in [1] and sparse grid interpolation
+% methods [2]. 
+%
+% The function requires a continuous or discrete nonlinear model in Simulink 
+% described as
+% 
+% $\mathbf{\dot{x}} = \mathbf{f}(\mathbf{x},\mathbf{u}) =
+% (f_1(\mathbf{x},\mathbf{u}),...,f_n(\mathbf{x},\mathbf{u}))^{T}$,
+%
+% $\mathbf{y} = \mathbf{g}(\mathbf{x},\mathbf{u}) =
+% (g_1(\mathbf{x},\mathbf{u}),...,g_p(\mathbf{x},\mathbf{u}))^T$,
+%
+% where $\mathbf{x} \in {R}^{n}$ are the states, $\mathbf{u} \in {R}^{m}$ 
+% are the inputs, and $\mathbf{y} \in {R}^{p}$ are the outputs.
+%
+% The model is approximated in the domain $D$, bounded by the intervals of
+% the operating range of the variables
+%
+% $x_{i} \in [x_{i,l},x_{i,u}], i = 1,...,n, \quad u_{j} \in [u_{j,l},u_{j,u}], j = 1,...,m, \quad y_{k} \in [y_{k,l},y_{k,u}], k = 1,...,p.$
+%
+% The function returns a continuous or discrete <mssDoc.html mss> object as the multilinear
+% approximation of the nonlinear model. 
+
+%% Requirements
+%
+% Simulink
+%
+% * Inputs must be loaded from workspace as time series. This can be set in
+% the Model Settings under Data Import/Export.
+% * Initial conditions must be entered at each integration (continuos or
+% discrte) blocks.
+% * The order of the lower and upper bounds matters. For the state order, 
+%   the function prints a message 
+%   with the order in which Simulink arranages the states after execution. Inputs and outputs use the same 
+%   order as the models.
+% * Hybrid continuous and discrete models are not yet allowed.
+% * Simscape blocks are not allowed.
+% * Use of accelerator and rapid accelerator modes is not supported.
+%
+% External library
+%
+% * The function requires the
+% <https://sites.google.com/view/sparse-grids-kit sparse grids MATLAB kit>,
+% realse 23-5 ("Robert") or above, in the path.
+%
+
+
+%% Input Arguments
+% 
+% * model (string) - Name of the model to be multilinearized,
+% * low_bnd (vector) -  Lower limits of the intervals for the states, inputs and
+%   outputs,  $\qquad$ $low\_bnd =
+%   [x_{1,l},...,x_{n,l},u_{1,l},...,u_{m,l},y_{1,l},...,y_{p,l}]$.
+% * up_bnd (vector) - Upper limits of the intervals for the states, inputs and
+% outputs, $\qquad$ $up\_bnd = [x_{1,u},...,x_{n,u},u_{1,u},...,u_{m,u},y_{1,u},...,y_{p,u}]$.
+% * level (scalar) - Level of approximation $(\mu)$ of the sparse grid [2]. The number of points in the grid grows polynomially in $(\mu)$ with $O((n+m)^{\mu})$.
+% * max_order (scalar) - Maximum multilinear order of the model (has only
+% monomials with an order lower or equal to) [1].
+
+%% Example
+% This example shows how to obtain a multilinear approximation from the
+% chemical system as presented in [1].
+%
+% <<simu_model.png>>
+%
+% The model represents a constant stirred tank reactor (CSTR) comprised of
+% 4 states and 2 inputs
+%
+% $\mathbf{x} = [c_A\quad c_B\quad T_r\quad T_j]^T, \qquad \mathbf{u} = [\dot{V}/V_r\quad \dot{Q}]^T$,
+%
+% where $c_A$ and $c_B$ are the concentrations of educts A and B
+% respectively, $T_r$ is the reactor temperature and $T_j$ is the 
+% temperature of the jacket.
+%
+% Input $u_1$ is the incoming flow $\dot{V}$ related to the volume of the
+% reactor $V_r$. Input $u_2$ is the cooling power of the jacket $\dot{Q}$.
+%
+% The equations of the model are nonlinear and are described as,
+% $\mathbf{\dot{x}} = \mathbf{f}(\mathbf{x},\mathbf{u})$, the formulation
+% of the equations and its parameters are presented in [1] and [3], respectively.
+%
+% Model parameters and initial conditions are declared next.
+
+% CSTR Initialization
+% Parameters
+alpha = 30.828;
+delta = 3.556e-4;
+Hab = 4.2;
+beta = 86.688;
+gamma = 0.1;
+Hbc = -11;
+cin = 5.1e3; 
+Tin = 104.9; 
+Had = -41.85;
+T_k0 = 107.7; %
+E1 = 9758.3;
+k10 = 1.287e12;
+E2 = 8560;
+k20 = 9.043e6;
+
+% Initial Conditions
+cA0 = 0;
+cB0 = 0;
+Tr0 = 105;
+Tj0 = 105;
+
+x0 = [cA0;cB0;Tr0;Tj0];
+
+%%
+% The model name, input functions and domanin are declared next.
+%
+
+% Model initialization
+model = 'cstr_modelTest';
+
+% Simulation time (in hours) and input signal
+ts = 1e-2;
+t = 0:ts:1.8;
+t = t';
+
+u = zeros(length(t),2);
+u(t>0.5 & t<1.5,1) = 2.5;
+u(t>=1.5,1) = 0.2;
+u(t>=1.5,2) = -1000;
+
+% Make sure that, in the Simulink configuration, under the
+% data import-export, the load from workspace is checked and 
+% set as [t,u].
+
+% Domain 
+% The domain bounds follow [ca, cb, Tr, Tj, u_1, u_2, y1, y2, y3, y4],
+% where in this case y = x.
+up_bnd = [1000 750 116 116 2.5 0 1000 750 114 114];
+low_bnd = [0 0 104 104 0 -1000 0 0 104 104];
+
+%% 
+% The mlinearize function is now called with a level of approximation of
+% $\mu = 6$ and a maximum multilinear order of 2. Here, make sure that the 
+% order of states in the domain bounds follow the order mlinearize printed.
+%
+
+level = 6;
+max_order = 2;
+MLStic=tic;
+[msys] = mss.mlinearize(model,low_bnd,up_bnd,level,max_order);
+MLStoc=toc(MLStic);
+fprintf('%.2f sec - Multilinearization\n', MLStoc)
+
+%% 
+%
+% The models can be now compared, by letting the simulation run for the nonlinear 
+% model and using the msim function on the mss object returned from
+% mlinearize.
+%
+
+% Simulations
+out = sim(model);
+[~,tout,xout] = msim(msys,u,t,x0);
+
+%%
+% The results can be accessed and plotted by the outputs of the
+% function msim.
+
+% Plots
+figure(1)
+
+subplot(2,2,1)
+plot(t,out.yout(:,1)./1000)
+hold on
+plot(tout,xout(:,1)./1000,'r')
+legend('Nonlinear','Multilinear')
+grid
+xlabel('Time in h')
+ylabel('Ca in kmol/l')
+
+subplot(2,2,2)
+plot(t,out.yout(:,2)./1000)
+hold on
+plot(tout,xout(:,2)./1000,'r')
+grid
+xlabel('Time in h')
+ylabel('Cb in kmol/l')
+
+subplot(2,2,3)
+plot(t,out.yout(:,3))
+hold on
+plot(tout,xout(:,3),'r')
+grid
+xlabel('Time in h')
+ylabel('Tr in °C')
+
+subplot(2,2,4)
+plot(t,out.yout(:,4))
+hold on
+plot(tout,xout(:,4),'r')
+grid
+xlabel('Time in h')
+ylabel('Tj in °C')
+
+
+
+%% References
+% [1] Kruppa, K., Pangalos, G., and Lichtenberg, G. Multilinear approximation of nonlinear state 
+% space models. IFAC Proceedings Volumes, 47(3):9474–9479. 19th IFAC World
+% Congress, 2014.
+%
+% [2] C. Piazzola, L. Tamellini. The Sparse Grids Matlab kit - a Matlab implementation of sparse grids
+%  for high-dimensional function approximation and uncertainty quantification, ArXiv 2203.09314, 2023.
+%
+% [3] T. Utz, V. Hagenmeyer, Bernd Mahn, and M. Zeitz. Nonlinear Model Predictive and Flatness-based 
+% Two-degreeof-freedom Control Design: A Comparison Evaluation in View of Industrial Application. 
+% In International Conference on Control Applications, pages 217-223. IEEE, 2006
+%
+
+##### SOURCE END #####
+-->
+</body>
+</html>

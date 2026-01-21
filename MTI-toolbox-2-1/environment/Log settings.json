@@ -1,0 +1,35 @@
+{
+  "Addon": [
+    {
+      "Name": "Tensorlab",
+      "LogLevel": 0,
+	  "Function": "private_tensorlabChecker"
+    },
+    {
+      "Name": "Tensor Toolbox",
+      "LogLevel": 0,
+	  "Function": "private_tensorToolboxChecker"
+    },
+    {
+       "Name": "Sparse Toolkit",
+       "LogLevel": 0,
+       "Function": "private_sparseToolkitChecker"
+    }
+	
+  ],
+  "MATLAB" : [
+  {
+	  "MinimumRequiredMatlabVersion" : "R2020b",
+	  "LogLevel": 0
+  }
+  ],
+  "OfficialAddon":[
+	{
+      "Name": "Global Optimization Toolbox",
+      "LogLevel": 0,
+      "MinimumRequiredAddonVersion": "4.8"
+    }
+  ]
+}
+
+

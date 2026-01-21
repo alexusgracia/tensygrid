@@ -1,0 +1,433 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>CPN1</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-06-24">
+<meta name="DC.source" content="CPN1Doc.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>CPN1</h1>
+<!--introduction-->
+<p>Canonical polyadic norm-1 form</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Description</a>
+</li>
+<li>
+<a href="#2">Creation</a>
+</li>
+<li>
+<a href="#3">Properties</a>
+</li>
+<li>
+<a href="#4">Examples</a>
+</li>
+<li>
+<a href="#7">References</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Description</h2>
+<p>Use <tt>CPN1</tt> to create a canonical polyadic (CP) norm-1 tensor, i.e., a CPN1 tensor.</p>
+<p>A tensor <img src="CPN1Doc_eq06393712449516251620.png" alt="$\mathrm{T}\in\mathbf{R}^{I_1\times I_2\times \ldots \times I_z}$" style="width:99px;height:13px;"> can be decomposed into a CP tensor by the sum of <img src="CPN1Doc_eq03659017738081218615.png" alt="$r$" style="width:7px;height:7px;"> outer products, where <img src="CPN1Doc_eq03659017738081218615.png" alt="$r$" style="width:7px;height:7px;"> is the so called <i>tensor rank</i>. All factors are represented in the so called factor matrices <img src="CPN1Doc_eq06489172608648320874.png" alt="$\mathbf{F}_i\in\mathbf{R}^{I_i\times r}$" style="width:65px;height:15px;"> for each dimension <img src="CPN1Doc_eq08984912804010224726.png" alt="$i$" style="width:4px;height:11px;"> of size <img src="CPN1Doc_eq04817993086029777111.png" alt="$I_i$" style="width:9px;height:13px;"> of the original tensor <img src="CPN1Doc_eq08945431675764363729.png" alt="$\mathrm{T}$" style="width:10px;height:11px;"> up to <img src="CPN1Doc_eq03267610581743698706.png" alt="$z$" style="width:7px;height:7px;">, which can be abreviated as</p>
+<p>
+<img src="CPN1Doc_eq01881340146764122448.png" alt="$$&#10;\mathrm{T} = \left[\mathbf{F}_1, \mathbf{F}_2, \ldots,&#10;\mathbf{F}_z\right].&#10;$$" style="width:132px;height:15px;"></p>
+<p>An element of <img src="CPN1Doc_eq08945431675764363729.png" alt="$\mathrm{T}$" style="width:10px;height:11px;"> is then given by</p>
+<p>
+<img src="CPN1Doc_eq14240818438377940970.png" alt="$$&#10;\mathrm{T}\left(i_1, i_2, \ldots, i_z\right) = \sum_{j=1}^{r}&#10;\mathbf{F}_1\left(i_1, j\right)\cdot\mathbf{F}_2\left(i_2,&#10;j\right)\cdot\ldots\cdot\mathbf{F}_z\left(i_z, j\right) .&#10;$$" style="width:358px;height:43px;"></p>
+<p>A CPN1 tensor is a CP tensor where</p>
+<p>
+<img src="CPN1Doc_eq04886114517627556146.png" alt="$ \Vert\mathbf{F}_i\left( I_i, k\right)\Vert_1 = 1 , $" style="width:105px;height:15px;"> for all <img src="CPN1Doc_eq12829740475467572519.png" alt="$k$" style="width:7px;height:11px;"> from <img src="CPN1Doc_eq02136768035765927026.png" alt="$1$" style="width:5px;height:10px;"> to <img src="CPN1Doc_eq03659017738081218615.png" alt="$r$" style="width:7px;height:7px;"> and for each dimension <img src="CPN1Doc_eq08984912804010224726.png" alt="$i$" style="width:4px;height:11px;">.</p>
+<p>Particularly for mti systems, the parameter tensor factor matrices have dimensions <img src="CPN1Doc_eq00019990882889459888.png" alt="$\mathbf{F}_i\in\mathbf{R}^{2\times r}$" style="width:63px;height:15px;"> for the first <img src="CPN1Doc_eq18268770988746897382.png" alt="$z-1$" style="width:31px;height:11px;"> dimensions corresponding to the monomial dimensions and the last <img src="CPN1Doc_eq03267610581743698706.png" alt="$z$" style="width:7px;height:7px;"> dimension called <img src="CPN1Doc_eq16179117359969153947.png" alt="$\phi$" style="width:8px;height:13px;"> is saved for parameterization, i.e., <img src="CPN1Doc_eq03908342427213177969.png" alt="$\mathbf{F}_{\phi}\in\mathbf{R}^{I_z\times r}$" style="width:69px;height:17px;">, such that</p>
+<p>
+<img src="CPN1Doc_eq10623834770803925371.png" alt="$$&#10;\mathrm{T} = \left[\mathbf{F}_1, \mathbf{F}_2, \ldots,&#10;\mathbf{F}_{z-1}, \mathbf{F}_{\phi}\right].&#10;$$" style="width:169px;height:15px;"></p>
+<p>For further reference see [1].</p>
+<h2 id="2">Creation</h2>
+<p><h3>Syntax</h3></p>
+<p>
+<tt>CPN1tens = CPN1(Umat,Phimat)</tt>
+</p>
+<p>
+<tt>CPN1tens = CPN1(tens)</tt>
+</p>
+<p><h2>Description</h2></p>
+<p>
+<tt>CPN1tens = CPN1(Umat,Phimat)</tt> creates a CP norm-1 tensor <tt>Ttens</tt> of the form <img src="CPN1Doc_eq03400967452384988550.png" alt="$ \mathrm{T} = \left[\mathbf{F}_1, \mathbf{F}_2, \ldots, \mathbf{F}_{z-1}, \mathbf{F}_{\phi}\right]. $" style="width:169px;height:15px;"></p>
+<p>
+<tt>CPN1tens = CPN1(tens)</tt> takes a CP decomposed <i>ktensor</i> of the form <img src="CPN1Doc_eq18142296385811430145.png" alt="$ \mathrm{T} = \left[\mathbf{F}_1, \mathbf{F}_2, \ldots, \mathbf{F}_{z-1}, \mathbf{F}_{\phi}\right] $" style="width:162px;height:15px;"> from the Tensor Toolbox and creates a CPN1 tensor object</p>
+<p><h2>Input Arguments</h2></p>
+<p><h3>Umat - Structure matrix</h3></p>
+<p>Structure matrix, which in the context of the MTI, vertically stacks the second row of each CPN1 factor matrix corresponding to each dimension of the monomial. For example for explicit MTI systems:</p>
+<p>
+<img src="CPN1Doc_eq07245366011131388081.png" alt="$$&#10;\mathbf{U}=\left[\begin{array}{c}\mathbf{F}_{x_1}(2,:)\\\mathbf{F}_{x_2}(2,:)\\\vdots\\\mathbf{F}_{x_n}(2,:)\\\mathbf{F}_{u_1}(2,:)\\\mathbf{F}_{u_2}(2,:)\\\vdots\\\mathbf{F}_{u_n}(2,:)\end{array}\right],&#10;$$" style="width:123px;height:159px;"></p>
+<p>leading to an <img src="CPN1Doc_eq12836738581438173849.png" alt="$n+m$" style="width:39px;height:10px;"> by <img src="CPN1Doc_eq03659017738081218615.png" alt="$r$" style="width:7px;height:7px;"> matrix. Note that due to the norm-1, specifying both columns of the monomial factor matrices is redundant.</p>
+<p><h3>Phimat - Parameter matrix</h3></p>
+<p>Parameter matrix, which in the context of the MTI, contains the parameters for each rank element of the tensor. For example for the state transition tensor parameter <img src="CPN1Doc_eq01611002717919227034.png" alt="$\mathrm{F}$" style="width:9px;height:11px;"> for explicit MTI systems, it would lead to a <img src="CPN1Doc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> by <img src="CPN1Doc_eq03659017738081218615.png" alt="$r$" style="width:7px;height:7px;"> factor matrix <img src="CPN1Doc_eq00816242043717497950.png" alt="$\mathbf{F}_{\phi}$" style="width:17px;height:15px;">.</p>
+<p><h2>Output Arguments</h2></p>
+<p><h3>CPN1tens - Output tensor</h3></p>
+<p>Output tensor returned as:</p>
+<div>
+<ul>
+<li>A CP norm-1 (<tt>CPN1</tt>) tensor object.</li>
+</ul>
+</div>
+<h2 id="3">Properties</h2>
+<p><h3>U - Structure matrix</h3></p>
+<p>Structure matrix, which for MTI parameter tensors correspond to the monomial dimension by the rank <img src="CPN1Doc_eq03659017738081218615.png" alt="$r$" style="width:7px;height:7px;">.</p>
+<p><h3>phi - Parameter matrix</h3></p>
+<p>Parameter matrix, which for MTI parameter tensors correspond to the parameters of each equation by the rank <img src="CPN1Doc_eq03659017738081218615.png" alt="$r$" style="width:7px;height:7px;">.</p>
+<h2 id="4">Examples</h2>
+<p><h3>SISO Multilinear Time-Invariant State-Space Model</h3></p>
+<p>Create the state-transition tensor of a SISO MTI state-space model defined by the following system equations:</p>
+<p>
+<img src="CPN1Doc_eq07100314948173429127.png" alt="$$&#10;\dot{x_1} = x_1 x_2 + 0.5 u&#10;$$" style="width:107px;height:12px;"></p>
+<p>
+<img src="CPN1Doc_eq10676319678468208941.png" alt="$$&#10;\dot{x_2} = 2 x_1 u + 7&#10;$$" style="width:89px;height:12px;"></p>
+<p>The model has the following parameter matrix</p>
+<p>
+<img src="CPN1Doc_eq14538747122355390815.png" alt="$$&#10;\mathbf{F} = \left(\begin{array}{cccccccc}&#10;0 &amp; 0 &amp; 0 &amp; 1 &amp; 0.5 &amp; 0 &amp; 0 &amp; 0 \\&#10;7 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 2 &amp; 0 &amp; 0&#10;\end{array}\right),&#10;$$" style="width:245px;height:35px;"></p>
+<p>and monomial vector</p>
+<p>
+<img src="CPN1Doc_eq09723674506184480531.png" alt="$$&#10;\mathbf{m}\left(x_1,x_2,u\right) = \left(\begin{array}{c}&#10;1 \\ x_1 \\ x_2 \\ x_1 x_2 \\ u \\ x_1 u \\ x_2 u \\ x_1 x_2 u&#10;\end{array}\right).&#10;$$" style="width:180px;height:141px;"></p>
+<p>The same parameter matrix can be presented in <tt>CPN1</tt> format as:</p>
+<p>
+<img src="CPN1Doc_eq03301401330063812438.png" alt="$$&#10;\mathbf{F}_\mathrm{U} = \left(\begin{array}{cccc}&#10;1 &amp; 0 &amp; 1 &amp; 0 \\&#10;1 &amp; 0 &amp; 0 &amp; 0 \\&#10;0 &amp; 1 &amp; 1 &amp; 0&#10;\end{array}\right),&#10;$$" style="width:157px;height:53px;"></p>
+<p>
+<img src="CPN1Doc_eq06355519878435534161.png" alt="$$&#10;\mathbf{F}_\mathrm{phi} = \left(\begin{array}{cccc}&#10;1 &amp; 0.5 &amp; 0 &amp; 0 \\&#10;0 &amp; 0 &amp; 2 &amp; 7&#10;\end{array}\right),&#10;$$" style="width:171px;height:35px;"></p>
+<p>Initializing the <img src="CPN1Doc_eq01611002717919227034.png" alt="$\mathrm{F}$" style="width:9px;height:11px;"> tensor in <tt>CPN1</tt> format</p>
+<pre class="codeinput">F_U = [1  0  1  0;
+       1  0  0  0;
+       0  1  1  0];
+F_phi = [1  0.5 0  0;
+         0  0   2  7];
+F=CPN1(F_U,F_phi);
+</pre>
+<p><h3>Normalizing CP tensor to CPN1 tensor object</h3></p>
+<p>Create a ktensor for the mti system above with factor matrices</p>
+<pre class="codeinput">Fx1=[0 1 0 1;1 0 1 0];
+Fx2=[0 1 1 1;1 0 0 0];
+Fu=[1 0 0 1;0 1 1 0];
+FPhi=[1 0.5 0 0;0 0 2 7];
+lambda=[1;1;1;1];
+CPtens=ktensor(lambda,Fx1,Fx2,Fu,FPhi);
+</pre>
+<p>Create a CPN1 tensor object by normalization</p>
+<pre class="codeinput">CPN1tens=CPN1(CPtens);
+</pre>
+<h2 id="7">References</h2>
+<p>[1] Lichtenberg, Gerwald; Pangalos, Georg; Cateriano Y&aacute;&ntilde;ez, Carlos; Luxa, Aline; J&ouml;res, Niklas; Schnelle, Leona; Kaufmann, Christoph (2022): Implicit multilinear modeling. In at - Automatisierungstechnik 70 (1), pp.&nbsp;13&ndash;30. DOI: 10.1515/auto-2021-0133.</p>
+<p>
+<style>
+a.button {
+  border-radius: 5px;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 1px;
+  cursor: pointer;
+  background-color: #0076A8; /* Matlab Blue */
+ }
+a.button:hover {
+ background-color: #3391B9;
+}
+</style>
+<a href="mssDoc.html" class="button">Open mss</a>
+</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% CPN1
+% Canonical polyadic norm-1 form
+
+%% Description
+% Use |CPN1| to create a canonical polyadic (CP) norm-1 tensor, i.e., a CPN1 tensor.
+% 
+% A tensor $\mathrm{T}\in\mathbf{R}^{I_1\times I_2\times \ldots \times I_z}$ can be decomposed into a CP tensor by the sum of $r$ outer products, where $r$ is
+% the so called _tensor rank_. All factors are represented in the so called factor 
+% matrices $\mathbf{F}_i\in\mathbf{R}^{I_i\times r}$ for each
+% dimension $i$ of size $I_i$ of the original tensor $\mathrm{T}$ up to $z$, which can be
+% abreviated as
+%
+% $$
+% \mathrm{T} = \left[\mathbf{F}_1, \mathbf{F}_2, \ldots,
+% \mathbf{F}_z\right].
+% $$
+%
+% An element of $\mathrm{T}$ is then given by
+%
+% $$
+% \mathrm{T}\left(i_1, i_2, \ldots, i_z\right) = \sum_{j=1}^{r}
+% \mathbf{F}_1\left(i_1, j\right)\cdot\mathbf{F}_2\left(i_2,
+% j\right)\cdot\ldots\cdot\mathbf{F}_z\left(i_z, j\right) .
+% $$
+%
+% A CPN1 tensor is a CP tensor where
+%
+% $$
+% \Vert\mathbf{F}_i\left( I_i, k\right)\Vert_1 = 1 ,
+% $$
+% for all $k$ from $1$ to $r$ and for each dimension $i$.
+%
+% Particularly for mti systems, the parameter tensor factor matrices have dimensions 
+% $\mathbf{F}_i\in\mathbf{R}^{2\times r}$ for the first $z-1$ dimensions
+% corresponding to the monomial dimensions and the last $z$ dimension called $\phi$ is saved for
+% parameterization, i.e., $\mathbf{F}_{\phi}\in\mathbf{R}^{I_z\times r}$,
+% such that
+%
+% $$
+% \mathrm{T} = \left[\mathbf{F}_1, \mathbf{F}_2, \ldots,
+% \mathbf{F}_{z-1}, \mathbf{F}_{\phi}\right].
+% $$
+%
+% For further reference see [1].
+%
+%% Creation
+% <html><h3>Syntax</h3></html> 
+%
+% |CPN1tens = CPN1(Umat,Phimat)|
+%
+% |CPN1tens = CPN1(tens)| 
+%
+% <html><h2>Description</h2></html>
+%
+% |CPN1tens = CPN1(Umat,Phimat)| creates a CP norm-1 tensor |Ttens| of the
+% form
+% $$
+% \mathrm{T} = \left[\mathbf{F}_1, \mathbf{F}_2, \ldots,
+% \mathbf{F}_{z-1}, \mathbf{F}_{\phi}\right].
+% $$
+%
+% |CPN1tens = CPN1(tens)| takes a CP decomposed _ktensor_ of the form
+% $$
+% \mathrm{T} = \left[\mathbf{F}_1, \mathbf{F}_2, \ldots,
+% \mathbf{F}_{z-1}, \mathbf{F}_{\phi}\right]
+% $$
+%  from the Tensor Toolbox and creates a CPN1 tensor object 
+%
+% <html><h2>Input Arguments</h2></html>
+%
+% <html><h3>Umat - Structure matrix</h3></html> 
+%
+% Structure matrix, which in the context of the MTI, vertically stacks the
+% second row of each CPN1 factor matrix corresponding to each dimension of
+% the monomial. For example for explicit MTI systems:
+%
+% $$
+% \mathbf{U}=\left[\begin{array}{c}\mathbf{F}_{x_1}(2,:)\\\mathbf{F}_{x_2}(2,:)\\\vdots\\\mathbf{F}_{x_n}(2,:)\\\mathbf{F}_{u_1}(2,:)\\\mathbf{F}_{u_2}(2,:)\\\vdots\\\mathbf{F}_{u_n}(2,:)\end{array}\right],
+% $$
+% 
+% leading to an $n+m$ by $r$ matrix. Note that due to the norm-1,
+% specifying both columns of the monomial factor matrices is redundant.
+%
+% <html><h3>Phimat - Parameter matrix</h3></html> 
+%
+% Parameter matrix, which in the context of the MTI, contains the parameters
+% for each rank element of the tensor. For example for the state transition tensor
+% parameter $\mathrm{F}$ for explicit MTI systems, it would lead to a $n$
+% by $r$ factor matrix $\mathbf{F}_{\phi}$.
+%
+% <html><h2>Output Arguments</h2></html>
+%
+% <html><h3>CPN1tens - Output tensor</h3></html> 
+%
+% Output tensor returned as:
+%
+% * A CP norm-1 (|CPN1|) tensor object.
+%
+%% Properties
+% 
+% <html><h3>U - Structure matrix</h3></html> 
+% 
+% Structure matrix, which for MTI parameter tensors correspond to the
+% monomial dimension by the rank $r$.
+%
+% <html><h3>phi - Parameter matrix</h3></html> 
+% 
+% Parameter matrix, which for MTI parameter tensors correspond to the
+% parameters of each equation by the rank $r$.
+%
+%% Examples
+%
+% <html><h3>SISO Multilinear Time-Invariant State-Space Model</h3></html>
+%
+% Create the state-transition tensor of a SISO MTI state-space model defined by the following system
+% equations:
+%
+% $$
+% \dot{x_1} = x_1 x_2 + 0.5 u
+% $$
+%
+% $$
+% \dot{x_2} = 2 x_1 u + 7
+% $$
+%
+% The model has the following parameter matrix
+%
+% $$
+% \mathbf{F} = \left(\begin{array}{cccccccc}
+% 0 & 0 & 0 & 1 & 0.5 & 0 & 0 & 0 \\ 
+% 7 & 0 & 0 & 0 & 0 & 2 & 0 & 0
+% \end{array}\right),
+% $$
+%
+% and monomial vector
+% 
+% $$
+% \mathbf{m}\left(x_1,x_2,u\right) = \left(\begin{array}{c}
+% 1 \\ x_1 \\ x_2 \\ x_1 x_2 \\ u \\ x_1 u \\ x_2 u \\ x_1 x_2 u
+% \end{array}\right).
+% $$
+%
+% The same parameter matrix can be presented in |CPN1| format as:
+%
+% $$
+% \mathbf{F}_\mathrm{U} = \left(\begin{array}{cccc}
+% 1 & 0 & 1 & 0 \\ 
+% 1 & 0 & 0 & 0 \\
+% 0 & 1 & 1 & 0
+% \end{array}\right),
+% $$
+%
+% $$
+% \mathbf{F}_\mathrm{phi} = \left(\begin{array}{cccc}
+% 1 & 0.5 & 0 & 0 \\ 
+% 0 & 0 & 2 & 7
+% \end{array}\right),
+% $$
+%
+% Initializing the $\mathrm{F}$ tensor in |CPN1| format
+F_U = [1  0  1  0;
+       1  0  0  0;
+       0  1  1  0];
+F_phi = [1  0.5 0  0;
+         0  0   2  7];
+F=CPN1(F_U,F_phi);
+
+%% 
+% <html><h3>Normalizing CP tensor to CPN1 tensor object</h3></html>
+%
+% Create a ktensor for the mti system above with factor matrices
+Fx1=[0 1 0 1;1 0 1 0];
+Fx2=[0 1 1 1;1 0 0 0];
+Fu=[1 0 0 1;0 1 1 0];
+FPhi=[1 0.5 0 0;0 0 2 7];
+lambda=[1;1;1;1];
+CPtens=ktensor(lambda,Fx1,Fx2,Fu,FPhi);
+%% 
+%
+% Create a CPN1 tensor object by normalization
+CPN1tens=CPN1(CPtens);
+%% References
+%
+% [1] Lichtenberg, Gerwald; Pangalos, Georg; Cateriano Yáñez, Carlos; Luxa,
+% Aline; Jöres, Niklas; Schnelle, Leona; Kaufmann, Christoph (2022): 
+% Implicit multilinear modeling. In at - Automatisierungstechnik 70 (1), 
+% pp. 13–30. DOI: 10.1515/auto-2021-0133.
+%
+% <html>
+% <style>
+% a.button {
+%   border-radius: 5px;
+%   border: none;
+%   color: white;
+%   padding: 15px 32px;
+%   text-align: center;
+%   text-decoration: none;
+%   display: inline-block;
+%   font-size: 16px;
+%   margin: 2px 1px;
+%   cursor: pointer;
+%   background-color: #0076A8; /* Matlab Blue */
+%  }
+% a.button:hover {
+%  background-color: #3391B9;
+% }
+% </style>
+% <a href="mssDoc.html" class="button">Open mss</a>
+% </html>
+##### SOURCE END #####
+-->
+</body>
+</html>

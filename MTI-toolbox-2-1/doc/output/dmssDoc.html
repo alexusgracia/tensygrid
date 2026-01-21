@@ -1,0 +1,640 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>dmss</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-06-24">
+<meta name="DC.source" content="dmssDoc.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>dmss</h1>
+<!--introduction-->
+<p>Multilinear descriptor state-space model (implicit)</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Syntax</a>
+</li>
+<li>
+<a href="#2">Description</a>
+</li>
+<li>
+<a href="#3">Properties</a>
+</li>
+<li>
+<a href="#4">Object Functions</a>
+</li>
+<li>
+<a href="#5">Examples</a>
+</li>
+<li>
+<a href="#21">References</a>
+</li>
+<li>
+<a href="#22">See Also</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Syntax</h2>
+<p>sys = dmss() Create empty dmss object with an empty hyCPN1 tensor/object.</p>
+<p>sys = dmss(H) Construct a continuous-time (ts = 0) dmss object when H is a hyCPN1 tensor/object.</p>
+<p>sys = dmss(mssSys) Convert a mss object into a dmss object with a similar stepsize ts, when mssSys is a mss object.</p>
+<p>sys = dmss(H,ts) Construct a dmss object when H is a hyCPN1 objct/tensor, with ts as stepsize (ts = 0: continuous-time, ts &gt; 0: discrete-time).</p>
+<h2 id="2">Description</h2>
+<p>The implicit multilinear time invariant (iMTI) model format has been introduced in [1]. In general, iMTI models can be described by a set of <img src="dmssDoc_eq05705075896852816573.png" alt="$N$" style="width:13px;height:11px;"> implicit continuous- time differential algebraic equations (DAEs)</p>
+<p>
+<img src="dmssDoc_eq09081298565046365417.png" alt="$$ 0 = \mathbf{h}(\mathbf{\dot{x}}, \mathbf{x}, \mathbf{u}, \mathbf{y}) $$" style="width:102px;height:15px;"></p>
+<p>containing only multilinear functions <img src="dmssDoc_eq13551287546431487114.png" alt="$\mathbf{h}$" style="width:9px;height:11px;">. Multilinear models can be represented using tensors and the system of equations can be represented by using the extended tensor product</p>
+<p>
+<img src="dmssDoc_eq02557455685059454990.png" alt="$$0 = \langle \mathbf{H} \vert \mathbf{M}(\mathbf{\dot{x}}, \mathbf{x}, \mathbf{u}, \mathbf{y}) \rangle$$" style="width:137px;height:15px;"></p>
+<p>of the model tensor <img src="dmssDoc_eq04238277023232096673.png" alt="$\mathbf{H}$" style="width:13px;height:11px;"> with the dimensions <img src="dmssDoc_eq03117978942318431965.png" alt="$n\times n\times m\times p\times N$" style="width:122px;height:13px;"> and monomial tensor <img src="dmssDoc_eq01518063970584319034.png" alt="$\mathbf{M}$" style="width:15px;height:11px;"> with the dimensions <img src="dmssDoc_eq14201122706908535431.png" alt="$n\times n\times m\times p$" style="width:91px;height:11px;">, see [1]. This utilizes tensor decomposition methods which introduces the reduced norm-1 canonical polyadic decomposed (CPn1) tensor representation of iMTI models, see [2], where the <img src="dmssDoc_eq01777687223830660826.png" alt="$j^{th}$" style="width:17px;height:16px;"> equation</p>
+<p>
+<img src="dmssDoc_eq16377082434184483182.png" alt="$$ 0 = \sum_{k=1}^{R} \Phi_{j,k} \prod_{l=1}^{2n+m+p} \left(1 - \vert F_{l,k} \vert + F_{l,k} v_{l}\right)$$" style="width:237px;height:44px;"></p>
+<p>can be represented in terms of the structure matrix <img src="dmssDoc_eq01768238589472138476.png" alt="$F$" style="width:11px;height:11px;"> with the dimensions <img src="dmssDoc_eq14864107479462756711.png" alt="$(2n+m+p)\times R$" style="width:111px;height:15px;"> and parameter Matrix <img src="dmssDoc_eq14890829443655089678.png" alt="$\Phi$" style="width:9px;height:11px;"> with the dimensions <img src="dmssDoc_eq15359435109972164964.png" alt="$N\times R$" style="width:43px;height:11px;">. While</p>
+<p>
+<img src="dmssDoc_eq11204248482356652506.png" alt="$$\mathbf{v} = \left[\mathbf{\dot{x}}, \mathbf{x}, \mathbf{u}, \mathbf{y}\right]'$$" style="width:95px;height:17px;"></p>
+<p>represents the signal vector of state derivatives (continuous time) / next states (discrete time), inputs and auxiliary/algebriac variables.</p>
+<p>sys = dmss(H, ts) creates an implicit/decriptor multilinear time invriant (iMTI) model stored by using the sparse norm-1 canonical polyadic decomposed (CPn1) tensor H, as a hyCPN1 object, and the stepsize ts.</p>
+<h2 id="3">Properties</h2>
+<p><h3>H - System tensor</h3></p>
+<p>System tensor, specified as canonical decomposed norm-1 tensor (hyCPN1-object).</p>
+<p><h3>n - Number of states</h3></p>
+<p>Number of states, specified as an integer <img src="dmssDoc_eq02959194361701386928.png" alt="$n\geq 0$" style="width:35px;height:12px;">.</p>
+<p><h3>m - Number of inputs</h3></p>
+<p>Number of inputs, specified as an integer <img src="dmssDoc_eq18301692951429874271.png" alt="$m\geq 0$" style="width:39px;height:12px;">.</p>
+<p><h3>p - Number of algebraic variables</h3></p>
+<p>Number of states, specified as an integer <img src="dmssDoc_eq17528734937003883516.png" alt="$q\geq 0$" style="width:33px;height:13px;">.</p>
+<p><h3>nEq - Number of equations</h3></p>
+<p>Number of equations, specified as an integer <img src="dmssDoc_eq06679848220587528925.png" alt="$nEq\geq 0$" style="width:54px;height:13px;">.</p>
+<p><h3>stateName - Names of states</h3></p>
+<p>Names of states, specified as an string vector with <img src="dmssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> entries.</p>
+<p><h3>stateUnit - Units of states</h3></p>
+<p>Units of states, specified as an string vector with <img src="dmssDoc_eq17555110721583917243.png" alt="$n$" style="width:9px;height:7px;"> entries.</p>
+<p><h3>algebraicName - Names of algebraic variables</h3></p>
+<p>Names of algebraic variables, specified as an string vector with <img src="dmssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> entries.</p>
+<p><h3>algebraicUnit - Units of algebraic variables</h3></p>
+<p>Units of algebraic variables, specified as an string vector with <img src="dmssDoc_eq03729901751903020778.png" alt="$p$" style="width:8px;height:10px;"> entries.</p>
+<p><h3>inputName - Names of inputs</h3></p>
+<p>Names of inputs, specified as an string vector with <img src="dmssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> entries.</p>
+<p><h3>inputUnit - Units of inputs</h3></p>
+<p>Units of inputs, specified as an string vector with <img src="dmssDoc_eq18216620034067401164.png" alt="$m$" style="width:13px;height:7px;"> entries.</p>
+<h2 id="4">Object Functions</h2>
+<p>
+<table border=1>
+<tr>
+<td>dmsim</td>
+<td>Simulation class to simulate time response of dynamic system to arbitrary inputs.</td>
+</tr>
+<tr>
+<td>sym2dmss</td>
+<td>Transfer symbolic equations into dmss model.</td>
+</tr>
+<tr>
+<td>c2d</td>
+<td>Convert continuous-time dynamic iMTI system to discrete time.</td>
+</tr>
+<tr>
+<td>d2c</td>
+<td>Convert discrete-time dynamic iMTI system to continuous-time.</td>
+</tr>
+<tr>
+<td>d2d</td>
+<td>Resample discrete-time dynamic iMTI system.</td>
+</tr>
+<tr>
+<td>append</td>
+<td>Append multiple dmss-objects.</td>
+</tr>
+<tr>
+<td>connect</td>
+<td>Connect signals of dmss objects, based of index matrices or signal names.</td>
+</tr>
+<tr>
+<td>jacobian</td>
+<td>Calculate jacobian matrix of the set of equations of a dmss model.</td>
+</tr>
+<tr>
+<td>incidenceMatrix</td>
+<td>Calculate incidence matrix of the set of equations of a dmss model.</td>
+</tr>
+<tr>
+<td>symbolicEquations</td>
+<td>Calculate symbolic equations of a dmss model with symbolic variables</td>
+</tr>
+<tr>
+<td>algebraicElimination</td>
+<td>Eliminate algrbaic equalities and variables of a dmss model, if its possible while maintaining the implicit multilinear structure.</td>
+</tr>
+<tr>
+<td>normalize</td>
+<td>Coordinate transformation of variables for dmss models.</td>
+</tr>
+<tr>
+<td>replaceSymbolicParameters</td>
+<td>Replace symbolic parameter values of the model tensor.</td>
+</tr>
+</table>
+</p>
+<h2 id="5">Examples</h2>
+<p>
+<b>Symbolic to dmss conversion and simulation of the the aizawa attractor</b>
+</p>
+<p>The aizawa attractor (from [3]) can be represented by an iMTI model using additional auxiliary variables and euqations. When using sym2dmss needed auxiliary variables will be generated automatically. The equations of the aizawa attractor are</p>
+<pre class="codeinput">Eq = {<span class="string">"dx1 = (x3-b)*x1 -d*x2"</span>;<span class="keyword">...</span>
+    <span class="string">"dx2 = d*x1+ (x3-b)*x2"</span>;<span class="keyword">...</span>
+    <span class="string">"dx3 = c+ a*x3 - x3^3/3 - x1^2 + f*x3*x1^3"</span>};
+</pre>
+<p>and can be directly used for creating a continuous time dmss object with</p>
+<pre class="codeinput">Ts = 0;
+sys = sym2dmss(Eq, Ts, {<span class="string">"dx"</span>, <span class="string">"x"</span>, <span class="string">"u"</span>, <span class="string">"y"</span>});
+</pre>
+<pre class="codeoutput">Reduced by 6 column(s) and 0 equation(s) with trivial Reduction due to duplications.
+</pre>
+<p>The equations of the resulting iMTI model can be viewed with</p>
+<pre class="codeinput">symEq = sys.symbolicEquations
+</pre>
+<pre class="codeoutput"> 
+symEq =
+ 
+                               xp1 + b*x1 + d*x2 - x1*x3 == 0
+                               xp2 + b*x2 - d*x1 - x2*x3 == 0
+3*xp3 - 3*c - 3*a*x3 + 3*x1*y1 + x3*y3*y4 - 3*f*x1*x3*y1 == 0
+                                                 y1 - x1 == 0
+                                                 y2 - x1 == 0
+                                                 y3 - x3 == 0
+                                                 y4 - x3 == 0
+ 
+</pre>
+<p>where <img src="dmssDoc_eq03728620088983410552.png" alt="$xp_i$" style="width:19px;height:10px;"> are the state derivatives, <img src="dmssDoc_eq05043059182872985900.png" alt="$x_i$" style="width:11px;height:9px;"> are states (differential variables), <img src="dmssDoc_eq14675076360472238679.png" alt="$y_i$" style="width:10px;height:10px;"> are algebriac variables and <img src="dmssDoc_eq16212169613327207076.png" alt="$u_i$" style="width:11px;height:9px;"> are input signals. One can see that due to the quadratic and cubic terms additional auxiliary variables y along with additional auxiliary equations have been created.</p>
+<p>For simulation the symbolic Parameters must be replaced by numeric values</p>
+<pre class="codeinput">symParameters = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"f"</span>];
+numParameters = [0.095, 0.7, 0.65, 3.5, 0.1];
+sys = sys.replaceSymbolicParameters(symParameters, numParameters);
+</pre>
+<p>Simulation can be done with creating a dmsim object (for more see: ...) using the iMTI model sys</p>
+<pre class="codeinput">tend = 1e3;
+x0 = [0.1, 0, 0];
+simout = dmsim(sys, x0, [0 tend], []);
+</pre>
+<pre class="codeoutput">Seperation in 3 subset(s) with 7 subproblem(s), from which 7 are explicit solvable.</pre>
+<p>The results can be accessed as properties of the dmsim object and plotted</p>
+<pre class="codeinput">plot3(simout.x(:,1), simout.x(:,2), simout.x(:,3))
+grid <span class="string">on</span>
+</pre>
+<img vspace="5" hspace="5" src="dmssDoc_01.png" alt=""> <p>
+<b>Creation by using the hyCPN1 tensor class for a simple thermal flow system</b>
+</p>
+<p>By creating a empty hyCPN1 object the object structure will be generated</p>
+<pre class="codeinput">H = hyCPN1();
+</pre>
+<p>and can be accessed via the properties of the object. The structure matrix can be manipulated by calling its property</p>
+<pre class="codeinput">H.F.stateDerivative = [1 0 0 0 0 0 0 0];
+H.F.state = [0 1 0 0 1 0 sym(<span class="string">"k_3"</span>) sym(<span class="string">"k_5"</span>)];
+H.F.input = [0 1 1 0 0 0 sym(<span class="string">"k_2"</span>) sym(<span class="string">"k_4"</span>);<span class="keyword">...</span>
+            0 0 1 0 0 0 0 0;<span class="keyword">...</span>
+            0 0 0 0 0 1 0 0];
+H.F.algebraic = [0 0 0 1 0 0 0 0;<span class="keyword">...</span>
+                0 0 0 0 1 1 sym(<span class="string">"k_1"</span>) 0];
+</pre>
+<p>Similar the parameter matrix can be accessed, here using partly symbolic parameters.</p>
+<pre class="codeinput">H.phi.equality = [sym(<span class="string">"m_w"</span>)*sym(<span class="string">"c_w"</span>) sym(<span class="string">"c_w"</span>) -sym(<span class="string">"c_w"</span>) 1 0 0 0 0;<span class="keyword">...</span>
+                    0 0 0 1 -sym(<span class="string">"A"</span>) sym(<span class="string">"A"</span>) 0 0;<span class="keyword">...</span>
+                    0 0 0 0 0 0 sym(<span class="string">"phi_1"</span>) sym(<span class="string">"phi_2"</span>)];
+</pre>
+<p>A continuous time dmss model can be created by</p>
+<pre class="codeinput">sys = dmss(H,0);
+</pre>
+<p>The equations can be checked by</p>
+<pre class="codeinput">disp(sys.symbolicEquations)
+</pre>
+<pre class="codeoutput">                                                                                                                                                         y1 + c_w*m_w*xp1 - c_w*u1*u2 + c_w*u1*x1 == 0
+                                                                                                                                                                           y1 + A*u3*y2 - A*x1*y2 == 0
+phi_2*(u1*conj(k_4) - abs(conj(k_4)) + 1)*(x1*conj(k_5) - abs(conj(k_5)) + 1) + phi_1*(u1*conj(k_2) - abs(conj(k_2)) + 1)*(x1*conj(k_3) - abs(conj(k_3)) + 1)*(y2*conj(k_1) - abs(conj(k_1)) + 1) == 0
+ 
+</pre>
+<p>where <img src="dmssDoc_eq03728620088983410552.png" alt="$xp_i$" style="width:19px;height:10px;"> are the state derivatives, <img src="dmssDoc_eq05043059182872985900.png" alt="$x_i$" style="width:11px;height:9px;"> are states (differential variables), <img src="dmssDoc_eq14675076360472238679.png" alt="$y_i$" style="width:10px;height:10px;"> are algebriac variables and <img src="dmssDoc_eq16212169613327207076.png" alt="$u_i$" style="width:11px;height:9px;"> are input signals.</p>
+<p>As before the symbolic parameters can be changed to numeric parameters by the replaceSymbolicParmeters function.</p>
+<pre class="codeinput">symParameters = [sym(<span class="string">"m_w"</span>) sym(<span class="string">"c_w"</span>) sym(<span class="string">"A"</span>) sym(<span class="string">"phi_1"</span>) sym(<span class="string">"phi_2"</span>) sym(<span class="string">"k_1"</span>) sym(<span class="string">"k_2"</span>) sym(<span class="string">"k_3"</span>) sym(<span class="string">"k_4"</span>) sym(<span class="string">"k_5"</span>)];
+
+di = 206.5/1000;
+A = di^2 *pi()/4;
+m_w = A*998*1;
+c_w = 4200;
+k = [-0.1497, -2.3659, -0.0109, 0.5556, 0.0131, 0.9872, 0.0259];
+numParameters = [m_w, c_w, A, k];
+
+sys = sys.replaceSymbolicParameters(symParameters, numParameters);
+
+disp(sys.symbolicEquations)
+</pre>
+<pre class="codeoutput">                                                                                                         (2411735508342479*xp1)/17179869184 + y1 - 4200*u1*u2 + 4200*u1*x1 == 0
+                                                                            y1 + (4826582636502955*u3*y2)/144115188075855872 - (4826582636502955*x1*y2)/144115188075855872 == 0
+(1497*((1389*u1)/2500 + 1111/2500)*((131*x1)/10000 + 9869/10000)*((109*y2)/10000 - 9891/10000))/10000 - (23659*((617*u1)/625 + 8/625)*((259*x1)/10000 + 9741/10000))/10000 == 0
+ 
+</pre>
+<p>The system can be simulated by using the dmsim class. A time vector, initial states and input values need to be defined.</p>
+<pre class="codeinput">t = 0:60;
+x0 = 8;
+u = ones([length(t),3]);
+u(:,1) = 0.8*A*998 * (0.6 + 0.2*rand(length(t),1));
+u(:,2) = 8 + rand(1,length(t));
+u(:,3) = 25 + asinh((t-30)/10).*cos(t/5);
+</pre>
+<p>For continuous time system standard ode options can be used</p>
+<pre class="codeinput">opt = odeset(<span class="string">'RelTol'</span>,1e-5,<span class="string">'AbsTol'</span>, 1e-3, <span class="string">'MaxStep'</span>, 0.5);
+</pre>
+<p>and simulation will be performed</p>
+<pre class="codeinput">simout = dmsim(sys, x0, t, u, opt);
+</pre>
+<pre class="codeoutput">Seperation in 1 subset(s) with 3 subproblem(s), from which 3 are explicit solvable.</pre>
+<p>The results can be accessed and plotted by the properties of the simulation object simout</p>
+<pre class="codeinput">subplot(2,1,1)
+plot(simout.tsim, simout.x)
+grid <span class="string">on</span>
+subplot(2,1,2)
+plot(simout.ut, simout.u)
+grid <span class="string">on</span>
+</pre>
+<img vspace="5" hspace="5" src="dmssDoc_02.png" alt=""> <h2 id="21">References</h2>
+<p>[1] G. Lichtenberg et al., "Implicit multilinear modeling," at - Automatisierungstechnik, vol. 70, no. 1, pp. 13&ndash;30, Jan. 2022. doi:10.1515/auto-2021-0133</p>
+<p>[2] N. J&ouml;res et al., &ldquo;Reduced CP representation of multilinear models,&rdquo; Proceedings of the 12th International Conference on Simulation and Modeling Methodologies, Technologies and Applications, 2022. doi:10.5220/0011273100003274</p>
+<p>[3] W. F. Langford, "Numerical studies of torus bifurcations,&rdquo; Numerical Methods for Bifurcation Problems, pp. 285&ndash;295, 1984. doi:10.1007/978-3-0348-6256-1_19</p>
+<h2 id="22">See Also</h2>
+<p>
+<a href="mssDoc.html">mss</a>, <a href="msimDoc.html">msim</a>, <a href="dmsimDoc.html">dmsim</a>, <a href="sym2dmssDoc.html">sym2dmss</a>, <a href="mss2dmssDoc.html">mss2dmss</a>, <a href="dmssJacobianDoc.html">jacobian</a>, <a href="incidenceMatrixDoc.html">incidenceMatrix</a>, <a href="symbolicEquationsDoc.html">symbolicEquations</a>, <a href="dmssc2dDoc.html">c2d</a>, <a href="d2cDoc.html">d2c</a>, <a href="d2dDoc.html">d2d</a>, <a href="algebraicEliminationDoc.html">algebraicElimination</a>, <a href="normalizeDoc.html">normalize</a>, <a href="replaceSymbolicParametersDoc.html">replaceSymbolicParameters</a>, <a href="appendDoc.html">append</a>, <a href="connectDoc.html">connect</a>, <a href="hyCPN1Doc.html">hyCPN1</a>
+</p>
+<p>Author(s): Torben Warnecke</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% dmss
+% Multilinear descriptor state-space model (implicit)
+%% Syntax
+% sys = dmss() 
+% Create empty dmss object with an empty hyCPN1 tensor/object.
+%
+% sys = dmss(H) 
+% Construct a continuous-time (ts = 0) dmss object 
+% when H is a hyCPN1 tensor/object.
+%
+% sys = dmss(mssSys) 
+% Convert a mss object into a dmss object with a similar 
+% stepsize ts, when mssSys is a mss object.
+%
+% sys = dmss(H,ts) 
+% Construct a dmss object when H is a hyCPN1 objct/tensor, 
+% with ts as stepsize (ts = 0: continuous-time, ts > 0: discrete-time).
+
+%% Description
+% The implicit multilinear time invariant (iMTI) model format has been introduced
+% in [1]. In general, iMTI models can be described by a set of $N$ implicit continuous-
+% time differential algebraic equations (DAEs) 
+%
+% $$ 0 = \mathbf{h}(\mathbf{\dot{x}}, \mathbf{x}, \mathbf{u}, \mathbf{y}) $$
+%
+% containing only multilinear functions $\mathbf{h}$.
+% Multilinear models can be represented using tensors and the system of equations can be represented by using the extended tensor
+% product 
+%
+% $$0 = \langle \mathbf{H} \vert \mathbf{M}(\mathbf{\dot{x}}, \mathbf{x}, \mathbf{u}, \mathbf{y}) \rangle$$ 
+%
+% of the model tensor $\mathbf{H}$ with the dimensions $n\times n\times m\times p\times N$ and monomial tensor $\mathbf{M}$ with the dimensions $n\times n\times m\times p$, see [1].
+% This utilizes tensor decomposition methods which introduces the reduced norm-1
+% canonical polyadic decomposed (CPn1) tensor representation of iMTI
+% models, see [2],
+% where the $j^{th}$ equation 
+%
+% $$ 0 = \sum_{k=1}^{R} \Phi_{j,k} \prod_{l=1}^{2n+m+p} \left(1 - \vert F_{l,k} \vert + F_{l,k} v_{l}\right)$$
+% 
+% can be represented in terms of the structure matrix $F$ with the dimensions $(2n+m+p)\times R$ and parameter
+% Matrix $\Phi$ with the dimensions $N\times R$. While
+% 
+% $$\mathbf{v} = \left[\mathbf{\dot{x}}, \mathbf{x}, \mathbf{u}, \mathbf{y}\right]'$$ 
+% 
+% represents the signal vector of state derivatives (continuous time) / next states (discrete time), inputs and auxiliary/algebriac variables.
+%
+% sys = dmss(H, ts) creates an implicit/decriptor multilinear time invriant 
+% (iMTI) model stored by using the sparse norm-1 canonical polyadic 
+% decomposed (CPn1) tensor H, as a hyCPN1 object, 
+% and the stepsize ts.
+% 
+%% Properties
+% <html><h3>H - System tensor</h3></html> 
+%
+% System tensor, specified as canonical decomposed norm-1 tensor
+% (hyCPN1-object).
+%
+% <html><h3>n - Number of states</h3></html> 
+%
+% Number of states, specified as an integer $n\geq 0$.
+%
+% <html><h3>m - Number of inputs</h3></html> 
+%
+% Number of inputs, specified as an integer $m\geq 0$.
+%
+% <html><h3>p - Number of algebraic variables</h3></html> 
+%
+% Number of states, specified as an integer $q\geq 0$.
+%
+% <html><h3>nEq - Number of equations</h3></html>
+%
+% Number of equations, specified as an integer $nEq\geq 0$.
+%
+% <html><h3>stateName - Names of states</h3></html> 
+%
+% Names of states, specified as an string vector with $n$ entries.
+%
+% <html><h3>stateUnit - Units of states</h3></html>
+%
+% Units of states, specified as an string vector with $n$ entries.
+%
+% <html><h3>algebraicName - Names of algebraic variables</h3></html>
+%
+% Names of algebraic variables, specified as an string vector with $p$ entries.
+%
+% <html><h3>algebraicUnit - Units of algebraic variables</h3></html>
+%
+% Units of algebraic variables, specified as an string vector with $p$ entries.
+%
+% <html><h3>inputName - Names of inputs</h3></html> 
+%
+% Names of inputs, specified as an string vector with $m$ entries.
+%
+% <html><h3>inputUnit - Units of inputs</h3></html>
+%
+% Units of inputs, specified as an string vector with $m$ entries.
+%
+%% Object Functions
+%
+% <html>
+% <table border=1>
+% <tr>
+% <td>dmsim</td>
+% <td>Simulation class to simulate time response of dynamic system to arbitrary inputs.</td>
+% </tr>
+% <tr>
+% <td>sym2dmss</td>
+% <td>Transfer symbolic equations into dmss model.</td>
+% </tr>
+% <tr>
+% <td>c2d</td>
+% <td>Convert continuous-time dynamic iMTI system to discrete time.</td>
+% </tr>
+% <tr>
+% <td>d2c</td>
+% <td>Convert discrete-time dynamic iMTI system to continuous-time.</td>
+% </tr>
+% <tr>
+% <td>d2d</td>
+% <td>Resample discrete-time dynamic iMTI system.</td>
+% </tr>
+% <tr>
+% <td>append</td>
+% <td>Append multiple dmss-objects.</td>
+% </tr>
+% <tr>
+% <td>connect</td>
+% <td>Connect signals of dmss objects, based of index matrices or signal names.</td>
+% </tr>
+% <tr>
+% <td>jacobian</td>
+% <td>Calculate jacobian matrix of the set of equations of a dmss model.</td>
+% </tr>
+% <tr>
+% <td>incidenceMatrix</td>
+% <td>Calculate incidence matrix of the set of equations of a dmss model.</td>
+% </tr>
+% <tr>
+% <td>symbolicEquations</td>
+% <td>Calculate symbolic equations of a dmss model with symbolic variables</td>
+% </tr>
+% <tr>
+% <td>algebraicElimination</td>
+% <td>Eliminate algrbaic equalities and variables of a dmss model, if its possible while maintaining the implicit multilinear structure.</td>
+% </tr>
+% <tr>
+% <td>normalize</td>
+% <td>Coordinate transformation of variables for dmss models.</td>
+% </tr>
+% <tr>
+% <td>replaceSymbolicParameters</td>
+% <td>Replace symbolic parameter values of the model tensor.</td>
+% </tr>
+% </table>
+% </html>
+%% Examples
+% *Symbolic to dmss conversion and simulation of the the aizawa attractor*
+%
+% The aizawa attractor (from [3]) can be represented by an iMTI model using
+% additional auxiliary variables and euqations. When using sym2dmss needed
+% auxiliary variables will be generated automatically.
+% The equations of the aizawa attractor are
+Eq = {"dx1 = (x3-b)*x1 -d*x2";...
+    "dx2 = d*x1+ (x3-b)*x2";...
+    "dx3 = c+ a*x3 - x3^3/3 - x1^2 + f*x3*x1^3"};
+%%
+% and can be directly used for creating a continuous time dmss object with
+Ts = 0;
+sys = sym2dmss(Eq, Ts, {"dx", "x", "u", "y"});
+%%
+% The equations of the resulting iMTI model can be viewed with
+symEq = sys.symbolicEquations
+%%
+% where $xp_i$ are the state derivatives, $x_i$ are states (differential
+% variables), $y_i$ are algebriac variables and $u_i$ are input signals.
+% One can see that due to the quadratic and cubic terms additional
+% auxiliary variables y along with additional auxiliary equations have been created.
+%
+% For simulation the symbolic Parameters must be replaced by numeric values
+symParameters = ["a", "b", "c", "d", "f"];
+numParameters = [0.095, 0.7, 0.65, 3.5, 0.1];
+sys = sys.replaceSymbolicParameters(symParameters, numParameters);
+%%
+% Simulation can be done with creating a dmsim object (for more see: ...) using
+% the iMTI model sys
+tend = 1e3;
+x0 = [0.1, 0, 0];
+simout = dmsim(sys, x0, [0 tend], []);
+%%
+% The results can be accessed as properties of the dmsim object and plotted
+plot3(simout.x(:,1), simout.x(:,2), simout.x(:,3))
+grid on
+
+%%
+% *Creation by using the hyCPN1 tensor class for a simple thermal flow system*
+%
+% By creating a empty hyCPN1 object the object structure will be generated
+H = hyCPN1();
+%%
+% and can be accessed via the properties of the object.
+% The structure matrix can be manipulated by calling its property
+H.F.stateDerivative = [1 0 0 0 0 0 0 0];
+H.F.state = [0 1 0 0 1 0 sym("k_3") sym("k_5")];
+H.F.input = [0 1 1 0 0 0 sym("k_2") sym("k_4");...
+            0 0 1 0 0 0 0 0;...
+            0 0 0 0 0 1 0 0];
+H.F.algebraic = [0 0 0 1 0 0 0 0;...
+                0 0 0 0 1 1 sym("k_1") 0];
+%%
+% Similar the parameter matrix can be accessed, here using partly symbolic
+% parameters.
+H.phi.equality = [sym("m_w")*sym("c_w") sym("c_w") -sym("c_w") 1 0 0 0 0;...
+                    0 0 0 1 -sym("A") sym("A") 0 0;...
+                    0 0 0 0 0 0 sym("phi_1") sym("phi_2")];
+%%
+% A continuous time dmss model can be created by
+sys = dmss(H,0);
+%%
+% The equations can be checked by
+disp(sys.symbolicEquations)
+%%
+% where $xp_i$ are the state derivatives, $x_i$ are states (differential
+% variables), $y_i$ are algebriac variables and $u_i$ are input signals.
+%
+% As before the symbolic parameters can be changed to numeric parameters by
+% the replaceSymbolicParmeters function.
+symParameters = [sym("m_w") sym("c_w") sym("A") sym("phi_1") sym("phi_2") sym("k_1") sym("k_2") sym("k_3") sym("k_4") sym("k_5")];
+
+di = 206.5/1000;
+A = di^2 *pi()/4;
+m_w = A*998*1; 
+c_w = 4200;
+k = [-0.1497, -2.3659, -0.0109, 0.5556, 0.0131, 0.9872, 0.0259];
+numParameters = [m_w, c_w, A, k];
+
+sys = sys.replaceSymbolicParameters(symParameters, numParameters);
+
+disp(sys.symbolicEquations)
+%%
+% The system can be simulated by using the dmsim class.
+% A time vector, initial states and input values need to be defined.
+t = 0:60;
+x0 = 8;
+u = ones([length(t),3]);
+u(:,1) = 0.8*A*998 * (0.6 + 0.2*rand(length(t),1));
+u(:,2) = 8 + rand(1,length(t));
+u(:,3) = 25 + asinh((t-30)/10).*cos(t/5);
+%%
+% For continuous time system standard ode options can be used
+opt = odeset('RelTol',1e-5,'AbsTol', 1e-3, 'MaxStep', 0.5);
+%%
+% and simulation will be performed
+simout = dmsim(sys, x0, t, u, opt);
+
+%%
+% The results can be accessed and plotted by the properties of the
+% simulation object simout
+subplot(2,1,1)
+plot(simout.tsim, simout.x)
+grid on
+subplot(2,1,2)
+plot(simout.ut, simout.u)
+grid on
+%% References
+% [1] G. Lichtenberg et al., "Implicit multilinear modeling," at - Automatisierungstechnik, vol. 70, no. 1, pp. 13–30, Jan. 2022. doi:10.1515/auto-2021-0133 
+%
+% [2] N. Jöres et al., “Reduced CP representation of multilinear models,” Proceedings of the 12th International Conference on Simulation and Modeling Methodologies, Technologies and Applications, 2022. doi:10.5220/0011273100003274  
+%
+% [3] W. F. Langford, "Numerical studies of torus bifurcations,” Numerical Methods for Bifurcation Problems, pp. 285–295, 1984. doi:10.1007/978-3-0348-6256-1_19  
+%% See Also
+% <mssDoc.html mss>,
+% <msimDoc.html msim>,
+% <dmsimDoc.html dmsim>,
+% <sym2dmssDoc.html sym2dmss>,
+% <mss2dmssDoc.html mss2dmss>,
+% <dmssJacobianDoc.html jacobian>,
+% <incidenceMatrixDoc.html incidenceMatrix>,
+% <symbolicEquationsDoc.html symbolicEquations>,
+% <dmssc2dDoc.html c2d>,
+% <d2cDoc.html d2c>,
+% <d2dDoc.html d2d>,
+% <algebraicEliminationDoc.html algebraicElimination>,
+% <normalizeDoc.html normalize>,
+% <replaceSymbolicParametersDoc.html replaceSymbolicParameters>,
+% <appendDoc.html append>,
+% <connectDoc.html connect>,
+% <hyCPN1Doc.html hyCPN1>
+%
+%
+% Author(s): Torben Warnecke
+
+##### SOURCE END #####
+-->
+</body>
+</html>

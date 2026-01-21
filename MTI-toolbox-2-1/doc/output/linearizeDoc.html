@@ -1,0 +1,373 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>linearize</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-08-15">
+<meta name="DC.source" content="linearizeDoc.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>linearize</h1>
+<!--introduction-->
+<p>Linearize an explicit (mss) or hybrid implicit (dmss) multilinear model around an operating point.</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Syntax</a>
+</li>
+<li>
+<a href="#2">Description</a>
+</li>
+<li>
+<a href="#3">Input Arguments</a>
+</li>
+<li>
+<a href="#4">Output Arguments</a>
+</li>
+<li>
+<a href="#5">Example (mss):</a>
+</li>
+<li>
+<a href="#10">Example (dmss):</a>
+</li>
+<li>
+<a href="#11">References</a>
+</li>
+<li>
+<a href="#13">See also</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Syntax</h2>
+<pre class="language-matlab">lsys = linearize(sys, op)                  <span class="comment">% mss -&gt; ss/sparss</span>
+dss  = linearize(sys, op)                  <span class="comment">% dmss -&gt; dss</span>
+[dss, dssSparse] = linearize(sys, op)      <span class="comment">% dmss -&gt; dense and sparse</span>
+</pre>
+<p>Backward compatible signatures: linearize(msys, x, u) % mss (legacy) linearize(msys, xp, x, u, y, z) % dmss (legacy)</p>
+<h2 id="2">Description</h2>
+<p>
+<tt>linearize(sys, op)</tt> invokes the class-specific linearization implemented by both <tt>mss</tt> and <tt>dmss</tt> objects. It accepts a single operating point argument <tt>op</tt> as a struct for clarity and extensibility.</p>
+<p>For <tt>mss</tt> objects:</p>
+<div>
+<ul>
+<li>
+<tt>op.x</tt> (n&times;1) &ndash; state operating point (required)</li>
+<li>
+<tt>op.u</tt> (m&times;1) &ndash; input operating point (required if m&gt;0)</li>
+</ul>
+</div>
+<p>For <tt>dmss</tt> objects:</p>
+<div>
+<ul>
+<li>
+<tt>op.xp</tt> (n&times;1) &ndash; state-derivative operating point (optional)</li>
+<li>
+<tt>op.x</tt> (n&times;1) &ndash; state operating point (optional)</li>
+<li>
+<tt>op.u</tt> (m&times;1) &ndash; input operating point (optional)</li>
+<li>
+<tt>op.y</tt> (p&times;1) &ndash; algebraic variable operating point (optional)</li>
+<li>
+<tt>op.z</tt> (q&times;1) &ndash; boolean variable operating point (optional)</li>
+</ul>
+</div>
+<p>Any omitted fields default to <tt>[]</tt>. The class methods perform basic dimension checks.</p>
+<p>Convenience forms are supported for parity with MATLAB&rsquo;s style:</p>
+<div>
+<ul>
+<li>
+<tt>mss</tt>: numeric vector <tt>[x; u]</tt> or cell <tt>{x, u}</tt>
+</li>
+<li>
+<tt>dmss</tt>: numeric vector <tt>[xp; x; u; y; z]</tt> or cell <tt>{xp, x, u, y, z}</tt>
+</li>
+</ul>
+</div>
+<h2 id="3">Input Arguments</h2>
+<p>
+<tt>sys</tt>: multilinear MTI model (<tt>mss</tt> or <tt>dmss</tt> object)</p>
+<p>
+<tt>op</tt> : struct, numeric vector, or cell containing operating point values (see above)</p>
+<h2 id="4">Output Arguments</h2>
+<p>
+<tt>lsys</tt>: linear LTI model, <tt>ss</tt> or <tt>sparss</tt> (for <tt>mss</tt> inputs)</p>
+<p>
+<tt>dss</tt>, <tt>dssSparse</tt>: linear descriptor model(s) as <tt>dss</tt> and <tt>sparss</tt> (for <tt>dmss</tt> inputs)</p>
+<h2 id="5">Example (mss):</h2>
+<p>Second-order explicit MTI model with 2 states and 1 input (expanded and factored form)</p>
+<p>
+<img src="linearizeDoc_eq15404324040323975961.png" alt="$\dot{\mathbf{x}}=\left(\begin{array}{cc} x_2 + x_1x_2\\ 3u_1 + 2x_2 - 3u_1x_1 + 2x_1x_2 \end{array}\right) = \left(\begin{array}{cc} 2\cdot(0.5+0.5x_1)x_2 \\ 4\cdot(0.5+0.5x_1)x_2 + 6 \cdot(0.5-0.5x_1)u_1 \end{array}\right) $">.</p>
+<p>The factored explicit MTI model as <tt>CPN1</tt> object thus has a structure matrix</p>
+<pre class="codeinput">    S = [0.5 -0.5; 1 0; 0 1];
+</pre>
+<p>and the parameter matrix</p>
+<pre class="codeinput">    phi = [2 0; 4 6];
+</pre>
+<p>Then we can create explicit MTI model as a <tt>CPN1</tt> object and the <tt>mss</tt>-object</p>
+<pre class="codeinput">    tens = CPN1(S,phi);
+    msys = mss(tens);
+</pre>
+<p>and assume the operating point for the states <tt>x</tt> and the input <tt>u</tt>
+</p>
+<pre class="codeinput">    x_op = [-1;1];
+    u_op = 3;
+</pre>
+<p>Then we can linearize the explicit MTI model using an op struct</p>
+<pre class="codeinput">    op = struct(<span class="string">'x'</span>, x_op, <span class="string">'u'</span>, u_op);
+    lsys = linearize(msys, op)
+</pre>
+<pre class="codeoutput">Warning: No Outputs defined, assuming states as outputs. 
+
+lsys =
+ 
+  A = 
+       x1  x2
+   x1   1   0
+   x2  -7   0
+ 
+  B = 
+       u1
+   x1   0
+   x2   6
+ 
+  C = 
+       x1  x2
+   y1   1   0
+   y2   0   1
+ 
+  D = 
+       u1
+   y1   0
+   y2   0
+ 
+Continuous-time state-space model.
+</pre>
+<h2 id="10">Example (dmss):</h2>
+<p>For the following continuous-time implicit multilinear model with 2 states and 1 algebraic variable, a <tt>dmss</tt> object is created using the <tt>sym2dmss</tt> command:</p>
+<pre class="codeinput">    eqs = {<span class="string">'0==xp1-x1*x2*y1+4'</span>;
+           <span class="string">'0==xp2-x2+2'</span>
+           <span class="string">'0==x2-y1'</span>;};
+    dsys = sym2dmss(eqs, 0);
+<span class="comment">%</span>
+<span class="comment">% The operating point point, where xp=0, is:</span>
+<span class="comment">%</span>
+    xpop = [0; 0];
+    xop  = [1; 2];
+    yop  = 2;
+<span class="comment">%</span>
+<span class="comment">% which is stored as a |op| struct</span>
+<span class="comment">%</span>
+    op = struct(<span class="string">'xp'</span>, xpop, <span class="string">'x'</span>, xop,<span class="string">'y'</span>,yop);
+<span class="comment">%</span>
+<span class="comment">% Then the |dmss| is linearized at the operating point as follows:</span>
+<span class="comment">%</span>
+    dss = linearize(dsys, op);
+<span class="comment">%</span>
+<span class="comment">% The result |dss| is a linear descriptor state-space model, which is a</span>
+<span class="comment">% |ss| object.</span>
+</pre>
+<pre class="codeoutput">Reduced by 2 column(s) and 0 equation(s) with trivial Reduction due to duplications.
+</pre>
+<h2 id="11">References</h2>
+<p>[1] C. Kaufmann, D. Cresp&iacute;, G. Lichtenberg, G. Pangalos, and C. Cateriano Y&aacute;&ntilde;ez, "Efficient Linearization of Explicit Multilinear Systems using Normalized Decomposed Tensors," IFAC-PapersOnLine, vol. 56, no. 2, pp. 7312&ndash;7317, Jan. 2023, doi: <a href="https://doi.org/10.1016/j.ifacol.2023.10.344">https://doi.org/10.1016/j.ifacol.2023.10.344</a>.</p>
+<p>[2] C. Kaufmann, G. Pangalos, G. Lichtenberg, O. Gomis-Bellmunt, "Small-Signal Stability Analysis of Power Systems by Implicit Multilinear Models", submitted to IEEE Trans. Circuits Syst. I Regul. Pap., 2025.</p>
+<p>You can find a full example here: <a href="matlab:open(%22Demo_Linearization.mlx%22)">open linearization example</a>
+</p>
+<h2 id="13">See also</h2>
+<p>
+<a href="jacobianDoc.html">jacobian</a>, <a href="cpn2LinDoc.html">cpn2Lin</a>, <a href="cpn2LinSparseDoc.html">cpn2LinSparse</a>
+</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% linearize
+% Linearize an explicit (mss) or hybrid implicit (dmss) multilinear model around an operating point.  
+%% Syntax
+%   lsys = linearize(sys, op)                  % mss -> ss/sparss
+%   dss  = linearize(sys, op)                  % dmss -> dss
+%   [dss, dssSparse] = linearize(sys, op)      % dmss -> dense and sparse
+%
+% Backward compatible signatures:
+%   linearize(msys, x, u)                      % mss (legacy)
+%   linearize(msys, xp, x, u, y, z)            % dmss (legacy)
+%% Description
+% |linearize(sys, op)| invokes the class-specific linearization implemented by
+% both |mss| and |dmss| objects. It accepts a single operating point argument |op|
+% as a struct for clarity and extensibility.
+%
+% For |mss| objects:
+%
+% * |op.x| (n×1) – state operating point (required)
+% * |op.u| (m×1) – input operating point (required if m>0)
+%
+% For |dmss| objects:
+%
+% * |op.xp| (n×1) – state-derivative operating point (optional)
+% * |op.x|  (n×1) – state operating point (optional)
+% * |op.u|  (m×1) – input operating point (optional)
+% * |op.y|  (p×1) – algebraic variable operating point (optional)
+% * |op.z|  (q×1) – boolean variable operating point (optional)
+%
+% Any omitted fields default to |[]|. The class methods perform basic dimension checks.
+%
+% Convenience forms are supported for parity with MATLAB’s style:
+%
+% * |mss|: numeric vector |[x; u]| or cell |{x, u}|
+% * |dmss|: numeric vector |[xp; x; u; y; z]| or cell |{xp, x, u, y, z}|
+%% Input Arguments
+% |sys|: multilinear MTI model (|mss| or |dmss| object)
+%
+% |op| : struct, numeric vector, or cell containing operating point values (see above)
+%% Output Arguments 
+% |lsys|: linear LTI model, |ss| or |sparss| (for |mss| inputs)
+%
+% |dss|, |dssSparse|: linear descriptor model(s) as |dss| and |sparss| (for |dmss| inputs)
+
+%% Example (mss):
+% Second-order explicit MTI model with 2 states and 1 input (expanded and factored form)
+% 
+% $$\dot{\mathbf{x}}=\left(\begin{array}{cc} x_2 + x_1x_2\\ 3u_1 + 2x_2 - 3u_1x_1 + 2x_1x_2
+% \end{array}\right) = \left(\begin{array}{cc} 2\cdot(0.5+0.5x_1)x_2 \\
+% 4\cdot(0.5+0.5x_1)x_2 + 6 \cdot(0.5-0.5x_1)u_1 \end{array}\right) $$. 
+%
+% The factored explicit MTI model as |CPN1| object thus has a structure matrix  
+%
+    S = [0.5 -0.5; 1 0; 0 1];
+%%
+% and the parameter matrix
+%
+    phi = [2 0; 4 6];
+%%
+% Then we can create explicit MTI model as a |CPN1| object and the
+% |mss|-object
+%
+    tens = CPN1(S,phi);
+    msys = mss(tens);
+
+%%
+% and assume the operating point for the states |x| and the input |u|
+%
+    x_op = [-1;1]; 
+    u_op = 3;
+%%
+% Then we can linearize the explicit MTI model using an op struct
+%
+    op = struct('x', x_op, 'u', u_op);
+    lsys = linearize(msys, op)
+
+%% Example (dmss):
+% For the following continuous-time implicit multilinear model with 2 states and 1
+% algebraic variable, a |dmss| object is created using the
+% |sym2dmss| command:
+%
+    eqs = {'0==xp1-x1*x2*y1+4';
+           '0==xp2-x2+2'
+           '0==x2-y1';};
+    dsys = sym2dmss(eqs, 0);
+%
+% The operating point point, where xp=0, is: 
+%
+    xpop = [0; 0];
+    xop  = [1; 2];
+    yop  = 2;
+%
+% which is stored as a |op| struct
+%
+    op = struct('xp', xpop, 'x', xop,'y',yop);
+%
+% Then the |dmss| is linearized at the operating point as follows:
+%
+    dss = linearize(dsys, op);
+%
+% The result |dss| is a linear descriptor state-space model, which is a
+% |ss| object. 
+
+%% References
+% [1] C. Kaufmann, D. Crespí, G. Lichtenberg, G. Pangalos, and C. Cateriano Yáñez, "Efficient Linearization of Explicit Multilinear Systems using Normalized Decomposed Tensors," IFAC-PapersOnLine, vol. 56, no. 2, pp. 7312–7317, Jan. 2023, doi: https://doi.org/10.1016/j.ifacol.2023.10.344.
+%
+% [2] C. Kaufmann, G. Pangalos, G. Lichtenberg, O. Gomis-Bellmunt,  "Small-Signal Stability Analysis of Power Systems by Implicit Multilinear Models", submitted to IEEE Trans. Circuits Syst. I Regul. Pap., 2025. 
+
+%%
+% You can find a full example here: <matlab:open("Demo_Linearization.mlx") open linearization example>
+%% See also 
+% <jacobianDoc.html jacobian>, <cpn2LinDoc.html cpn2Lin>, <cpn2LinSparseDoc.html cpn2LinSparse>
+##### SOURCE END #####
+-->
+</body>
+</html>

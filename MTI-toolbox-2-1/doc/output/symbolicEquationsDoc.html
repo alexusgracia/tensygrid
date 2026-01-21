@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>smybolicEquations</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-06-24">
+<meta name="DC.source" content="symbolicEquationsDoc.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>smybolicEquations</h1>
+<!--introduction-->
+<p>Outputs the mss-model as symbolic equations</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Syntax</a>
+</li>
+<li>
+<a href="#2">Description</a>
+</li>
+<li>
+<a href="#3">Input Arguments</a>
+</li>
+<li>
+<a href="#4">Output Arguments</a>
+</li>
+<li>
+<a href="#5">Example 1</a>
+</li>
+<li>
+<a href="#7">Example 2</a>
+</li>
+<li>
+<a href="#12">See also</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Syntax</h2>
+<pre class="language-matlab">symbolicEquations(msys)
+[xp,y]=symbolicEquations(msys)
+</pre>
+<h2 id="2">Description</h2>
+<p>
+<tt>symbolicEquations(msys)</tt> Outputs the state equations of the multilinear state-space object <tt>msys</tt> as a symbolic equation.</p>
+<p>
+<tt>[xp,y]=symbolicEquations(msys)</tt> Outputs the state equations <tt>xp</tt> and the output equations <tt>y</tt> of the multilinear state-space object <tt>msys</tt> as a symbolic equation.</p>
+<p>Note that this command requires the Symbolic Math Toolbox from Matlab.</p>
+<h2 id="3">Input Arguments</h2>
+<p>
+<tt>msys</tt> multilinear state-space model of type mss in CPN1 format</p>
+<h2 id="4">Output Arguments</h2>
+<p>
+<tt>xp</tt> vector or scalar of the state equations as symbolic equations</p>
+<p>
+<tt>y</tt> vector or scalar of the output equations as symbolic equations</p>
+<h2 id="5">Example 1</h2>
+<pre>Firstly we can create a random continuous-time system with n=2 states, m=1 input, p=2 output, and
+a rank of r=4:</pre>
+<pre class="codeinput">   msys=rmss(2,1,2,4)
+</pre>
+<pre class="codeoutput">
+msys = 
+
+  mss with properties:
+
+        F: [1&times;1 CPN1]
+        G: [1&times;1 CPN1]
+        n: 2
+        m: 1
+        p: 2
+    ntype: '1'
+       ts: 0
+
+</pre>
+<p>Then we can check the equations by:</p>
+<pre class="codeinput">   [xp,y]=symbolicEquations(msys)
+</pre>
+<pre class="codeoutput"> 
+xp =
+ 
+(10019847143879479617130564704405*u1)/81129638414606681695789005144064 + (5446107898113957435312448814475*x2)/40564819207303340847894502572032 + 25080151865133454224759707479125/81129638414606681695789005144064
+ (2364521389257206159142764184533*u1)/40564819207303340847894502572032 + (4597976788001104214284280469943*x1)/10141204801825835211973625643008 + 24510632067871052468972673242447/40564819207303340847894502572032
+ 
+ 
+y =
+ 
+                                                                                                         405915346306581/1125899906842624
+(8596451650578180963667417106255*x1)/40564819207303340847894502572032 + 24715625766144926850242585950385/40564819207303340847894502572032
+ 
+</pre>
+<h2 id="7">Example 2</h2>
+<p>Assume we have the following second-order explicit MTI model with 2 states and 1 input <img src="symbolicEquationsDoc_eq05833491009125610448.png" alt="$\dot{\mathbf{x}}=\left(\begin{array}{cc} x_2 + x_1x_2\\ 3u_1 + 2x_2 - 3u_1x_1 + 2x_1x_2 \end{array}\right)$" style="width:231px;height:35px;">. We write the explicit MTI model as a <tt>CPN1</tt> object by defining the structural matrix S to form the monomial</p>
+<pre class="codeinput">    S=[0.5 -0.5; 1 0; 0 1];
+</pre>
+<p>and the parameter matrix with corresponding coefficients of the summands:</p>
+<pre class="codeinput">    phi=[2 0; 4 6];
+</pre>
+<p>Then we can create explicit MTI model as a <tt>CPN1</tt> object and the <tt>mss</tt>-object:</p>
+<pre class="codeinput">    obj=CPN1(S,phi);
+    msys=mss(obj);
+</pre>
+<p>To display the equations, simply use:</p>
+<pre class="codeinput">    [xp]=symbolicEquations(msys)
+</pre>
+<pre class="codeoutput"> 
+xp =
+ 
+                    2*x2*(x1/2 + 1/2)
+4*x2*(x1/2 + 1/2) - 6*u1*(x1/2 - 1/2)
+ 
+</pre>
+<p>To get the expanded form, we can use the <tt>expand()</tt> command of the Symbolic Math Toolbox.</p>
+<pre class="codeinput">    expand(xp)
+</pre>
+<pre class="codeoutput"> 
+ans =
+ 
+                     x2 + x1*x2
+3*u1 + 2*x2 - 3*u1*x1 + 2*x1*x2
+ 
+</pre>
+<h2 id="12">See also</h2>
+<p>
+<a href="mssDoc.html">mss</a>, <a href="rmssDoc.html">rmss</a>
+</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% smybolicEquations
+% Outputs the mss-model as symbolic equations
+%% Syntax 
+%   symbolicEquations(msys)
+%   [xp,y]=symbolicEquations(msys)
+%% Description
+% |symbolicEquations(msys)| Outputs the state equations of the multilinear state-space object
+% |msys| as a symbolic equation.
+%
+% |[xp,y]=symbolicEquations(msys)| Outputs the state equations |xp| and the output equations |y| of the multilinear state-space object
+% |msys| as a symbolic equation.
+%
+% Note that this command requires the Symbolic Math Toolbox from Matlab. 
+
+%% Input Arguments
+% |msys| multilinear state-space model of type mss in CPN1 format
+%
+
+%% Output Arguments
+% |xp| vector or scalar of the state equations as symbolic equations 
+%
+% |y| vector or scalar of the output equations as symbolic equations 
+%% Example 1   
+%  Firstly we can create a random continuous-time system with n=2 states, m=1 input, p=2 output, and
+%  a rank of r=4:
+   msys=rmss(2,1,2,4)
+%%   
+% Then we can check the equations by:
+%
+   [xp,y]=symbolicEquations(msys)
+
+%% Example 2
+% Assume we have the following second-order explicit MTI model with 2 states and 1 input $$\dot{\mathbf{x}}=\left(\begin{array}{cc} x_2 + x_1x_2\\ 3u_1 + 2x_2 - 3u_1x_1 + 2x_1x_2
+% \end{array}\right)$$. We write the explicit MTI model as a |CPN1| object by defining the structural matrix S to form the monomial 
+%
+    S=[0.5 -0.5; 1 0; 0 1];
+%%
+% and the parameter matrix with corresponding coefficients of the summands:
+%
+    phi=[2 0; 4 6];
+%%
+% Then we can create explicit MTI model as a |CPN1| object and the
+% |mss|-object:
+%
+    obj=CPN1(S,phi);
+    msys=mss(obj);
+%% 
+% To display the equations, simply use:
+%
+    [xp]=symbolicEquations(msys)
+%%
+% To get the expanded form, we can use the |expand()| command of the
+% Symbolic Math Toolbox.
+% 
+    expand(xp)
+
+%% See also 
+% <mssDoc.html mss>, <rmssDoc.html rmss>
+##### SOURCE END #####
+-->
+</body>
+</html>
