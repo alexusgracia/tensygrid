@@ -1,0 +1,475 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>mss2mss</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-10-15">
+<meta name="DC.source" content="mss2mssDoc.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>mss2mss</h1>
+<!--introduction-->
+<p>Affine state transformations of MTI models (currently only permutation, scaling and offset allowed)</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Syntax</a>
+</li>
+<li>
+<a href="#2">Description</a>
+</li>
+<li>
+<a href="#3">Input arguments</a>
+</li>
+<li>
+<a href="#4">Output arguments</a>
+</li>
+<li>
+<a href="#5">Example state transformation</a>
+</li>
+<li>
+<a href="#11">Example transformation in state and input</a>
+</li>
+<li>
+<a href="#17">See also</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Syntax</h2>
+<p>
+<tt>[sys_sc] = mss2mss(sys, T, c)</tt>
+</p>
+<h2 id="2">Description</h2>
+<p>
+<tt>[mtiSystemTransformed] = mss2mss(mtiSystem, transformation, offset)</tt>
+</p>
+<p>Linear state transformation (and optionally input transformation) of an explicit MTI model in CPN1 format. Currently only permutation, scaling and offset is possible (no rotation, i.e. the transformation matrix must have exactly one non-zero element per row and column).</p>
+<p>The tranformation is done with the linear state transformation</p>
+<p>
+<img src="mss2mssDoc_eq18286470187666017122.png" alt="$$ \mathbf{x}=\mathbf{T}\tilde{\mathbf{x}}+\mathbf{c} $$"></p>
+<p>and</p>
+<p>
+<img src="mss2mssDoc_eq00768758057896068830.png" alt="$ \tilde{\mathbf{x}}=\mathbf{T}^{-1}(\mathbf{x}-\mathbf{c}) $">.</p>
+<p>where T can have only 1 non-zero element per row and column.</p>
+<p>The transformed MTI system in normalized representation is given by</p>
+<p>
+<img src="mss2mssDoc_eq13578599770413748764.png" alt="$$\mathbf{\dot{\tilde{x}}}=\mathbf{\tilde{F}}_\phi\prod{(&#10;1-|\mathbf{\tilde{F}}_U|+\mathbf{\tilde{F}}_U\mathbf{\tilde{x}})}$$"></p>
+<p>
+<img src="mss2mssDoc_eq12750964803831817122.png" alt="$$\mathbf{y}=\mathbf{\tilde{G}}_\phi\prod{(&#10;1-|\mathbf{\tilde{G}}_U|+\mathbf{\tilde{G}}_U\mathbf{\tilde{x}})}$$"></p>
+<p>The output is a MTI model with the same input and output behavior as the original system, but with scaled states (and optionally scaled inputs) according to the transformation matrix and offset vector.</p>
+<p>If the transformation matrix has dimensions n x n (with n being the number of states), then only states will be scaled. If the transformation matrix has dimensions (n + m) x (n + m) then the inputs will be scaled, too (where m is the number of inputs).</p>
+<p>Combining this function with dataProcessing.scaleData allows for easy scaling of states (and optionally inputs) between lower and upper bounds.</p>
+<h2 id="3">Input arguments</h2>
+<p>
+<tt>mtiSystem</tt> - mss object (eMTI system)</p>
+<p>
+<tt>transformation</tt> - transformation matrix (must be diagonal)</p>
+<p>
+<tt>offset</tt> - vector of offsets</p>
+<h2 id="4">Output arguments</h2>
+<p>
+<tt>mtiSystemTransformed</tt> - mss object (transformed eMTI system)</p>
+<h2 id="5">Example state transformation</h2>
+<p>Build multilinear model (MTI), 2.order, 1 input</p>
+<pre class="codeinput">F.U = [[0.83, -0.1]; [0, 0.53]; [1, -0.1]];    <span class="comment">% state transition matrix</span>
+F.phi = [[1.0080, 0]; [0, 1.50]];              <span class="comment">% state weigting matrix</span>
+u = [zeros(20, 1); ones(20, 1); -ones(20, 1)]; <span class="comment">% input signal</span>
+t = 1:1:60;                                    <span class="comment">% time vector</span>
+Ts = 1;                                        <span class="comment">% sampling time (discrete)</span>
+obj = mss(CPN1(F.U, F.phi), Ts);               <span class="comment">% build mti model object</span>
+</pre>
+<p>Simulate MTI Model</p>
+<pre class="codeinput">x0 = [0; 0];                                   <span class="comment">% initial state</span>
+[y, ~, xsim] = msim(obj, u, t, x0);
+</pre>
+<p>Set limits for states (inputs not scaled in this example)</p>
+<pre class="codeinput">lbx = [0, 0];                                  <span class="comment">% lower limit state</span>
+ubx = [1, 1];                                  <span class="comment">% upper limit state</span>
+</pre>
+<p>Linear state transformation of mti model</p>
+<pre class="codeinput">[xsc, ~, T, c] = dataProcessing.scaleData(xsim, u, lbx, ubx);
+<span class="comment">% scale data within limits and obtain transformation matrix and offset</span>
+msys = mss2mss(obj, T, c);                 <span class="comment">% transform (scale) system</span>
+</pre>
+<p>Simulation of transformed mti model</p>
+<pre class="codeinput">[ysc, ~, xsimsc] = msim(msys, u, t, xsc(1,:));
+<span class="comment">% simulate scaled mti model with scaled initial state</span>
+</pre>
+<p>Plot results</p>
+<pre class="codeinput">figure()                                        <span class="comment">% plot original mti model</span>
+sgtitle(<span class="string">'original MTI model'</span>)
+subplot(3, 1, 1)
+plot(u)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend(<span class="string">'input'</span>)
+subplot(3, 1, 2)
+plot(xsim)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend({<span class="string">'state 1'</span>, <span class="string">'state 2'</span>})
+subplot(3, 1, 3)
+plot(y)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend(<span class="string">'output'</span>)
+
+figure()                                        <span class="comment">% plot scaled mti model</span>
+sgtitle(<span class="string">'scaled MTI model'</span>)
+subplot(3,1,1)
+plot(u)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend(<span class="string">'input'</span>)
+subplot(3,1,2)
+plot(xsimsc)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend({<span class="string">'state 1'</span>,<span class="string">'state 2'</span>})
+subplot(3,1,3)
+plot(ysc)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend(<span class="string">'output'</span>)
+</pre>
+<img vspace="5" hspace="5" src="mss2mssDoc_01.png" alt=""> <img vspace="5" hspace="5" src="mss2mssDoc_02.png" alt=""> <h2 id="11">Example transformation in state and input</h2>
+<p>Build multilinear model (MTI), 2.order, 1 input</p>
+<pre class="codeinput">F.U = [[0.83, -0.1]; [0, 0.53]; [1, -0.1]];    <span class="comment">% state transition matrix</span>
+F.phi = [[1.0080, 0]; [0, 1.50]];              <span class="comment">% state weigting matrix</span>
+u = [zeros(20, 1); ones(20, 1); -ones(20, 1)]; <span class="comment">% input signal</span>
+t = 1:1:60;                                    <span class="comment">% time vector</span>
+Ts = 1;                                        <span class="comment">% sampling time (discrete)</span>
+obj = mss(CPN1(F.U, F.phi), Ts);               <span class="comment">% build mti model object</span>
+</pre>
+<p>Simulate MTI Model</p>
+<pre class="codeinput">x0 = [0; 0];                                   <span class="comment">% initial state</span>
+[y, ~, xsim] = msim(obj, u, t, x0);
+</pre>
+<p>Set limits for states and inputs</p>
+<pre class="codeinput">lbx = [0, 0];                                  <span class="comment">% lower limit state</span>
+ubx = [1, 1];                                  <span class="comment">% upper limit state</span>
+lbu = 0;                                       <span class="comment">% lower limit input</span>
+ubu = 1;                                       <span class="comment">% upper limit input</span>
+</pre>
+<p>Linear state transformation of mti model</p>
+<pre class="codeinput">[xsc, usc, T, c] = dataProcessing.scaleData(xsim, u, lbx, ubx, lbu, ubu);
+<span class="comment">% scale data within limits and obtain transformation matrix and offset</span>
+msys = mss2mss(obj, T, c);                 <span class="comment">% transform (scale) system</span>
+</pre>
+<p>Simulation of transformed mti model</p>
+<pre class="codeinput">[ysc, tOut, xsimsc] = msim(msys, usc, t, xsc(1,:));
+<span class="comment">% simulate scaled mti model with scaled initial state</span>
+</pre>
+<p>plot results</p>
+<pre class="codeinput">figure()                                        <span class="comment">% plot original mti model</span>
+sgtitle(<span class="string">'original MTI model'</span>)
+subplot(3, 1, 1)
+plot(u)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend(<span class="string">'input'</span>)
+subplot(3, 1, 2)
+plot(xsim)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend({<span class="string">'state 1'</span>,<span class="string">'state 2'</span>})
+subplot(3, 1, 3)
+plot(y)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend(<span class="string">'output'</span>)
+
+figure()                                        <span class="comment">% plot scaled mti model</span>
+sgtitle(<span class="string">'scaled MTI model'</span>)
+subplot(3, 1, 1)
+plot(usc)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend(<span class="string">'input'</span>)
+subplot(3, 1, 2)
+plot(xsimsc)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend({<span class="string">'state 1'</span>,<span class="string">'state 2'</span>})
+subplot(3, 1, 3)
+plot(ysc)
+xlim([min(t), max(t)])
+xlabel(<span class="string">'time'</span>)
+legend(<span class="string">'output'</span>)
+</pre>
+<img vspace="5" hspace="5" src="mss2mssDoc_03.png" alt=""> <img vspace="5" hspace="5" src="mss2mssDoc_04.png" alt=""> <h2 id="17">See also</h2>
+<p> <a href="mssDoc.html"><tt>mss</tt></a> <a href="CPN1Doc.html"><tt>CPN1</tt></a>
+</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% mss2mss
+% Affine state transformations of MTI models (currently only permutation, 
+% scaling and offset allowed)
+% 
+%% Syntax
+% |[sys_sc] = mss2mss(sys, T, c)|
+%% Description
+% |[mtiSystemTransformed] = mss2mss(mtiSystem, transformation, offset)| 
+% 
+% Linear state transformation (and optionally input transformation) of an 
+% explicit MTI model in CPN1 format. Currently only permutation, scaling 
+% and offset is possible (no rotation, i.e. the transformation matrix must
+% have exactly one non-zero element per row and column).
+%
+% The tranformation is done with the linear state transformation 
+%
+% $$ \mathbf{x}=\mathbf{T}\tilde{\mathbf{x}}+\mathbf{c} $$
+% 
+% and
+%
+% $$ \tilde{\mathbf{x}}=\mathbf{T}^{-1}(\mathbf{x}-\mathbf{c})
+% $$.
+%
+% where T can have only 1 non-zero element per row and column. 
+%
+% The transformed MTI system in normalized representation is given by
+%
+% $$\mathbf{\dot{\tilde{x}}}=\mathbf{\tilde{F}}_\phi\prod{(
+% 1-|\mathbf{\tilde{F}}_U|+\mathbf{\tilde{F}}_U\mathbf{\tilde{x}})}$$
+%
+% $$\mathbf{y}=\mathbf{\tilde{G}}_\phi\prod{(
+% 1-|\mathbf{\tilde{G}}_U|+\mathbf{\tilde{G}}_U\mathbf{\tilde{x}})}$$
+%
+% The output is a MTI model with the same input and output behavior as the
+% original system, but with scaled states (and optionally scaled inputs) 
+% according to the transformation matrix and offset vector.
+%
+% If the transformation matrix has dimensions n x n (with n being the 
+% number of states), then only states will be scaled. If the transformation
+% matrix has dimensions (n + m) x (n + m) then the inputs will be scaled,
+% too (where m is the number of inputs). 
+% 
+%
+% Combining this function with dataProcessing.scaleData allows for easy 
+% scaling of states (and optionally inputs) between lower and upper bounds.
+% 
+
+%% Input arguments
+% |mtiSystem|       - mss object (eMTI system)
+%
+% |transformation|  - transformation matrix (must be diagonal)
+%
+% |offset|          - vector of offsets
+%
+
+%% Output arguments
+% |mtiSystemTransformed|  - mss object (transformed eMTI system)
+%
+
+%% Example state transformation
+% Build multilinear model (MTI), 2.order, 1 input
+F.U = [[0.83, -0.1]; [0, 0.53]; [1, -0.1]];    % state transition matrix
+F.phi = [[1.0080, 0]; [0, 1.50]];              % state weigting matrix
+u = [zeros(20, 1); ones(20, 1); -ones(20, 1)]; % input signal
+t = 1:1:60;                                    % time vector
+Ts = 1;                                        % sampling time (discrete)
+obj = mss(CPN1(F.U, F.phi), Ts);               % build mti model object
+%%
+% Simulate MTI Model
+x0 = [0; 0];                                   % initial state
+[y, ~, xsim] = msim(obj, u, t, x0);
+%%
+% Set limits for states (inputs not scaled in this example)
+lbx = [0, 0];                                  % lower limit state
+ubx = [1, 1];                                  % upper limit state
+%%
+% Linear state transformation of mti model
+[xsc, ~, T, c] = dataProcessing.scaleData(xsim, u, lbx, ubx); 
+% scale data within limits and obtain transformation matrix and offset
+msys = mss2mss(obj, T, c);                 % transform (scale) system           
+
+%%
+% Simulation of transformed mti model
+[ysc, ~, xsimsc] = msim(msys, u, t, xsc(1,:)); 
+% simulate scaled mti model with scaled initial state
+%%
+% Plot results 
+figure()                                        % plot original mti model   
+sgtitle('original MTI model')
+subplot(3, 1, 1)
+plot(u)
+xlim([min(t), max(t)])
+xlabel('time')
+legend('input')
+subplot(3, 1, 2)
+plot(xsim)
+xlim([min(t), max(t)])
+xlabel('time')
+legend({'state 1', 'state 2'})
+subplot(3, 1, 3)
+plot(y)
+xlim([min(t), max(t)])
+xlabel('time')
+legend('output')
+
+figure()                                        % plot scaled mti model   
+sgtitle('scaled MTI model')
+subplot(3,1,1)
+plot(u)
+xlim([min(t), max(t)])
+xlabel('time')
+legend('input')
+subplot(3,1,2)
+plot(xsimsc)
+xlim([min(t), max(t)])
+xlabel('time')
+legend({'state 1','state 2'})
+subplot(3,1,3)
+plot(ysc)
+xlim([min(t), max(t)])
+xlabel('time')
+legend('output')
+%% Example transformation in state and input
+% Build multilinear model (MTI), 2.order, 1 input
+F.U = [[0.83, -0.1]; [0, 0.53]; [1, -0.1]];    % state transition matrix
+F.phi = [[1.0080, 0]; [0, 1.50]];              % state weigting matrix
+u = [zeros(20, 1); ones(20, 1); -ones(20, 1)]; % input signal
+t = 1:1:60;                                    % time vector
+Ts = 1;                                        % sampling time (discrete)
+obj = mss(CPN1(F.U, F.phi), Ts);               % build mti model object
+%%
+% Simulate MTI Model
+x0 = [0; 0];                                   % initial state
+[y, ~, xsim] = msim(obj, u, t, x0);
+%%
+% Set limits for states and inputs
+lbx = [0, 0];                                  % lower limit state
+ubx = [1, 1];                                  % upper limit state
+lbu = 0;                                       % lower limit input
+ubu = 1;                                       % upper limit input
+%%
+% Linear state transformation of mti model
+[xsc, usc, T, c] = dataProcessing.scaleData(xsim, u, lbx, ubx, lbu, ubu);
+% scale data within limits and obtain transformation matrix and offset
+msys = mss2mss(obj, T, c);                 % transform (scale) system
+%%
+% Simulation of transformed mti model
+[ysc, tOut, xsimsc] = msim(msys, usc, t, xsc(1,:)); 
+% simulate scaled mti model with scaled initial state
+%%
+% plot results
+figure()                                        % plot original mti model   
+sgtitle('original MTI model')
+subplot(3, 1, 1)
+plot(u)
+xlim([min(t), max(t)])
+xlabel('time')
+legend('input')
+subplot(3, 1, 2)
+plot(xsim)
+xlim([min(t), max(t)])
+xlabel('time')
+legend({'state 1','state 2'})
+subplot(3, 1, 3)
+plot(y)
+xlim([min(t), max(t)])
+xlabel('time')
+legend('output')
+
+figure()                                        % plot scaled mti model   
+sgtitle('scaled MTI model')
+subplot(3, 1, 1)
+plot(usc)
+xlim([min(t), max(t)])
+xlabel('time')
+legend('input')
+subplot(3, 1, 2)
+plot(xsimsc)
+xlim([min(t), max(t)])
+xlabel('time')
+legend({'state 1','state 2'})
+subplot(3, 1, 3)
+plot(ysc)
+xlim([min(t), max(t)])
+xlabel('time')
+legend('output')
+
+%% See also
+% <mssDoc.html |mss|>
+% <CPN1Doc.html |CPN1|>
+##### SOURCE END #####
+-->
+</body>
+</html>

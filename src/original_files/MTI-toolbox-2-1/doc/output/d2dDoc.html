@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>d2d</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-06-24">
+<meta name="DC.source" content="d2dDoc.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>d2d</h1>
+<!--introduction-->
+<p>Resamples discrete-time dynamic iMTI system</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Syntax</a>
+</li>
+<li>
+<a href="#2">Description</a>
+</li>
+<li>
+<a href="#3">Examples</a>
+</li>
+<li>
+<a href="#10">References</a>
+</li>
+<li>
+<a href="#11">See also</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Syntax</h2>
+<p>SYSD2 = d2d(SYSD1,TS) computes a resampled discrete-time model with using one step forward euler approximation</p>
+<h2 id="2">Description</h2>
+<p>For the resampling the one step forward euler approximation is used: (xpOld - x)/TSOld = (xpNew - x)/TSNew. The algorithm directly implements additional auxilary equations for all state predictions and replaces the old state predictions by auxiliary variables by manipulation of the parameter tensor (the strucutre and parameter matrix of the CP decomposition). Afterwards it will be checked if those additional auxilary variables and equations can be reduced algebraicly, if so, they will be eliminated by algbraic elimination by direct manipulation of the parameter tensor (the strucutre and parameter matrix of the CP decomposition).</p>
+<h2 id="3">Examples</h2>
+<p>
+<b>Find stable time step for discretization of the Dadras attractor with c2d and d2d:</b>
+</p>
+<p>The Dadras attractor, introduced in [1], can be described by the following set of ODEs</p>
+<pre class="codeinput">eq = [<span class="string">"xp1 = x2 - a*x1 + b*x2*x3"</span>;<span class="keyword">...</span>
+    <span class="string">"xp2 = c*x2 - x1*x3 + x3"</span>;<span class="keyword">...</span>
+    <span class="string">"xp3 = d*x1*x2 - h*x3"</span>];
+</pre>
+<p>which can be converted into a continuous time dmss object</p>
+<pre class="codeinput">ts = 0;
+sys = sym2dmss(eq, ts);
+disp(sys.symbolicEquations)
+</pre>
+<pre class="codeoutput">Reduced by 2 column(s) and 0 equation(s) with trivial Reduction due to duplications.
+xp1 - x2 + a*x1 - b*x2*x3 == 0
+  xp2 - x3 - c*x2 + x1*x3 == 0
+     xp3 + h*x3 - d*x1*x2 == 0
+ 
+</pre>
+<p>For simulation the symbolic parameters should be replace by numeric values</p>
+<pre class="codeinput">symParameters = sym([<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"h"</span>]);
+numParameters = [3, 2.7, 4.7, 2, 9];
+sys = sys.replaceSymbolicParameters(symParameters, numParameters);
+disp(sys.symbolicEquations)
+</pre>
+<pre class="codeoutput">3*x1 - x2 + xp1 - (27*x2*x3)/10 == 0
+  xp2 - x3 - (47*x2)/10 + x1*x3 == 0
+           9*x3 + xp3 - 2*x1*x2 == 0
+ 
+</pre>
+<p>The model can be converted into discrete time model by</p>
+<pre class="codeinput">tsD = 0.1;
+sysD = c2d(sys, tsD);
+disp(sysD.symbolicEquations)
+</pre>
+<pre class="codeoutput">System reduced algebraicly by 3 algebraic variable(s) and 3 equation(s).
+         xp1 - x2/10 - (7*x1)/10 - (27*x2*x3)/100 == 0
+(100*xp2)/147 - (10*x3)/147 - x2 + (10*x1*x3)/147 == 0
+                          xp3 - x3/10 - (x1*x2)/5 == 0
+ 
+</pre>
+<p>With simulation the phase potrait can be computed for the continuous- and discrete-time models. Also the simulation times can be compared.</p>
+<pre class="codeinput">x0 = [5, 0, -4];
+tend = 1e2;
+
+tic()
+simoutC = dmsim(sys, x0, [0, tend]);
+timeC = toc();
+
+tic()
+simoutD = dmsim(sysD, x0, [0:tsD:tend]);
+timeD = toc();
+
+figure()
+plot3(simoutC.x(:,1),simoutC.x(:,2),simoutC.x(:,3), <span class="string">"r-"</span>, LineWidth=0.01);
+hold <span class="string">on</span>
+plot3(simoutD.x(:,1),simoutD.x(:,2),simoutD.x(:,3), <span class="string">"k--"</span>, LineWidth=0.01);
+view([45, 30])
+grid <span class="string">on</span>
+legend([sprintf(<span class="string">"continuous model: %.3f sec."</span>, timeC), sprintf(<span class="string">"discrete model: %.3f sec."</span>, timeD)], <span class="string">"Location"</span>,<span class="string">"southeast"</span>)
+axis([0 20 -10 10 -15 10])
+hold <span class="string">off</span>
+</pre>
+<pre class="codeoutput">Seperation in 3 subset(s) with 3 subproblem(s), from which 3 are explicit solvable.Warning: Results may be inaccurate. Absolute function value is bigger then
+eps^(1/4).
+Maximum absolute function value is 2.228e+189
+Mean absolute function value is NaN
+ 
+</pre>
+<img vspace="5" hspace="5" src="d2dDoc_01.png" alt=""> <p>In the phase potrait it can be seen that the discretization is unstable and nearly reaches very large state values. The discrete-time model can be resampled to find a more suitable step size.</p>
+<pre class="codeinput">tsD = 0.01;
+sysD = sysD.d2d(tsD);
+
+tic()
+simoutC = dmsim(sys, x0, [0, tend]);
+timeC = toc();
+
+tic()
+simoutD = dmsim(sysD, x0, [0:tsD:tend]);
+timeD = toc();
+
+figure()
+plot3(simoutC.x(:,1),simoutC.x(:,2),simoutC.x(:,3), <span class="string">"r-"</span>, LineWidth=0.01);
+hold <span class="string">on</span>
+plot3(simoutD.x(:,1),simoutD.x(:,2),simoutD.x(:,3), <span class="string">"k--"</span>, LineWidth=0.01);
+view([45, 30])
+grid <span class="string">on</span>
+legend([sprintf(<span class="string">"continuous model: %.3f sec."</span>, timeC), sprintf(<span class="string">"discrete model: %.3f sec."</span>, timeD)], <span class="string">"Location"</span>,<span class="string">"southeast"</span>)
+axis([0 20 -10 10 -15 10])
+hold <span class="string">off</span>
+</pre>
+<pre class="codeoutput">System reduced algebraicly by 3 algebraic variable(s) and 3 equation(s).
+Seperation in 3 subset(s) with 3 subproblem(s), from which 3 are explicit solvable.</pre>
+<img vspace="5" hspace="5" src="d2dDoc_02.png" alt=""> <p>In the phase potrait it can be seen that the discretization is now stable and behaves similar (within a similar magnitude) as the continuous time model. Due to the chaotic behaviour of the system it is extremely unlikely to generate exactly similar trends.</p>
+<h2 id="10">References</h2>
+<p>[1] S. Dadras and H. R. Momeni, &ldquo;A novel three-dimensional autonomous chaotic system generating two, three and four-scroll attractors,&rdquo; Physics Letters A, vol. 373, no. 40, pp. 3637&ndash;3642, Sep. 2009. doi:10.1016/j.physleta.2009.07.088</p>
+<h2 id="11">See also</h2>
+<p>
+<a href="dmssc2dDoc.html">c2d</a>, <a href="d2cDoc.html">d2c</a>, <a href="dmssDoc.html">dmss</a>, <a href="dmsimDoc.html">dmsim</a>, <a href="sym2dmssDoc.html">sym2dmss</a>
+</p>
+<p>Author(s): Torben Warnecke</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% d2d
+% Resamples discrete-time dynamic iMTI system
+
+%% Syntax
+% SYSD2 = d2d(SYSD1,TS) computes a resampled discrete-time model with 
+%   using one step forward euler approximation
+
+%% Description
+% For the resampling the one step forward euler approximation is used: (xpOld - x)/TSOld = (xpNew - x)/TSNew.
+% The algorithm directly implements additional auxilary equations for all state predictions 
+% and replaces the old state predictions by auxiliary variables by manipulation
+% of the parameter tensor (the strucutre and parameter matrix of the CP
+% decomposition).
+% Afterwards it will be checked if those additional auxilary variables and
+% equations can be reduced algebraicly, if so, they will be eliminated by
+% algbraic elimination by direct manipulation of the parameter tensor 
+% (the strucutre and parameter matrix of the CP decomposition).
+%% Examples
+% *Find stable time step for discretization of the Dadras attractor with c2d and d2d:*
+%
+% The Dadras attractor, introduced in [1], can be described by the
+% following set of ODEs
+eq = ["xp1 = x2 - a*x1 + b*x2*x3";...
+    "xp2 = c*x2 - x1*x3 + x3";...
+    "xp3 = d*x1*x2 - h*x3"];
+%%
+% which can be converted into a continuous time dmss object
+ts = 0;
+sys = sym2dmss(eq, ts);
+disp(sys.symbolicEquations)
+%%
+% For simulation the symbolic parameters should be replace by numeric
+% values
+symParameters = sym(["a", "b", "c", "d", "h"]);
+numParameters = [3, 2.7, 4.7, 2, 9];
+sys = sys.replaceSymbolicParameters(symParameters, numParameters);
+disp(sys.symbolicEquations)
+%%
+% The model can be converted into discrete time model by
+tsD = 0.1;
+sysD = c2d(sys, tsD);
+disp(sysD.symbolicEquations)
+
+%%
+% With simulation the phase potrait can be computed for the continuous- and discrete-time models. Also the simulation times can be
+% compared.
+
+x0 = [5, 0, -4];
+tend = 1e2;
+
+tic()
+simoutC = dmsim(sys, x0, [0, tend]);
+timeC = toc();
+
+tic()
+simoutD = dmsim(sysD, x0, [0:tsD:tend]);
+timeD = toc();
+
+figure()
+plot3(simoutC.x(:,1),simoutC.x(:,2),simoutC.x(:,3), "r-", LineWidth=0.01);
+hold on
+plot3(simoutD.x(:,1),simoutD.x(:,2),simoutD.x(:,3), "kREPLACE_WITH_DASH_DASH", LineWidth=0.01);
+view([45, 30])
+grid on
+legend([sprintf("continuous model: %.3f sec.", timeC), sprintf("discrete model: %.3f sec.", timeD)], "Location","southeast")
+axis([0 20 -10 10 -15 10])
+hold off
+%%
+% In the phase potrait it can be seen that the discretization is unstable and
+% nearly reaches very large state values. The discrete-time model can be
+% resampled to find a more suitable step size.
+tsD = 0.01;
+sysD = sysD.d2d(tsD);
+
+tic()
+simoutC = dmsim(sys, x0, [0, tend]);
+timeC = toc();
+
+tic()
+simoutD = dmsim(sysD, x0, [0:tsD:tend]);
+timeD = toc();
+
+figure()
+plot3(simoutC.x(:,1),simoutC.x(:,2),simoutC.x(:,3), "r-", LineWidth=0.01);
+hold on
+plot3(simoutD.x(:,1),simoutD.x(:,2),simoutD.x(:,3), "kREPLACE_WITH_DASH_DASH", LineWidth=0.01);
+view([45, 30])
+grid on
+legend([sprintf("continuous model: %.3f sec.", timeC), sprintf("discrete model: %.3f sec.", timeD)], "Location","southeast")
+axis([0 20 -10 10 -15 10])
+hold off
+%%
+% In the phase potrait it can be seen that the discretization is now stable and
+% behaves similar (within a similar magnitude) as the continuous time
+% model. Due to the chaotic behaviour of the system it is extremely unlikely to
+% generate exactly similar trends.
+
+%% References
+% [1] S. Dadras and H. R. Momeni, “A novel three-dimensional autonomous chaotic system generating two, three and four-scroll attractors,” Physics Letters A, vol. 373, no. 40, pp. 3637–3642, Sep. 2009. doi:10.1016/j.physleta.2009.07.088
+%
+%% See also
+% <dmssc2dDoc.html c2d>,
+% <d2cDoc.html d2c>,
+% <dmssDoc.html dmss>,
+% <dmsimDoc.html dmsim>,
+% <sym2dmssDoc.html sym2dmss>
+%
+%
+% Author(s): Torben Warnecke
+##### SOURCE END #####
+-->
+</body>
+</html>
