@@ -89,5 +89,16 @@ $$
 Per tant, la idea és aconseguir passar de les equacions a la matriu.
 
 
+## Todo
+
+- [x] Lector d'equacions d'entrada
+- [x] Lògica linearitzar
+- [x] Generar classe tests
+- [] Repassar tests
+- [] Depurar codi
+- [] Classe per a linearitzar equacions d'entrada
+- [] Simplificar procés
+
+
 
     
