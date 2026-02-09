@@ -1,0 +1,292 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>connect</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-06-24">
+<meta name="DC.source" content="connectDoc.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h1>connect</h1>
+<!--introduction-->
+<p>Connect signals of dmss model(s)</p>
+<!--/introduction-->
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">Syntax</a>
+</li>
+<li>
+<a href="#2">Examples</a>
+</li>
+<li>
+<a href="#8">References</a>
+</li>
+<li>
+<a href="#9">See also</a>
+</li>
+</ul>
+</div>
+<h2 id="1">Syntax</h2>
+<p>sys = connect(sys) Connect an appended system based on signal names</p>
+<p>sys = connect(sys, stateConnections, algebraicConnections, booleanConnections, similarInputs) Connect an appended system based on indexes (state-input-/ algebraic-inputs-/ boolean-input-connections and similar inputs). Indexes are parsed as connection matrices with input indexes in the first column and the variable indices in the following columns [inputIdx, variableIdx, ...; ...]. If more then 2 values are in a row a additional (linear) connection equation will be added: u = var(1) + var(2) + ... If a variable index is parsed as negative value it is subtracted in the connection equation: u = -var(1) ...</p>
+<p>sys = connect(sys1, sys2, ..., sysN): Connect multiple systems based on signal names</p>
+<h2 id="2">Examples</h2>
+<p>
+<b>Connect via index matrices: simplified HVAC system</b>
+</p>
+<p>The supplied room of an HVAC system can be modelled by its power and transport balance, as well as the enthalpy equation for the humid air.</p>
+<pre class="codeinput">powerBalance = [<span class="string">"0 = -m*dx1 + u1 + u2"</span>];
+transportBalance = [<span class="string">"0 = -m*dx2 + u3"</span>];
+enthalpy = [<span class="string">"x1 = c_d * y1 + c_v * y1 * x2 + r0 * x2"</span>];
+room = sym2dmss([powerBalance; transportBalance; enthalpy], 0, [<span class="string">"dx"</span>, <span class="string">"x"</span>, <span class="string">"u"</span>, <span class="string">"y"</span>]);
+</pre>
+<p>where x1 is the room air enthalpy, x2 is the absolute room air humidity, dx1 and dx2 are their derivatives, y1 is the room temperature, u1 is the heat transfered by the air flow of the air conditioning system (either heating or cooling the room air), u2 is the heat loss to the environment and u3 is the water vapor mass flow transfered by the air flow of the air conditioning system (either humidifying or dehumidifying the room air).</p>
+<p>The energy and humidity transfer by the air conditioning system can be modelled by the following equations</p>
+<pre class="codeinput">airConditioning = [<span class="string">"y1 = c_d*u1*u2 + c_v*u1*u2*u3 + r0*u1*u3 - u1*u4"</span>;<span class="keyword">...</span>
+                    <span class="string">"y2 = u1*u3 - u1*u5"</span>];
+airConditioning = sym2dmss(airConditioning, 0, [<span class="string">"dx"</span>, <span class="string">"x"</span>, <span class="string">"u"</span>, <span class="string">"y"</span>]);
+</pre>
+<pre class="codeoutput">Reduced by 1 column(s) and 0 equation(s) with trivial Reduction due to duplications.
+</pre>
+<p>where y1 corresponds to the heat transfered by the air flow of the air conditioning system, y2 to the water vapor mass flow transfered by the air flow of the air conditioning system, u1 to the supplied mass flow of air, u2 to the supply temperature, u3 to the supply humidity, u4 to the rooms enthalpy and u5 to the rooms absolute humidity.</p>
+<p>Additionally the heating loss to the environment can be calculated by</p>
+<pre class="codeinput">loss = [<span class="string">"y1 = k*A*(u1-u2)"</span>];
+loss = sym2dmss(loss, 0, [<span class="string">"dx"</span>, <span class="string">"x"</span>, <span class="string">"u"</span>, <span class="string">"y"</span>]);
+</pre>
+<p>where y1 is the heat loss, u1 is the ambient temperature and u2 is the rooms temperature.</p>
+<p>The component models can be appended to obtain an overall model of the system</p>
+<pre class="codeinput">sys = append(room, airConditioning, loss);
+disp(sys.symbolicEquations)
+</pre>
+<pre class="codeoutput error">Unable to perform assignment because value of type 'sym' is not convertible to 'double'.
+
+Error in dmss/append/insertDiagonally (line 146)
+        Mout.c(idxRows, idxCols) = M2.c;
+
+Error in dmss/append (line 92)
+    sysOut.H.phi.equality = insertDiagonally(sysOut.H.phi.equality, sys2.H.phi.equality, nEqi+1:nEqi+sys2.nEq, Ri+1:Ri+R2);
+
+Error in connectDoc (line 57)
+sys = append(room, airConditioning, loss);
+
+Caused by:
+    Error using mupadengine/feval2char
+    Unable to convert expression containing symbolic variables into double array. Apply 'subs' function first to substitute values for variables</pre>
+<p>Due to the appending the number of variables as well as their index is increasing accordingly.</p>
+<p>The input and output signals can be connected by using connection matrices, where the first column corresponds to the input index and the second column to the state/algebraic signal index.</p>
+<pre class="codeinput">stateInputConnection = [7 1; 8 2];
+algebraicInputConnection = [9 1; 1 2; 3 3; 2 4];
+similarInputs = [];
+sys = sys.connect(stateInputConnection, algebraicInputConnection, [], similarInputs);
+
+disp(sys.symbolicEquations)
+</pre>
+<p>
+<b>Connect via signal names: simplified HVAC system</b>
+</p>
+<p>Anopther way of connecting the sub-models is via signal names. Therefor the signal names need to be set accordingly. For the naming it is important that there are no duplicats in the states and algebraic variable names. If there are duplicats in the input names, they will be set as similar inputs.</p>
+<pre class="codeinput">room.stateName = [<span class="string">"room enthalpy"</span>, <span class="string">"room humidity"</span>];
+room.algebraicName = [<span class="string">"room temperature"</span>];
+room.inputName = [<span class="string">"heat transfer by air conditioning"</span>, <span class="string">"heat loss"</span>, <span class="string">"humidity transfer by air conditioning"</span>];
+
+airConditioning.algebraicName = [<span class="string">"heat transfer by air conditioning"</span>, <span class="string">"humidity transfer by air conditioning"</span>];
+airConditioning.inputName = [<span class="string">"air flow"</span>, <span class="string">"supply temperature"</span>, <span class="string">"supply humidity"</span>, <span class="string">"room enthalpy"</span>, <span class="string">"room humidity"</span>];
+
+loss.algebraicName = [<span class="string">"heat loss"</span>];
+loss.inputName = [<span class="string">"ambient temperature"</span>, <span class="string">"room temperature"</span>];
+
+sys = connect(room, airConditioning, loss);
+
+disp(sys.symbolicEquations)
+</pre>
+<h2 id="8">References</h2>
+<h2 id="9">See also</h2>
+<p>
+<a href="dmssDoc.html">dmss</a>, <a href="appendDoc.html">append</a>, <a href="sym2dmssDoc.html">sym2dmss</a>, <a href="replaceSymbolicParametersDoc.html">replaceSymbolicParameters</a>
+</p>
+<p>Author(s): Torben Warnecke</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% connect
+% Connect signals of dmss model(s)
+%% Syntax
+% sys = connect(sys)
+%   Connect an appended system based on signal names
+%
+% sys = connect(sys, stateConnections, algebraicConnections, booleanConnections, similarInputs)
+%   Connect an appended system based on indexes (state-input-/
+%   algebraic-inputs-/ boolean-input-connections and similar
+%   inputs). Indexes are parsed as connection matrices with input indexes
+%   in the first column and the variable indices in the following columns [inputIdx, variableIdx, ...; ...].
+%   If more then 2 values are in a row a additional (linear) connection equation will be added: u = var(1) + var(2) + ...
+%   If a variable index is parsed as negative value it is subtracted in the
+%   connection equation: u = -var(1) ...
+%
+% sys = connect(sys1, sys2, ..., sysN):
+%   Connect multiple systems based on signal names
+%
+%% Examples
+% *Connect via index matrices: simplified HVAC system*
+% 
+% The supplied room of an HVAC system can be modelled by its power and
+% transport balance, as well as the enthalpy equation for the humid air.
+powerBalance = ["0 = -m*dx1 + u1 + u2"];
+transportBalance = ["0 = -m*dx2 + u3"];
+enthalpy = ["x1 = c_d * y1 + c_v * y1 * x2 + r0 * x2"];
+room = sym2dmss([powerBalance; transportBalance; enthalpy], 0, ["dx", "x", "u", "y"]);
+%%
+% where x1 is the room air enthalpy, x2 is the absolute room air humidity,
+% dx1 and dx2 are their derivatives, y1 is the room temperature, u1 is the
+% heat transfered by the air flow of the air conditioning system (either heating or cooling the room air), u2 is the
+% heat loss to the environment and u3 is the water vapor mass flow
+% transfered by the air flow of the air conditioning system (either humidifying
+% or dehumidifying the room air).
+%
+% The energy and humidity transfer by the air conditioning system can be
+% modelled by the following equations
+airConditioning = ["y1 = c_d*u1*u2 + c_v*u1*u2*u3 + r0*u1*u3 - u1*u4";...
+                    "y2 = u1*u3 - u1*u5"];
+airConditioning = sym2dmss(airConditioning, 0, ["dx", "x", "u", "y"]);
+%%
+% where y1 corresponds to the heat transfered by the air flow of the air
+% conditioning system, y2 to the water vapor mass flow transfered by the air
+% flow of the air conditioning system, u1 to the supplied mass flow of air, u2
+% to the supply temperature, u3 to the supply humidity, u4 to the rooms
+% enthalpy and u5 to the rooms absolute humidity.
+%
+% Additionally the heating loss to the environment can be calculated by
+loss = ["y1 = k*A*(u1-u2)"];
+loss = sym2dmss(loss, 0, ["dx", "x", "u", "y"]);
+%%
+% where y1 is the heat loss, u1 is the ambient temperature and u2 is the
+% rooms temperature.
+%
+% The component models can be appended to obtain an overall model of the
+% system
+sys = append(room, airConditioning, loss);
+disp(sys.symbolicEquations)
+%%
+% Due to the appending the number of variables as well
+% as their index is increasing accordingly. 
+% 
+% The input and output signals can be connected by using connection matrices, where the first column corresponds to the input
+% index and the second column to the state/algebraic signal index.
+stateInputConnection = [7 1; 8 2];
+algebraicInputConnection = [9 1; 1 2; 3 3; 2 4];
+similarInputs = [];
+sys = sys.connect(stateInputConnection, algebraicInputConnection, [], similarInputs);
+
+disp(sys.symbolicEquations)
+%%
+% *Connect via signal names: simplified HVAC system*
+%
+% Anopther way of connecting the sub-models is via signal names. 
+% Therefor the signal names need to be set accordingly.
+% For the naming it is important that there are no duplicats in the
+% states and algebraic variable names. If there are duplicats in the input
+% names, they will be set as similar inputs.
+room.stateName = ["room enthalpy", "room humidity"];
+room.algebraicName = ["room temperature"];
+room.inputName = ["heat transfer by air conditioning", "heat loss", "humidity transfer by air conditioning"];
+
+airConditioning.algebraicName = ["heat transfer by air conditioning", "humidity transfer by air conditioning"];
+airConditioning.inputName = ["air flow", "supply temperature", "supply humidity", "room enthalpy", "room humidity"];
+
+loss.algebraicName = ["heat loss"];
+loss.inputName = ["ambient temperature", "room temperature"];
+
+sys = connect(room, airConditioning, loss);
+
+disp(sys.symbolicEquations)
+
+%% References
+%
+%% See also
+% <dmssDoc.html dmss>,
+% <appendDoc.html append>,
+% <sym2dmssDoc.html sym2dmss>,
+% <replaceSymbolicParametersDoc.html replaceSymbolicParameters>
+%
+%
+% Author(s): Torben Warnecke
+##### SOURCE END #####
+-->
+</body>
+</html>
