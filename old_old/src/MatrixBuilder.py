@@ -8,13 +8,14 @@ class MatrixBuilder:
 
 
     def __init__(self, equations=None):
-        self.equations = equations if equations else []
-        self.symbols_list, self.terms_list, self.parsed_equations = self._infer_symbols_and_terms()
-        self.symbol_to_index = {sym: i for i, sym in enumerate(self.symbols_list)}
-        self.term_to_index = {term: i for i, term in enumerate(self.terms_list)}
+        
+        self.equations = equations if equations else [] # Això ho fem així per a poder inicialitzar la classe buida
+        self.symbols_list, self.terms_list, self.parsed_equations = self._infer_symbols_and_terms() # Llista de símbols, termes i equacions parsejades
+        self.symbol_to_index = {sym: i for i, sym in enumerate(self.symbols_list)} # Diccionari per a poder trobar l'índex d'un símbol
+        self.term_to_index = {term: i for i, term in enumerate(self.terms_list)} # Diccionari per a poder trobar l'índex d'un terme
 
-        self.S = self._build_S()
-        self.P = self._build_P()
+        self.S = self._build_S() # Matriu S
+        self.P = self._build_P() # Matriu P
 
     def _build_P(self):
         """
