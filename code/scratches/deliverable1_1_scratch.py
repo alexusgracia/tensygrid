@@ -1,8 +1,9 @@
 import sympy as sp
 import numpy as np
-from scipy.linalg import block_diag
+from scipy import sparse
 from sympy.parsing.sympy_parser import parse_expr
-
+import cProfile, pstats, io
+from memory_profiler import profile
 
 class PolynomialMatrixBuilder:
     """
@@ -59,61 +60,68 @@ class PolynomialMatrixBuilder:
 
 
     def matrix_creation(self, all_exprs):
-        """
-        Creates the S_H and Phi_F matrices from a list of equations.
-        
-        Args:
-            all_exprs (list): List of equations.
-            all_symbols (list): List of symbols.
-        
-        Returns:
-            tuple: Tuple containing S_H and Phi_F matrices.
-        """
-        S_H_list = []
-        P_Hs_list = []
-        print(f"--- Expressions: ---")
-        for i, eq in enumerate(all_exprs):
-            print(f"\nEquation {i+1} (Ordered Terms): {eq}")
-            try:
-                if eq.is_Add:
-                    terms = eq.args
-                else:
-                    terms = [eq]
-                
-                eq_coeffs = []
-                
-                for term in terms:
-                    p = sp.Poly(term, *self.all_symbols)
-                    monom = np.array(p.monoms()[0])
-                    coeff = p.coeffs()[0]
-                    
-                    # Comment this line if you don't want to see the term comparison
-                    print(f"  Term: {term} -> Coeff: {coeff}, Monom: {monom}")
-                    
-                    S_H_list.append(monom)
-                    eq_coeffs.append(coeff)
-
-                if eq_coeffs:
-                    P_Hs_list.append(np.array(eq_coeffs))
-
-
-            except sp.PolificationFailed:
-                 print(f"\nCould not create Poly for equation {i+1}")
-                
-        if S_H_list:
-            S_H = np.vstack(S_H_list).T
-        else:
-            S_H = np.array([])
+            """
+            Creates the S_H and Phi_F matrices from a list of equations.
             
-        if P_Hs_list:
-            # \Phi_F is a block diagonal matrix with the coefficients of each equation on the diagonal
-            Phi_F = block_diag(*P_Hs_list)
-        else:
-            Phi_F = np.array([])
+            Args:
+                all_exprs (list): List of equations.
+                all_symbols (list): List of symbols.
+            
+            Returns:
+                tuple: Tuple containing S_H and Phi_F matrices.
+            """
+            S_H_list = []
+            P_Hs_list = []
+            print(f"--- Expressions: ---")
+            for i, eq in enumerate(all_exprs):
+                print(f"\nEquation {i+1} (Ordered Terms): {eq}")
+                try:
+                    if eq.is_Add:
+                        terms = eq.args
+                    else:
+                        terms = [eq]
+                    
+                    eq_coeffs = []
+                    
+                    for term in terms:
+                        p = sp.Poly(term, *self.all_symbols)
+                        monom = np.array(p.monoms()[0])
+                        coeff = p.coeffs()[0]
+                        
+                        # Comment this line if you don't want to see the term comparison
+                        print(f"  Term: {term} -> Coeff: {coeff}, Monom: {monom}")
+                        
+                        S_H_list.append(monom)
+                        eq_coeffs.append(float(coeff))
+
+                    if eq_coeffs:
+                        P_Hs_list.append(np.array([eq_coeffs], dtype=float))
+
+
+                except sp.PolificationFailed:
+                    print(f"\nCould not create Poly for equation {i+1}")
+                    
+            if S_H_list:
+                S_H = np.vstack(S_H_list).T
+                S_H = sparse.csc_matrix(S_H)
+            else:
+                S_H = sparse.csc_matrix([])
+                
+            if P_Hs_list:
+                # \Phi_F is a block diagonal matrix with the coefficients of each equation on the diagonal
+
+                Phi_F = sparse.block_diag(P_Hs_list)
+            else:
+                Phi_F = sparse.csc_matrix([])
+            
+            return S_H, Phi_F
+
+    def linearize(self, S, Phi, v_dict):
+        v = np.array([v_dict.get(sym, 0.0) for sym in self.all_symbols], dtype=float).reshape(-1, 1)
         
-        return S_H, Phi_F
+        
 
-
+    @profile
     def build(self):
         print("\n--- Coefficient extraction ---\n")
         self.extract_symbols(self.eqs + self.ineqs)
@@ -129,35 +137,31 @@ class PolynomialMatrixBuilder:
 
         return S_H, Phi_F, S_W, Phi_W
 
+# --- Orquestación de Profiling ---
 
+def profile_it(builder_instance):
+    # Tiempo
+    pr = cProfile.Profile()
+    pr.enable()
+    
+    # Esto disparará el @profile de memoria línea a línea en build()
+    builder_instance.build()
+    
+    pr.disable()
+    s = io.StringIO()
+    ps = pstats.Stats(pr, stream=s).sort_stats('tottime')
+    print("\n" + "="*40 + "\nTOP TIEMPO DE EJECUCIÓN\n" + "="*40)
+    ps.print_stats(15)
+    print(s.getvalue())
 
-# --- Unfactorized case ---
-### NOTE: This case works properly
+if __name__ == "__main__":
+    eqs = [
+        "3*dx1*y1 + 2*z1*x1-u1*x1-u1*z1*x1+2*x1",
+        "dx1-y1"
+    ]
+    ineqs = [
+        "5-5*z1-x1+x1*z1"
+    ]
 
-eqs = [
-    "3*dx1*y1 + 2*z1*x1 - u1*x1 - u1*z1*x1 + 2*x1",
-    "dx1-y1"
-]
-
-ineqs = [
-    "5 - 5*z1 - x1 + x1*z1"
-]
-
-builder = PolynomialMatrixBuilder(eqs, ineqs)
-S_H, Phi_F, S_W, Phi_W = builder.build()
-
-
-# --- Factorized case ---
-### NOTE: This case does not work properly
-
-eqs = [
-    "3*dx1*y1 + 6*(1/2+1/2*z1)*(2/3-1/3*u1)*x1",
-    "dx1-y1"
-]
-
-ineqs = [
-    "12*(5/6-1/6*x1)*(1/2+1/2*z1)"
-]
-
-builder = PolynomialMatrixBuilder(eqs, ineqs)
-S_H, Phi_F, S_W, Phi_W = builder.build()
+    builder = PolynomialMatrixBuilder(eqs, ineqs)
+    profile_it(builder)
