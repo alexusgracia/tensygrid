@@ -4,6 +4,14 @@ from scipy import sparse
 from sympy.parsing.sympy_parser import parse_expr
 import cProfile, pstats, io
 from memory_profiler import profile
+import builtins
+
+
+# Si 'profile' no existe en el entorno global, creamos uno que no haga nada
+if 'profile' not in builtins.__dict__:
+    def profile(func): 
+        return func
+
 
 class PolynomialMatrixBuilder:
     """
@@ -60,65 +68,84 @@ class PolynomialMatrixBuilder:
 
 
     def matrix_creation(self, all_exprs):
-            """
-            Creates the S_H and Phi_F matrices from a list of equations.
-            
-            Args:
-                all_exprs (list): List of equations.
-                all_symbols (list): List of symbols.
-            
-            Returns:
-                tuple: Tuple containing S_H and Phi_F matrices.
-            """
-            S_H_list = []
-            P_Hs_list = []
-            print(f"--- Expressions: ---")
-            for i, eq in enumerate(all_exprs):
-                print(f"\nEquation {i+1} (Ordered Terms): {eq}")
-                try:
-                    if eq.is_Add:
-                        terms = eq.args
-                    else:
-                        terms = [eq]
-                    
-                    eq_coeffs = []
-                    
-                    for term in terms:
-                        p = sp.Poly(term, *self.all_symbols)
-                        monom = np.array(p.monoms()[0])
-                        coeff = p.coeffs()[0]
-                        
-                        # Comment this line if you don't want to see the term comparison
-                        print(f"  Term: {term} -> Coeff: {coeff}, Monom: {monom}")
-                        
-                        S_H_list.append(monom)
-                        eq_coeffs.append(float(coeff))
-
-                    if eq_coeffs:
-                        P_Hs_list.append(np.array([eq_coeffs], dtype=float))
-
-
-                except sp.PolificationFailed:
-                    print(f"\nCould not create Poly for equation {i+1}")
-                    
-            if S_H_list:
-                S_H = np.vstack(S_H_list).T
-                S_H = sparse.csc_matrix(S_H)
-            else:
-                S_H = sparse.csc_matrix([])
+                """
+                Creates the S_H and Phi_F matrices from a list of equations.
                 
-            if P_Hs_list:
-                # \Phi_F is a block diagonal matrix with the coefficients of each equation on the diagonal
+                Args:
+                    all_exprs (list): List of equations.
+                    all_symbols (list): List of symbols.
+                
+                Returns:
+                    tuple: Tuple containing S_H and Phi_F matrices.
+                """
+                S_H_list = []
+                P_Hs_data = []
+                monom_to_idx = {}
+                
+                print(f"--- Expressions: ---")
+                for i, eq in enumerate(all_exprs):
+                    print(f"\nEquation {i+1} (Ordered Terms): {eq}")
+                    try:
+                        if eq.is_Add:
+                            terms = eq.args
+                        else:
+                            terms = [eq]
+                        
+                        # Diccionario local para esta ecuación: {indice_columna: suma_de_coeficientes}
+                        current_eq_coeffs = {}
+                        
+                        for term in terms:
+                            p = sp.Poly(term, *self.all_symbols)
+                            monom_tuple = p.monoms()[0]
+                            coeff = float(p.coeffs()[0])
+                            
+                            # Si el monomio no existe en la matriz S_H global, lo añadimos
+                            if monom_tuple not in monom_to_idx:
+                                idx = len(S_H_list)
+                                monom_to_idx[monom_tuple] = idx
+                                S_H_list.append(np.array(monom_tuple))
+                                
+                                # Comment this line if you don't want to see the term comparison
+                                print(f"  Term: {term} -> Coeff: {coeff}, Monom: {monom_tuple}")
+                            else:
+                                idx = monom_to_idx[monom_tuple]
+                                # Usamos tu comentario para mostrar que ya existe y su índice
+                                print(f"  Term: {term} -> Coeff: {coeff}, Monom: {monom_tuple} already exists. Index = {idx}")
+                            
+                            # Acumulamos el coeficiente en la columna correspondiente para esta fila
+                            current_eq_coeffs[idx] = current_eq_coeffs.get(idx, 0.0) + coeff
 
-                Phi_F = sparse.block_diag(P_Hs_list)
-            else:
-                Phi_F = sparse.csc_matrix([])
-            
-            return S_H, Phi_F
+                        P_Hs_data.append(current_eq_coeffs)
+
+                    except sp.PolificationFailed:
+                        print(f"\nCould not create Poly for equation {i+1}")
+                        
+                if S_H_list:
+                    # S_H se construye con los monomios únicos (uno por columna)
+                    S_H = np.vstack(S_H_list).T
+                    num_cols = S_H.shape[1]
+                    
+                    # Construimos Phi_F asegurando que cada fila tenga el ancho total de S_H
+                    phi_rows = []
+                    for eq_dict in P_Hs_data:
+                        row = np.zeros(num_cols)
+                        for col_idx, val in eq_dict.items():
+                            row[col_idx] = val
+                        phi_rows.append(row)
+                    
+                    # Convertimos a float para que scipy.sparse no falle
+                    Phi_F = sparse.csr_matrix(np.vstack(phi_rows))
+                    # Convertimos a sparse
+                    S_H = sparse.csc_matrix(S_H)
+                else:
+                    S_H = sparse.csc_matrix([])
+                    Phi_F = sparse.csc_matrix([])
+                
+                return S_H, Phi_F
 
     def linearize(self, S, Phi, v_dict):
         v = np.array([v_dict.get(sym, 0.0) for sym in self.all_symbols], dtype=float).reshape(-1, 1)
-        
+
         
 
     @profile
@@ -128,14 +155,15 @@ class PolynomialMatrixBuilder:
 
         S_H, Phi_F = self.matrix_creation(self.eqs)
         S_W, Phi_W = self.matrix_creation(self.ineqs)
-
+        S_H_array, Phi_F_array = S_H.toarray(), Phi_F.toarray()
+        S_W_array, Phi_W_array = S_W.toarray(), Phi_W.toarray()
         print("\n--- Matrix creation ---\n")
-        print("S_H=\n", S_H)
-        print("\n" + "\\Phi_F=" + "\n", Phi_F)
-        print("\n" + "S_W=" + "\n", S_W)
-        print("\n" + "\\Phi_W=" + "\n", Phi_W)
+        print("S_H=\n", S_H_array)
+        print("\\Phi_F=\n", Phi_F_array)
+        print("S_W=\n", S_W_array)
+        print("\\Phi_W=\n", Phi_W_array)
 
-        return S_H, Phi_F, S_W, Phi_W
+        return S_H_array, Phi_F_array, S_W_array, Phi_W_array
 
 # --- Orquestación de Profiling ---
 
@@ -155,13 +183,20 @@ def profile_it(builder_instance):
     print(s.getvalue())
 
 if __name__ == "__main__":
+    do_profile = False  # <--- Cambia esto a True cuando quieras el reporte
+
     eqs = [
         "3*dx1*y1 + 2*z1*x1-u1*x1-u1*z1*x1+2*x1",
-        "dx1-y1"
+        "dx1-y1-x1"
     ]
     ineqs = [
         "5-5*z1-x1+x1*z1"
     ]
 
     builder = PolynomialMatrixBuilder(eqs, ineqs)
-    profile_it(builder)
+
+    if do_profile:
+        profile_it(builder)
+    else:
+        # Ejecución normal, limpia y rápida
+        S_H, Phi_F, S_W, Phi_W = builder.build()
