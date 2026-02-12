@@ -3,6 +3,7 @@
 ## Equacions
 
 Si tenim per exemple les equacions
+
 $$
 -\dot{x}_1 -x_1 + u = 0
 \\
@@ -10,22 +11,24 @@ $$
 $$
 
 Això ens donarà les matrius:
+
 $$
 S = \begin{bmatrix}
     1 & 0 & 0 & 0 & 0 & 0 \\
     0 & 1 & 0 & 0 & 0 & 0 \\
     0 & 0 & 1 & 0 & 0 & 1 \\
     0 & 0 & 0 & 1 & 0 & 1 \\
-    0 & 0 & 0 & 0 & 1 & 0 
-\end{bmatrix} 
+    0 & 0 & 0 & 0 & 1 & 0
+\end{bmatrix}
 
 P = \begin{bmatrix}
     -1 & 0 & -1 & 0 & 1 & 0 \\
-    0 & -1 & 0 & -1 & 0 & 1 
+    0 & -1 & 0 & -1 & 0 & 1
 \end{bmatrix}
 $$
 
 Tal que:
+
 $$
 \begin{array}{r|cccccc}
 & \dot{x}_1 & \dot{x}_2 & x_1 & x_2 & u & x_1x_2 \\ \hline
@@ -35,7 +38,7 @@ x_1 & 0 & 0 & 1 & 0 & 0 & 1 \\
 x_2 & 0 & 0 & 0 & 1 & 0 & 1 \\
 u & 0 & 0 & 0 & 0 & 1 & 0 \\ \hline
 P_1 & -1 & 0 & -1 & 0 & 1 & 0 \\
-P_2 & 0 & -1 & 0 & -1 & 0 & 1 
+P_2 & 0 & -1 & 0 & -1 & 0 & 1
 \end{array}
 $$
 
@@ -48,7 +51,8 @@ $$
 \\
 \dot{x}_2 = -x_2 + x_1x_2
 $$
-Aleshores fem: 
+
+Aleshores fem:
 
 $$
 -\dot{x}_1 -x_1 + 2x_2 + u = 0
@@ -57,22 +61,24 @@ $$
 $$
 
 Això ens donarà les matrius:
+
 $$
 S = \begin{bmatrix}
     1 & 0 & 0 & 0 & 0 & 0 \\
     0 & 1 & 0 & 0 & 0 & 0 \\
     0 & 0 & 1 & 0 & 0 & 1 \\
     0 & 0 & 0 & 1 & 0 & 1 \\
-    0 & 0 & 0 & 0 & 1 & 0 
-\end{bmatrix} 
+    0 & 0 & 0 & 0 & 1 & 0
+\end{bmatrix}
 
 P = \begin{bmatrix}
     -1 & 0 & -1 & \textcolor{red}{2} & 1 & 0 \\
-    0 & -1 & 0 & -1 & 0 & 1 
+    0 & -1 & 0 & -1 & 0 & 1
 \end{bmatrix}
 $$
 
 Tal que:
+
 $$
 \begin{array}{r|cccccc}
 & \dot{x}_1 & \dot{x}_2 & x_1 & x_2 & u & x_1x_2 \\ \hline
@@ -82,12 +88,11 @@ x_1 & 0 & 0 & 1 & 0 & 0 & 1 \\
 x_2 & 0 & 0 & 0 & 1 & 0 & 1 \\
 u & 0 & 0 & 0 & 0 & 1 & 0 \\ \hline
 P_1 & -1 & 0 & -1 & \textcolor{red}{2} & 1 & 0 \\
-P_2 & 0 & -1 & 0 & -1 & 0 & 1 
+P_2 & 0 & -1 & 0 & -1 & 0 & 1
 \end{array}
 $$
 
 Per tant, la idea és aconseguir passar de les equacions a la matriu.
-
 
 ## Todo
 
@@ -99,11 +104,9 @@ Per tant, la idea és aconseguir passar de les equacions a la matriu.
 - [] Classe per a linearitzar equacions d'entrada
 - [] Simplificar procés
 
-
-
 Alguns exemples d'equacions
 
-```python 
+```python
 
 '-dx1 - x1 + u',
 '-dx2 - x2 + x1*x2',
@@ -119,3 +122,5 @@ Alguns exemples d'equacions
 "4*z - 8",
 
 ```
+
+# Coses a afegir
