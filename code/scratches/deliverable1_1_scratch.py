@@ -3,45 +3,40 @@ import numpy as np
 from scipy import sparse
 from sympy.parsing.sympy_parser import parse_expr
 import cProfile, pstats, io
+from memory_profiler import profile
 import builtins
 
-# If 'profile' does not exist in the global environment, create a dummy decorator
+# Si 'profile' no existe en el entorno global, creamos uno que no haga nada
 if 'profile' not in builtins.__dict__:
     def profile(func): 
         return func
 
 class PolynomialMatrixBuilder:
     """
-    This class builds the S_H and Phi_F matrices from a list of polynomial equations
-    following the TenSyGrid D1.1 Multilinear format.
+    This class is used to build the S_H and Phi_F matrices from a list of polynomial equations.
     """
 
     def __init__(self, eqs, ineqs, verbose=False):
         """
-        Initializes the builder and creates the matrices.
+        Initializes the PolynomialMatrixBuilder.
         
         Args:
-            eqs (list): List of polynomial equations (strings).
-            ineqs (list): List of polynomial inequalities (strings).
-            verbose (bool): If True, prints the analysis of terms.
+            eqs (list): List of polynomial equations.
+            ineqs (list): List of polynomial inequalities.
         """
         self.verbose = verbose
-        # Parse expressions without evaluating to preserve user-defined factors
         self.eqs = [parse_expr(eq, evaluate=False) for eq in eqs]
         self.ineqs = [parse_expr(eq, evaluate=False) for eq in ineqs]
         self.all_symbols = None
         
-        # Extract and sort symbols based on D1.1 naming conventions
         self.extract_symbols(self.eqs + self.ineqs)
 
-        # Map symbolic variables to numeric indices
+        # Mapa de les variables simbòliques a nombre
         self.sym_to_idx = {sym.name: i for i, sym in enumerate(self.all_symbols)}
         
-        # Create matrices for equations and inequalities
         S_H_sp, Phi_F_sp = self.matrix_creation(self.eqs)
         S_W_sp, Phi_W_sp = self.matrix_creation(self.ineqs)
         
-        # Convert sparse to dense for easier inspection
         self.S_H = S_H_sp.toarray()
         self.Phi_F = Phi_F_sp.toarray()
         self.S_W = S_W_sp.toarray()
@@ -49,12 +44,18 @@ class PolynomialMatrixBuilder:
 
     def extract_symbols(self, all_exprs):
         """
-        Extracts symbols from expressions and sorts them by category (dx, x, u, y, z).
+        Extracts the symbols from a list of equations.
+        
+        Args:
+            all_exprs (list): List of equations.
+        
+        Returns:
+            list: List of symbols (sorted).
         """  
         all_symbols = []
         seen = set()
         for eq in all_exprs:
-            # Sort local symbols to maintain consistency
+            # This is performed in order to have a consistent order of symbols
             current_syms = sorted(list(eq.free_symbols), key=lambda s: s.name)
             for sym in current_syms:
                 if sym not in seen:
@@ -63,7 +64,7 @@ class PolynomialMatrixBuilder:
 
         def custom_sort_key(sym):
             name = sym.name
-            # Sorting logic as expected by TenSyGrid Deliverable 1.1
+            # This only orders the symbols as TenSyGrid deliverable 1.1 expects them
             if name.startswith('dx'): return (0, name)
             if name.startswith('x'): return (1, name)
             if name.startswith('u'): return (2, name)
@@ -80,9 +81,9 @@ class PolynomialMatrixBuilder:
 
     def matrix_creation(self, all_exprs):
         """
-        Creates S_H and Phi_F matrices.
-        S_H: Internal weights of variables (b in a + b*s).
-        Phi_F: Global coefficients of the terms.
+        Creates S_H and Phi_F matrices with automatic L1 normalization (Eq. 4.18 - 4.21).
+        S_H: Internal weights of variables (normalized b in a + b*s).
+        Phi_F: Global coefficients of the terms (scaled by normalization factors).
         """
         S_H_list = []
         P_Hs_data = []
@@ -102,25 +103,38 @@ class PolynomialMatrixBuilder:
             for term in terms:
                 # 1. Extract global coefficient and product factors
                 coeff_sym, factors = term.as_coeff_mul()
-                coeff = float(coeff_sym)
+                global_phi = float(coeff_sym)
 
-                # 2. Extract weights b_i for each symbol in this term
-                weights = []
-                for s in self.all_symbols:
-                    s_weight = 0.0
-                    if s in term.free_symbols:
-                        # Search for the specific factor containing variable 's'
-                        for f in factors:
-                            if s in f.free_symbols:
-                                # Differentiate to get internal coefficient 'b'
-                                deriv = sp.diff(f, s)
-                                # Clean residual variables for expanded cases (e.g., u1*z1)
-                                for other in deriv.free_symbols:
-                                    deriv = deriv.subs(other, 1)
-                                s_weight = float(deriv)
-                                break
-                    weights.append(s_weight)
+                weights = [0.0] * len(self.all_symbols)
                 
+                # 2. Normalize each factor following TenSyGrid papers (Eq. 4.19)
+                for f in factors:
+                    f_vars = list(f.free_symbols)
+                    if len(f_vars) == 1:
+                        s = f_vars[0]
+                        idx = self.sym_to_idx[s.name]
+                        
+                        # Extract internal coefficients b (slope) and a (intercept)
+                        b_val = float(sp.diff(f, s))
+                        a_val = float(f.subs(s, 0))
+                        
+                        # Apply L1 Normalization: Scale = |a| + |b|
+                        scale = abs(a_val) + abs(b_val)
+                        if scale == 0: scale = 1.0
+                        
+                        # Normalized weight goes to S, scale moves to Phi
+                        normalized_b = b_val / scale
+                        global_phi *= scale
+                        weights[idx] = normalized_b
+                        
+                    elif len(f_vars) > 1:
+                        # For expanded terms or complex factors, we use unit weights
+                        for s in f_vars:
+                            weights[self.sym_to_idx[s.name]] = 1.0
+                    else:
+                        # Pure numerical factors
+                        global_phi *= float(f)
+
                 monom_tuple = tuple(weights)
                 
                 # 3. Handle indexing and verbose logging
@@ -130,18 +144,18 @@ class PolynomialMatrixBuilder:
                     S_H_list.append(np.array(monom_tuple))
                     if self.verbose:
                         print(f"  Unseen term: {term}")
-                        print(f"    -> Coeff (Phi): {coeff}, Weights (S): {monom_tuple}")
+                        print(f"    -> Coeff (Phi): {global_phi}, Weights (S): {monom_tuple}")
                 else:
                     idx = monom_to_idx[monom_tuple]
                     if self.verbose:
                         print(f"  Seen term: {term}")
-                        print(f"    -> Adding {coeff} to index {idx}")
+                        print(f"    -> Adding {global_phi} to index {idx}")
                 
-                current_eq_coeffs[idx] = current_eq_coeffs.get(idx, 0.0) + coeff
+                current_eq_coeffs[idx] = current_eq_coeffs.get(idx, 0.0) + global_phi
 
             P_Hs_data.append(current_eq_coeffs)
 
-        # Build final sparse matrices
+        # Construcción final de las matrices sparse
         if S_H_list:
             S_H_raw = np.vstack(S_H_list).T.astype(float)
             S_H = sparse.csc_matrix(S_H_raw)
@@ -161,17 +175,76 @@ class PolynomialMatrixBuilder:
         
         return S_H, Phi_F
 
+    """@profile
+    def linearize(self, v_dict, use_ineqs=False):
+        S = self.S_W if use_ineqs else self.S_H
+        Phi = self.Phi_W if use_ineqs else self.Phi_F
+
+        v = np.zeros((len(self.all_symbols), 1))
+        for name, val in v_dict.items():
+            if name in self.sym_to_idx:
+                v[self.sym_to_idx[name]] = val
+
+        X = S * v - np.abs(S)
+        
+        icrit = (X == -1)
+        if np.any(icrit):
+            raise ValueError("Specials to be implemented")
+        
+        X = np.where(S != 0, X + 1, 1.0)
+
+        # axis=0 suma/multiplica hacia abajo (por columnas)
+        Y = np.prod(X, axis=0) 
+
+        F = S * Y * (1.0 / X) 
+
+        EABC = Phi @ F.T
+
+        return EABC"""
+
+def profile_it(builder_instance, v_dict):
+    pr = cProfile.Profile()
+    pr.enable()
+    
+    builder_instance.linearize(v_dict)
+    
+    pr.disable()
+    s = io.StringIO()
+    ps = pstats.Stats(pr, stream=s).sort_stats('tottime')
+    print("\n" + "="*40 + "\nTOP TIEMPO DE EJECUCIÓN\n" + "="*40)
+    ps.print_stats(15)
+    print(s.getvalue())
+
 if __name__ == "__main__":
-    # Example equations combining factored and expanded forms
+    do_profile = False 
+
     eqs = [
-        "3*dx1*y1 + 6*(1/2+1/2*z1)*(2/3-1/3*u1)*x1",
-        "dx1-y1+dx1*y1"
+        "3*dx1*y1 + 2*z1*x1 - u_1*x1-u1*z1*x1+2*x1",
+        "dx1-y1"
     ]
 
-    # Initialize builder with verbose=True to see the analysis
-    builder = PolynomialMatrixBuilder(eqs, ineqs=[], verbose=True)
+    ineqs =[
+        "(5-x1)*(1-z1)"
+    ]
+    builder = PolynomialMatrixBuilder(eqs, ineqs, verbose=True)
     
-    print("\n--- Final S_H Matrix ---")
+    print("\n--- S_H Matrix ---")
     print(builder.S_H)
-    print("\n--- Final Phi_F Matrix ---")
+    print("\n--- Phi_H Matrix ---")
     print(builder.Phi_F)
+
+    print("\n--- S_W Matrix ---")
+    print(builder.S_W)
+    print("\n--- Phi_W Matrix ---")
+    print(builder.Phi_W)
+
+    v_dict = {
+        'dx1': 1.0, 'x1': 2.0, 'u1': 3.0, 'y1': 4.0, 'z1': 5.0
+    }
+    
+    """if do_profile:
+        profile_it(builder, v_dict)
+    else:
+        result = builder.linearize(v_dict)
+        print("\n--- Resultado de Linearización (EABC) ---")
+        print(result)"""
