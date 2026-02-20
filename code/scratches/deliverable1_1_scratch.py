@@ -2,8 +2,10 @@ import sympy as sp
 import numpy as np
 from scipy import sparse, linalg
 from sympy.parsing.sympy_parser import parse_expr
+from memory_profiler import profile
 import cProfile, pstats, io
 import builtins
+import sys
 
 if 'profile' not in builtins.__dict__:
     def profile(func):
@@ -78,7 +80,8 @@ class PolynomialMatrixBuilder:
         def _sort_key(sym):
             name = sym.name
             if name.startswith('dx'): return (0, name)
-            if name.startswith('x'):  return (1, name)
+            if name.startswith('xp'): return (0, name)
+            if name.startswith('x') and not name.startswith('xp'):  return (1, name)
             if name.startswith('u'):  return (2, name)
             if name.startswith('y'):  return (3, name)
             if name.startswith('z'):  return (4, name)
@@ -96,6 +99,7 @@ class PolynomialMatrixBuilder:
     # Matrix creation
     # ------------------------------------------------------------------
 
+    @profile
     def matrix_creation(self, all_exprs: list) -> tuple[sparse.csc_matrix, sparse.csr_matrix]:
         """
         Creates the S and Phi sparse matrices with automatic L1 normalisation
@@ -197,6 +201,7 @@ class PolynomialMatrixBuilder:
     # Linearisation – public entry point
     # ------------------------------------------------------------------
 
+    @profile
     def linearize(
         self, v_dict: dict[str, float], use_ineqs: bool = False
     ) -> np.ndarray:
@@ -239,6 +244,7 @@ class PolynomialMatrixBuilder:
                 v[self.sym_to_idx[name]] = val
         return v
 
+    @profile
     def _compute_jacobian(self, S: np.ndarray, v: np.ndarray) -> np.ndarray:
         """
         Compute the analytic Jacobian of the monomial basis at point *v*.
@@ -281,8 +287,11 @@ class PolynomialMatrixBuilder:
         Returns:
             tuple: (E, A, B) matrices.
         """
-        idx_dx   = [i for i, s in enumerate(self.all_symbols) if s.name.startswith('dx')]
-        idx_vars = [i for i, s in enumerate(self.all_symbols) if s.name.startswith(('x', 'y', 'z'))]
+        idx_dx   = [i for i, s in enumerate(self.all_symbols)
+                    if s.name.startswith('dx') or s.name.startswith('xp')]
+        idx_vars = [i for i, s in enumerate(self.all_symbols)
+                    if s.name.startswith(('x', 'y', 'z'))
+                    and not s.name.startswith('xp')]
         idx_u    = [i for i, s in enumerate(self.all_symbols) if s.name.startswith('u')]
 
         n_vars = len(idx_vars)
@@ -300,6 +309,7 @@ class PolynomialMatrixBuilder:
     # Stability analysis
     # ------------------------------------------------------------------
 
+    @profile
     def compute_stability(
         self,
     ) -> tuple[np.ndarray | None, bool, float | None]:
@@ -333,29 +343,138 @@ class PolynomialMatrixBuilder:
                     print("Error computing det(E - A)")
             return None, False, None
 
+    # ------------------------------------------------------------------
+    # Reporting
+    # ------------------------------------------------------------------
+
+    def report(
+        self,
+        eigenvalues: np.ndarray | None = None,
+        is_stable: bool = False,
+        max_real: float | None = None,
+        print_matrices: bool = True,
+        save_path: str | None = None,
+    ) -> None:
+        """
+        Print and/or save all matrices and stability results.
+
+        Args:
+            eigenvalues    : Output of compute_stability().
+            is_stable      : Output of compute_stability().
+            max_real       : Output of compute_stability().
+            print_matrices : If True, print S, Phi, E, A, B to stdout.
+            save_path      : If given, write all matrices to this txt file.
+        """
+        def _arr2str(a: np.ndarray) -> str:
+            return np.array2string(
+                np.asarray(a),
+                max_line_width=99999,
+                precision=6,
+                suppress_small=True,
+                threshold=99999,
+            )
+
+        def _section(title: str, content: str) -> str:
+            bar = "=" * (len(title) + 4)
+            return f"{bar}\n  {title}\n{bar}\n{content}\n"
+
+        if print_matrices:
+            for label, mat in [
+                ("S",   self.S_H),
+                ("Phi", self.Phi_H),
+                ("E",   self.E),
+                ("A",   self.A),
+                ("B",   self.B),
+            ]:
+                if mat is not None:
+                    print(f"\n--- {label} Matrix ---")
+                    print(sparse.csc_matrix(mat))
+
+            print("\n--- Stability Analysis ---")
+            print(f"Is stable:     {is_stable}")
+            print(f"Max Real Part: {max_real}")
+
+        if save_path is not None:
+            import os
+            os.makedirs(os.path.dirname(os.path.abspath(save_path)), exist_ok=True)
+            with open(save_path, "w", encoding="utf-8") as f:
+                for label, mat in [
+                    ("S Matrix",   self.S_H),
+                    ("Phi Matrix", self.Phi_H),
+                    ("E Matrix",   self.E),
+                    ("A Matrix",   self.A),
+                    ("B Matrix",   self.B),
+                ]:
+                    if mat is not None:
+                        f.write(_section(label, _arr2str(mat)) + "\n")
+
+                stability_txt = (
+                    f"Is stable:     {is_stable}\n"
+                    f"Max Real Part: {max_real}\n"
+                )
+                if eigenvalues is not None:
+                    evs_txt = "\n".join(f"  {ev}" for ev in eigenvalues)
+                    stability_txt += f"Eigenvalues:\n{evs_txt}\n"
+
+                f.write(_section("Stability Analysis", stability_txt))
+
+            print(f"\nMatrices saved to: {save_path}")
+
 
 # ----------------------------------------------------------------------
 # Entry point
 # ----------------------------------------------------------------------
 
 if __name__ == "__main__":
-    do_profile = False
+    import os
+    do_profile  = False
+    save_output = False   # ← set False to skip txt export
+
+    # eqs = [
+    #     "3*dx1*y1 + 6*(1/2+1/2*z1)*(2/3-1/3*u1)*x1",
+    #     "y1 - 2*x1",
+    #     "z1 + 0.5*y1 - 1",
+    # ]
 
     eqs = [
-        "3*dx1*y1 + 6*(1/2+1/2*z1)*(2/3-1/3*u1)*x1",
-        "y1 - 2*x1",
-        "z1 + 0.5*y1 - 1",
+        '-xp1 + 0.3440*x10 + 0.4474',
+        '-xp2 + 0.0038*x2 + 0.6549*x10 + 0.7845*x13 + 0.0040*x14 + 0.2282*x19 + 0.9734',
+        '-xp3 + 0.6267*u5 + 0.0651*x12 + 0.3473*x16 + 0.8588',
+        '-xp4 + 0.0598*u5 + 0.2887*x17 + 0.0327*x18 + 0.8685',
+        '-xp5 + 0.0831*u4 + 0.38984*x15 + 0.1381*x18 + 0.2472',
+        '-xp6 + 0.4737*x8 + 0.0856*x16 + 0.2286*x18 + 1.6085',
+        '-xp7 + 0.0838*u5 + 0.2301*x11 + 0.2002*x12 + 0.8884',
+        '-xp8 + 0.0998*u5 + 0.66*x9 + 0.0515*x10 + 0.5883',
+        '-xp9 + 0.6785*u2 + 0.0110*x7 + 0.4883*x9 + 0.2754*x12 + 0.6573',
+        '-xp10 + 0.0276*x1 + 0.2263*x19 + 0.3483',
+        '-xp11 + 0.0549*u2 + 0.2598*x3 + 0.2733*x12 + 0.0994*x16 + 0.1905*x20 + 1.9020',
+        '-xp12 + 0.0732*u5 + 0.0466*u6 + 0.8391',
+        '-xp13 + 0.1264*u1 + 0.5706*x5 + 0.0839*x13 + 0.2854*x20 + 1.4471',
+        '-xp14 + 0.4188*x8 + 0.4638',
+        '-xp15 + 0.7539*u1 + 0.4065*x15 + 0.5479',
+        '-xp16 + 0.0105*u2 + 0.1236*x1 + 0.1916*x4 + 0.0859*x6 + 0.1613*x18 + 1.0436',
+        '-xp17 + 0.2431*u3 + 0.0820',
+        '-xp18 + 0.0578*x2 + 0.0867*x4 + 0.0267*x5 + 0.0526*x8 + 2.5279',
+        '-xp19 + 0.2644*u5 + 0.4517*x12 + 1.1073',
+        '-xp20 + 0.5101*u4 + 0.3917'
     ]
 
     builder = PolynomialMatrixBuilder(eqs, ineqs=[], verbose=False)
 
-    v_dict = {'dx1': 1.0, 'x1': 2.0, 'u1': 3.0, 'y1': 4.0, 'z1': 5.0}
+    #v_dict = {'dx1': 1.0, 'x1': 2.0, 'u1': 3.0, 'y1': 4.0, 'z1': 5.0}
+    xOP = [-0.1668, -0.4590,  0.5462, -1.3023, -0.4115,
+           -0.5401,  1.3665,  0.7068,  0.6076,  0.9198,
+            0.8994,  0.0327, -1.4159, -1.6809,  0.0378,
+            1.6635,  0.8310,  1.0477,  1.7938, -0.4851]
 
-    print("\n--- S Matrix ---")
-    print(builder.S_H)
+    uOP = [-0.6336,  1.1019, -0.7170,  2.2000,  0.8906, -0.6354]
 
-    print("\n--- Phi Matrix ---")
-    print(builder.Phi_H)
+    v_dict = {
+        **{f'dx{i}': 0.0         for i in range(1, 21)},
+        **{f'x{i}':  xOP[i - 1]  for i in range(1, 21)},
+        **{f'u{i}':  uOP[i - 1]  for i in range(1, 7)},
+        **{f'xp{i}': 0.0         for i in range(1, 21)},
+    }
 
     if do_profile:
         pr = cProfile.Profile()
@@ -368,14 +487,15 @@ if __name__ == "__main__":
         ps.print_stats(15)
         print(stream.getvalue())
     else:
-        EABC = builder.linearize(v_dict)
-        print("\n--- EABC ---")
-        print(EABC)
-
-    print("\n--- E Matrix ---")
-    print(builder.E)
+        builder.linearize(v_dict)
 
     evs, stable, margin = builder.compute_stability()
-    print("\n--- Stability Analysis ---")
-    print(f"Is stable:     {stable}")
-    print(f"Max Real Part: {margin}")
+
+    out_path = os.path.join(os.path.dirname(__file__), "matrices_output.txt") if save_output else None
+    builder.report(
+        eigenvalues    = evs,
+        is_stable      = stable,
+        max_real       = margin,
+        print_matrices = True,
+        save_path      = out_path,
+    )
