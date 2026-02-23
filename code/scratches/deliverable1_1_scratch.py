@@ -312,7 +312,7 @@ class PolynomialMatrixBuilder:
     @profile
     def compute_stability(
         self,
-    ) -> tuple[np.ndarray | None, bool, float | None]:
+    ) -> tuple[np.ndarray | None, np.ndarray | None, np.ndarray | None, np.ndarray | None, bool, float | None]:
         """
         Compute generalised eigenvalues for the descriptor pair (A, E).
 
@@ -321,18 +321,24 @@ class PolynomialMatrixBuilder:
                    All entries are None / False on failure.
         """
         if self.A is None or self.E is None:
-            return None, False, None
+            return None, None, None, None, False, None
 
         try:
-            eigenvalues = linalg.eigvals(self.A, self.E)
-            finite_evs  = eigenvalues[np.isfinite(eigenvalues)]
+            evals, evecs_left, evecs_right = linalg.eig(self.A, self.E, left=True, right=True)
+            finite_evs  = evals[np.isfinite(evals)]
 
             if len(finite_evs) == 0:
-                return eigenvalues, True, -np.inf
+                return evals, evecs_left, evecs_right, None, True, -np.inf
+
+            for i in range(len(evals)):
+                scaling = np.dot(evecs_left[:, i].conj(), evecs_right[:, i])
+                evecs_left[:, i] /= scaling
+
+            participation_matrix = np.abs(evecs_right) * np.abs(evecs_left).T
 
             max_real  = float(np.max(np.real(finite_evs)))
             is_stable = max_real < 0
-            return eigenvalues, is_stable, max_real
+            return evals, evecs_left, evecs_right, participation_matrix, is_stable, max_real
 
         except Exception as e:
             print(f"Error computing eigenvalues: {e}")
@@ -341,7 +347,7 @@ class PolynomialMatrixBuilder:
                     print(f"det(E - A) = {linalg.det(self.E - self.A)}")
                 except Exception:
                     print("Error computing det(E - A)")
-            return None, False, None
+            return None, None, None, None, False, None
 
     # ------------------------------------------------------------------
     # Reporting
@@ -489,11 +495,11 @@ if __name__ == "__main__":
     else:
         builder.linearize(v_dict)
 
-    evs, stable, margin = builder.compute_stability()
+    evals, e_left, e_right, p_matrix, stable, margin = builder.compute_stability()
 
     out_path = os.path.join(os.path.dirname(__file__), "matrices_output.txt") if save_output else None
     builder.report(
-        eigenvalues    = evs,
+        eigenvalues    = evals,
         is_stable      = stable,
         max_real       = margin,
         print_matrices = True,
