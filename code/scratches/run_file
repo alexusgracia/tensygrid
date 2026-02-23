@@ -1,0 +1,80 @@
+
+import PolynomialMatrixBuilder_class as PMB
+# ----------------------------------------------------------------------
+# Entry point
+# ----------------------------------------------------------------------
+
+if __name__ == "__main__":
+    import os
+    do_profile  = False
+    save_output = False   # ← set False to skip txt export
+
+    # eqs = [
+    #     "3*dx1*y1 + 6*(1/2+1/2*z1)*(2/3-1/3*u1)*x1",
+    #     "y1 - 2*x1",
+    #     "z1 + 0.5*y1 - 1",
+    # ]
+
+    eqs = [
+        '-xp1 + 0.3440*x10 + 0.4474',
+        '-xp2 + 0.0038*x2 + 0.6549*x10 + 0.7845*x13 + 0.0040*x14 + 0.2282*x19 + 0.9734',
+        '-xp3 + 0.6267*u5 + 0.0651*x12 + 0.3473*x16 + 0.8588',
+        '-xp4 + 0.0598*u5 + 0.2887*x17 + 0.0327*x18 + 0.8685',
+        '-xp5 + 0.0831*u4 + 0.38984*x15 + 0.1381*x18 + 0.2472',
+        '-xp6 + 0.4737*x8 + 0.0856*x16 + 0.2286*x18 + 1.6085',
+        '-xp7 + 0.0838*u5 + 0.2301*x11 + 0.2002*x12 + 0.8884',
+        '-xp8 + 0.0998*u5 + 0.66*x9 + 0.0515*x10 + 0.5883',
+        '-xp9 + 0.6785*u2 + 0.0110*x7 + 0.4883*x9 + 0.2754*x12 + 0.6573',
+        '-xp10 + 0.0276*x1 + 0.2263*x19 + 0.3483',
+        '-xp11 + 0.0549*u2 + 0.2598*x3 + 0.2733*x12 + 0.0994*x16 + 0.1905*x20 + 1.9020',
+        '-xp12 + 0.0732*u5 + 0.0466*u6 + 0.8391',
+        '-xp13 + 0.1264*u1 + 0.5706*x5 + 0.0839*x13 + 0.2854*x20 + 1.4471',
+        '-xp14 + 0.4188*x8 + 0.4638',
+        '-xp15 + 0.7539*u1 + 0.4065*x15 + 0.5479',
+        '-xp16 + 0.0105*u2 + 0.1236*x1 + 0.1916*x4 + 0.0859*x6 + 0.1613*x18 + 1.0436',
+        '-xp17 + 0.2431*u3 + 0.0820',
+        '-xp18 + 0.0578*x2 + 0.0867*x4 + 0.0267*x5 + 0.0526*x8 + 2.5279',
+        '-xp19 + 0.2644*u5 + 0.4517*x12 + 1.1073',
+        '-xp20 + 0.5101*u4 + 0.3917'
+    ]
+
+    builder = PMB.PolynomialMatrixBuilder(eqs, ineqs=[], verbose=False)
+
+    #v_dict = {'dx1': 1.0, 'x1': 2.0, 'u1': 3.0, 'y1': 4.0, 'z1': 5.0}
+    xOP = [-0.1668, -0.4590,  0.5462, -1.3023, -0.4115,
+           -0.5401,  1.3665,  0.7068,  0.6076,  0.9198,
+            0.8994,  0.0327, -1.4159, -1.6809,  0.0378,
+            1.6635,  0.8310,  1.0477,  1.7938, -0.4851]
+
+    uOP = [-0.6336,  1.1019, -0.7170,  2.2000,  0.8906, -0.6354]
+
+    v_dict = {
+        **{f'dx{i}': 0.0         for i in range(1, 21)},
+        **{f'x{i}':  xOP[i - 1]  for i in range(1, 21)},
+        **{f'u{i}':  uOP[i - 1]  for i in range(1, 7)},
+        **{f'xp{i}': 0.0         for i in range(1, 21)},
+    }
+
+    if do_profile:
+        pr = cProfile.Profile()
+        pr.enable()
+        builder.linearize(v_dict)
+        pr.disable()
+        stream = io.StringIO()
+        ps = pstats.Stats(pr, stream=stream).sort_stats('tottime')
+        print("\n" + "=" * 40 + "\nTOP EXECUTION TIME\n" + "=" * 40)
+        ps.print_stats(15)
+        print(stream.getvalue())
+    else:
+        builder.linearize(v_dict)
+
+    evals, e_left, e_right, p_matrix, stable, margin = builder.compute_stability()
+
+    out_path = os.path.join(os.path.dirname(__file__), "matrices_output.txt") if save_output else None
+    builder.report(
+        eigenvalues    = evals,
+        is_stable      = stable,
+        max_real       = margin,
+        print_matrices = True,
+        save_path      = out_path,
+    )
