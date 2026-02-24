@@ -3,9 +3,7 @@ import numpy as np
 from scipy import sparse, linalg
 from sympy.parsing.sympy_parser import parse_expr
 from memory_profiler import profile
-import cProfile, pstats, io
 import builtins
-import sys
 
 if 'profile' not in builtins.__dict__:
     def profile(func):
