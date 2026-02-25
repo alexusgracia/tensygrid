@@ -10,7 +10,7 @@ if __name__ == "__main__":
     save_output = False   # ← set False to skip txt export
 
     # eqs = [
-    #     "3*dx1*y1 + 6*(1/2+1/2*z1)*(2/3-1/3*u1)*x1",
+    #     "3*dx1*y1 + 6*(1/2+1/2*z1)*(2/3-1/3*u1-u2)*x1",
     #     "y1 - 2*x1",
     #     "z1 + 0.5*y1 - 1",
     # ]

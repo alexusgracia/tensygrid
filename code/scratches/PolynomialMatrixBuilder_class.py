@@ -128,52 +128,8 @@ class PolynomialMatrixBuilder:
             current_eq_coeffs: dict = {}
 
             for term in terms:
-                # 1. Separate the global scalar coefficient from symbolic factors
-                coeff_sym, factors = term.as_coeff_mul()
-                global_phi = float(coeff_sym)
-                weights    = [0.0] * len(self.all_symbols)
-
-                # 2. Normalise each factor (TenSyGrid Eq. 4.19)
-                for f in factors:
-                    f_vars = list(f.free_symbols)
-
-                    if len(f_vars) == 1:
-                        s   = f_vars[0]
-                        idx = self.sym_to_idx[s.name]
-
-                        b_val = float(sp.diff(f, s))    # slope
-                        a_val = float(f.subs(s, 0))     # intercept
-
-                        # L1 norm: |a| + |b|
-                        scale = abs(a_val) + abs(b_val) or 1.0
-
-                        weights[idx] = b_val / scale
-                        global_phi  *= scale
-
-                    elif len(f_vars) > 1:
-                        # Multi-variable factor – use unit weights (conservative)
-                        for s in f_vars:
-                            weights[self.sym_to_idx[s.name]] = 1.0
-                    else:
-                        # Pure numerical factor
-                        global_phi *= float(f)
-
-                # 3. Register or look up the monomial
-                monom_tuple = tuple(weights)
-                if monom_tuple not in monom_to_idx:
-                    idx = len(S_list)
-                    monom_to_idx[monom_tuple] = idx
-                    S_list.append(np.array(monom_tuple))
-                    if self.verbose:
-                        print(f"  Unseen term: {term}")
-                        print(f"    -> Coeff (Phi): {global_phi}, Weights (S): {monom_tuple}")
-                else:
-                    idx = monom_to_idx[monom_tuple]
-                    if self.verbose:
-                        print(f"  Seen term: {term}")
-                        print(f"    -> Adding {global_phi} to index {idx}")
-
-                current_eq_coeffs[idx] = current_eq_coeffs.get(idx, 0.0) + global_phi
+                current_eq_coeffs = self._get_monomial_weights(term, S_list, monom_to_idx, current_eq_coeffs)
+                
 
             Phi_data.append(current_eq_coeffs)
 
@@ -242,20 +198,82 @@ class PolynomialMatrixBuilder:
                 v[self.sym_to_idx[name]] = val
         return v
 
+    def _get_monomial_weights(self, term, S_list, monom_to_idx, current_eq_coeffs):
+            """
+            Processes a term. If the term is non-linear/factored (e.g., (x+y)*z),
+            it catches the error and expands it automatically.
+            """
+            try:
+                # 1. Separate global coefficient
+                coeff_sym, symbolic_part = term.as_coeff_mul()
+                global_phi = float(coeff_sym)
+                weights = [0.0] * len(self.all_symbols)
+
+                # 2. Extract symbolic factors
+                factors = sp.Mul.make_args(sp.Mul(*symbolic_part))
+
+                for f in factors:
+                    f_vars = list(f.free_symbols)
+
+                    if len(f_vars) == 1:
+                        s = f_vars[0]
+                        idx = self.sym_to_idx[s.name]
+
+                        # Extraction logic (b*s + a)
+                        b_val = float(sp.diff(f, s))
+                        a_val = float(f.subs(s, 0))
+
+                        scale = abs(a_val) + abs(b_val)
+                        if scale == 0: scale = 1.0
+
+                        weights[idx] = b_val / scale
+                        global_phi *= scale
+
+                    elif len(f_vars) > 1:
+                        # TRIGGER: This is a factored term like (x + y + 1)
+                        # We raise a ValueError to trigger the 'except' block expansion
+                        raise ValueError("Multi-variable factor detected.")
+                    
+                    elif len(f_vars) == 0:
+                        global_phi *= float(f)
+
+                # 3. Standard Registration (if no error was raised)
+                monom_tuple = tuple(weights)
+                if monom_tuple not in monom_to_idx:
+                    idx = len(S_list)
+                    monom_to_idx[monom_tuple] = idx
+                    S_list.append(np.array(monom_tuple))
+                else:
+                    idx = monom_to_idx[monom_tuple]
+
+                current_eq_coeffs[idx] = current_eq_coeffs.get(idx, 0.0) + global_phi
+
+            except (ValueError, TypeError):
+                # SELF-HEALING: Expand the problematic term and process its parts
+                if self.verbose:
+                    print(f"   Expanding complex term: {term}")
+                
+                expanded_sub_terms = sp.Add.make_args(term.expand())
+                for sub_t in expanded_sub_terms:
+                    # Recurse with simpler terms
+                    self._get_monomial_weights(sub_t, S_list, monom_to_idx, current_eq_coeffs)
+
+            return current_eq_coeffs
+
     @profile
     def _compute_jacobian(self, S: np.ndarray, v: np.ndarray) -> np.ndarray:
         """
         Compute the analytic Jacobian of the monomial basis at point *v*.
 
-        For each monomial m(v) = ∏ᵢ (sᵢ·vᵢ + (1−|sᵢ|)), the partial
+        For each monomial m(v) = ∏ᵢ (sᵢ·vᵢ + (1-|sᵢ|)), the partial
         derivative with respect to vⱼ is  sⱼ · ∏_{i≠j} Xᵢ  = sⱼ · Y / Xⱼ.
 
         Args:
-            S (np.ndarray): Weight matrix (n_vars × n_monomials).
+            S (np.ndarray): Weight matrix (n_vars x n_monomials).
             v (np.ndarray): Operating-point vector (n_vars,).
 
         Returns:
-            np.ndarray: Jacobian F (n_vars × n_monomials).
+            np.ndarray: Jacobian F (n_vars x n_monomials).
         """
         X = (S.T * v) + (1 - np.abs(S.T))   # shape: (n_monomials, n_vars)
         Y = np.prod(X, axis=1)               # shape: (n_monomials,)
