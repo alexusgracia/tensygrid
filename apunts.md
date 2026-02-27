@@ -149,11 +149,11 @@ $$
 Al que ens respecta a nosaltres, tindrem (abusant de notació usaré l'igual) redefinint $\mathrm{x}$ com el vector $(\dot{\mathrm{x}},\mathrm{x},\mathrm{u})$ amb dimensions $\mathbb{R}^{2n+m}$
 
 $$
-0=E(\mathrm{\dot{x}}-\mathrm{\dot{x}}_0)+A(\mathrm{x}-\mathrm{x}_0)+B(\mathrm{u}-\mathrm{u}_0)=E\Delta\mathrm{\dot{x}}+A\Delta\mathrm{x}+B\Delta\mathrm{u},
+0=E(\mathrm{\dot{x}}-\underbrace{\mathrm{\dot{x}}_0}_{=0 \text{ (punt extrem)}})+A(\mathrm{x}-\mathrm{x}_0)+B(\mathrm{u}-\mathrm{u}_0)=E\Delta\mathrm{\dot{x}}+A\Delta\mathrm{x}+B\Delta\mathrm{u},
 $$
 
 que és
 
 $$
--E\Delta\mathrm{\dot{x}}=A\Delta\mathrm{x}+B\Delta\mathrm{u}.
+-E\mathrm{\dot{x}}=A\Delta\mathrm{x}+B\Delta\mathrm{u}.
 $$
