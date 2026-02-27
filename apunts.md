@@ -149,11 +149,23 @@ $$
 Al que ens respecta a nosaltres, tindrem (abusant de notació usaré l'igual) redefinint $\mathrm{x}$ com el vector $(\dot{\mathrm{x}},\mathrm{x},\mathrm{u})$ amb dimensions $\mathbb{R}^{2n+m}$
 
 $$
-0=E(\mathrm{\dot{x}}-\underbrace{\mathrm{\dot{x}}_0}_{=0 \text{ (punt extrem)}})+A(\mathrm{x}-\mathrm{x}_0)+B(\mathrm{u}-\mathrm{u}_0)=E\Delta\mathrm{\dot{x}}+A\Delta\mathrm{x}+B\Delta\mathrm{u},
+0=\mathrm{E}(\mathrm{\dot{x}}-\underbrace{\mathrm{\dot{x}}_0}_{=0 \text{ (punt extrem)}})+\mathrm{A}(\mathrm{x}-\mathrm{x}_0)+\mathrm{B}(\mathrm{u}-\mathrm{u}_0)=\mathrm{E}\Delta\mathrm{\dot{x}}+\mathrm{A}\Delta\mathrm{x}+\mathrm{B}\Delta\mathrm{u},
 $$
 
 que és
 
 $$
--E\mathrm{\dot{x}}=A\Delta\mathrm{x}+B\Delta\mathrm{u}.
+-\mathrm{E}\mathrm{\dot{x}}=\mathrm{A}\Delta\mathrm{x}+\mathrm{B}\Delta\mathrm{u}.
 $$
+
+Com les variables d'entrada $u$ no són dinàmiques, un cop han estat utilitzades pel comput de $\mathrm{E}$ i $\mathrm{A}$ deixen de formar part del sistema dinàmic a resoldre. Per tant, ens queda $-\mathrm{E}\mathrm{\dot{x}}=\mathrm{A}\Delta\mathrm{x}$.
+
+Ara, podem modelar $\Delta\mathrm{x}\mathrm{v}$ com $\mathrm{x}\propto\exp{(\lambda t)}\mathrm{v}$, pel que la derivada ens quedaria com $\dot{\mathrm{x}}=\lambda\mathrm{x}$. Llavors, tindrem
+
+$$
+\mathrm{A}\mathrm{v}=-\lambda \mathrm{E}\mathrm{v},
+$$
+
+que és un problema de valors propis generalitzat on suposem que les matrius no són normals, pel que $\lambda\in\mathbb{C}$.
+
+Un cop solucionat, veient que $\mathrm{x}\propto\exp{(\lambda t)}\mathrm{v}$, podem estudiar l'estabilitat del sistema de manera molt senzilla: si $\mathrm{Re}(\lambda)<0$, llavors el sistema és estable. En canvi, si $\mathrm{Re}(\lambda)>0$, llavors el sistema és instable. La part imaginaria només ens indica la freqüència d'oscil·lació.
