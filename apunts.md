@@ -124,3 +124,36 @@ Alguns exemples d'equacions
 ```
 
 # Coses a afegir
+# Explicació mètode
+Un iMTI es defineix com un sistema d'equacions on igualem funcions a zero. D'altra manera, és una funció vectorial de vàries variables on totes s'anul·len pel conjunt solució:
+$$
+\langle \mathcal{F}| \mathcal{M}(\mathrm{x})\rangle=\mathrm{f}(\mathrm{x})=0.
+$$
+
+Podem expandir $\mathrm{f}(\mathrm{x})$ al voltant d'un punt d'operaxió $\mathrm{x_0}$ tal que
+$$
+\mathrm{f}(\mathrm{x})\approx\mathrm{f}(\mathrm{x}-\mathrm{x}_0)+\underbrace{\left(\nabla\mathrm{f}(\mathrm{x})\right)_{\mathrm{x_0}}}_{\mathrm{J}_\mathrm{f}(\mathrm{x})}(\mathrm{x}-\mathrm{x_0}),
+$$
+
+on el jacobià $\mathrm{J}_\mathrm{f}(\mathrm{x})$ queda definit com la matriu $\underbrace{r}_{\#\text{ eqs}}\times \underbrace{(n+m)}_{\#\textrm{ variables}}$
+
+$$
+\mathrm{J}_\mathrm{f}(\mathrm{x}):=\left(\dfrac{\partial f_i}{\partial x_j}\right),\ i=\{1,...,r\},\ j=\{1,...,n+m\}.
+$$
+
+Per definició, $\mathrm{f}(\mathrm{x})=0$. Respecte $\mathrm{f}(\mathrm{x}-\mathrm{x}_0)$, com estem expandint al voltant d'un punt d'operació, qualsevol $\textrm{x}':=\textrm{x}-\textrm{x}_0$ ha de formar part del conjunt solució, i.e.: $\mathrm{x}'\in\{\mathrm{x}'\text{ such that }\mathrm{f}(\mathrm{x'})=0\}$, pel que també s'anul·la. Llavors, ens queda
+$$
+\mathrm{J}_\mathrm{f}(\mathrm{x})|_{\mathrm{x}_0}(\mathrm{x}-\mathrm{x}_0)\approx0.
+$$
+
+Al que ens respecta a nosaltres, tindrem (abusant de notació usaré l'igual) redefinint $\mathrm{x}$ com el vector $(\dot{\mathrm{x}},\mathrm{x},\mathrm{u})$ amb dimensions $\mathbb{R}^{2n+m}$
+
+$$
+0=E(\mathrm{\dot{x}}-\mathrm{\dot{x}}_0)+A(\mathrm{x}-\mathrm{x}_0)+B(\mathrm{u}-\mathrm{u}_0)=E\Delta\mathrm{\dot{x}}+A\Delta\mathrm{x}+B\Delta\mathrm{u},
+$$
+
+que és
+
+$$
+-E\Delta\mathrm{\dot{x}}=A\Delta\mathrm{x}+B\Delta\mathrm{u}.
+$$
