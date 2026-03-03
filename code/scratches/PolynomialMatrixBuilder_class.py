@@ -294,29 +294,34 @@ class PolynomialMatrixBuilder:
     def _split_EABC(
         self, EABC: np.ndarray
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """
-        Split the full Jacobian into the descriptor system matrices E, A, B.
-
-        Args:
-            EABC (np.ndarray): Full Jacobian (n_eqs x n_vars).
-
-        Returns:
-            tuple: (E, A, B) matrices.
-        """
+        # 1. Identificamos los índices por categorías
         idx_dx   = [i for i, s in enumerate(self.all_symbols)
-                    if s.name.startswith('dx') or s.name.startswith('xp')]
+                    if s.name.startswith(('dx', 'xp'))]
+        
         idx_vars = [i for i, s in enumerate(self.all_symbols)
                     if s.name.startswith(('x', 'y', 'z'))
                     and not s.name.startswith('xp')]
+        
         idx_u    = [i for i, s in enumerate(self.all_symbols) if s.name.startswith('u')]
 
-        n_vars = len(idx_vars)
-        E      = np.zeros((EABC.shape[0], n_vars))
-        for i, col in enumerate(idx_dx):
-            if i < n_vars:
-                E[:, i] = -EABC[:, col]
+        n_eqs = EABC.shape[0]  # En tu caso, 20
+        
+        # --- SOLUCIÓN: Ajustar n_vars al número de ecuaciones ---
+        # A y E deben ser (n_eqs x n_eqs)
+        E = np.zeros((n_eqs, n_eqs))
+        
+        # Llenamos E con las columnas de las derivadas (dx)
+        for i, col_idx in enumerate(idx_dx):
+            if i < n_eqs:
+                E[:, i] = -EABC[:, col_idx]
 
-        A = EABC[:, idx_vars]
+        # Tomamos tantas columnas para A como ecuaciones tengamos
+        # Si hay menos variables x,y,z que ecuaciones, rellenamos con ceros
+        A = np.zeros((n_eqs, n_eqs))
+        cols_to_take = min(len(idx_vars), n_eqs)
+        A[:, :cols_to_take] = EABC[:, idx_vars[:cols_to_take]]
+
+        # B siempre puede ser rectangular (n_eqs x n_inputs)
         B = EABC[:, idx_u]
 
         return E, A, B
@@ -415,7 +420,10 @@ class PolynomialMatrixBuilder:
             print("\n--- Stability Analysis ---")
             print(f"Is stable:     {is_stable}")
             print(f"Max Real Part: {max_real}")
-
+            sorted_evs = sorted(eigenvalues[np.isfinite(eigenvalues)], key=lambda x: x.real, reverse=True)
+            print("Eigenvalues:")
+            for ev in sorted_evs:
+                print(f"  {ev.real:.6f} + {ev.imag:.6f}j")
         if save_path is not None:
             import os
             os.makedirs(os.path.dirname(os.path.abspath(save_path)), exist_ok=True)
