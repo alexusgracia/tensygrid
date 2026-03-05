@@ -96,7 +96,7 @@ class TestPolynomialStability(unittest.TestCase):
 
     def test_stable_nonlinear_5x5_system(self) -> None:
         """
-        Test 2: Nonlinear Stable System (3 ODEs + 2 Algebraic).
+        Test 2: Nonlinear Stable System (3 DAEs + 2 Algebraic).
         Validates handling of complex expressions and stability detection.
         """
         eqs: List[str] = list([
