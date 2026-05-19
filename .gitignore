@@ -49,7 +49,9 @@ desktop.ini
 *.tmp
 *.temp
 
+# Sphinx build output
+manual/docs/_build/
+
 code/scratches/matrices_output.txt
 manual/venv
 
-docs/_build
