@@ -23,7 +23,9 @@ jobs:
 
       - name: Install dependencies
         run: |
+          apt update
           python -m pip install --upgrade pip
+          pip install sphinx sphinx-rtd-theme sphinxcontrib-mermaid
           pip install -r manual/requirements.txt
 
       - name: Build docs

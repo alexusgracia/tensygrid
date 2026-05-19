@@ -8,4 +8,5 @@ Welcome to subject or Manual name
    :caption: Contents
 
    topic1.md
+   topic2.md
    template.md 

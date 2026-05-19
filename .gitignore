@@ -51,3 +51,5 @@ desktop.ini
 
 code/scratches/matrices_output.txt
 manual/venv
+
+docs/_build/*

@@ -8,6 +8,7 @@ release = '0.1'
 
 extensions = [
     'myst_parser',
+    'sphinxcontrib.mermaid',
 ]
 
 html_theme = 'sphinx_rtd_theme'

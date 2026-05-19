@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; Manuals 0.1 documentation</title>
+  <title>🌐 Tema 2 — Flux del Sistema (Mermaid) &mdash; Manuals 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
@@ -452,8 +453,10 @@ mermaid.initialize(
 window.addEventListener("load", load);
 window.runMermaid = runMermaid;</script>
     <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Topic Title" href="template.html" />
+    <link rel="prev" title="Topic 1: Introduction to the Course" href="topic1.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -476,9 +479,9 @@ window.runMermaid = runMermaid;</script>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="topic1.html">Topic 1: Introduction to the Course</a></li>
-<li class="toctree-l1"><a class="reference internal" href="topic2.html">🌐 Tema 2 — Flux del Sistema (Mermaid)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">🌐 Tema 2 — Flux del Sistema (Mermaid)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="template.html">Topic Title</a></li>
 </ul>
 
@@ -496,8 +499,9 @@ window.runMermaid = runMermaid;</script>
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Index</li>
+      <li class="breadcrumb-item active">🌐 Tema 2 — Flux del Sistema (Mermaid)</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/topic2.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -505,17 +509,160 @@ window.runMermaid = runMermaid;</script>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+  <section id="tema-2-flux-del-sistema-mermaid">
+<h1>🌐 Tema 2 — Flux del Sistema (Mermaid)<a class="headerlink" href="#tema-2-flux-del-sistema-mermaid" title="Link to this heading"></a></h1>
+<p>Aquest document mostra una visió general d’un sistema modern, des de l’usuari fins a l’observabilitat i el desplegament.</p>
+<pre  class="mermaid">
+        flowchart TB
+    %% --- Estils ---
+    classDef user fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#0D47A1
+    classDef edge fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#4A148C
+    classDef app fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#1B5E20
+    classDef data fill:#FFF8E1,stroke:#F9A825,stroke-width:2px,color:#5D4037
+    classDef infra fill:#ECEFF1,stroke:#546E7A,stroke-width:2px,color:#263238
+    classDef sec fill:#FFEBEE,stroke:#E53935,stroke-width:2px,color:#B71C1C
+    classDef obs fill:#E0F7FA,stroke:#00ACC1,stroke-width:2px,color:#006064
 
-<h1 id="index">Index</h1>
+    %% --- Clients ---
+    subgraph C1[&quot;👥 Capa de Clients&quot;]
+      U1[&quot;Usuari Web&quot;]
+      U2[&quot;Usuari Mòbil&quot;]
+      U3[&quot;Administrador&quot;]
+    end
 
-<div class="genindex-jumpbox">
- 
-</div>
+    %% --- Edge ---
+    subgraph C2[&quot;🌍 Edge &amp; Entrada&quot;]
+      CDN[&quot;CDN&quot;]
+      WAF[&quot;WAF&quot;]
+      LB[&quot;Load Balancer&quot;]
+      API[&quot;API Gateway&quot;]
+    end
+
+    %% --- Aplicació ---
+    subgraph C3[&quot;⚙️ Serveis d'Aplicació&quot;]
+      AUTH[&quot;Servei Auth&quot;]
+      CORE[&quot;Servei Core&quot;]
+      BILL[&quot;Servei Billing&quot;]
+      NOTIF[&quot;Servei Notificacions&quot;]
+      SEARCH[&quot;Servei Cerca&quot;]
+    end
+
+    %% --- Dades ---
+    subgraph C4[&quot;🗄️ Capa de Dades&quot;]
+      SQL[&quot;PostgreSQL&quot;]
+      CACHE[&quot;Redis Cache&quot;]
+      MQ[&quot;Message Queue&quot;]
+      OBJ[&quot;Object Storage&quot;]
+      ES[&quot;Search Index&quot;]
+    end
+
+    %% --- Seguretat ---
+    subgraph C5[&quot;🔐 Seguretat i Govern&quot;]
+      IAM[&quot;IAM / RBAC&quot;]
+      KMS[&quot;KMS (Xifrat)&quot;]
+      AUDIT[&quot;Audit Logs&quot;]
+      POLICY[&quot;Policy Engine&quot;]
+    end
+
+    %% --- Infra ---
+    subgraph C6[&quot;☁️ Plataforma&quot;]
+      K8S[&quot;Kubernetes&quot;]
+      CI[&quot;CI Pipeline&quot;]
+      CD[&quot;CD Pipeline&quot;]
+      REG[&quot;Container Registry&quot;]
+    end
+
+    %% --- Observabilitat ---
+    subgraph C7[&quot;📊 Observabilitat&quot;]
+      MET[&quot;Mètriques&quot;]
+      LOG[&quot;Logs&quot;]
+      TRC[&quot;Tracing&quot;]
+      ALT[&quot;Alertes&quot;]
+      DASH[&quot;Dashboards&quot;]
+    end
+
+    %% Flux principal
+    U1 --&gt; CDN
+    U2 --&gt; CDN
+    U3 --&gt; CDN
+    CDN --&gt; WAF --&gt; LB --&gt; API
+
+    API --&gt; AUTH
+    API --&gt; CORE
+    API --&gt; BILL
+    API --&gt; SEARCH
+    API --&gt; NOTIF
+
+    AUTH --&gt; IAM
+    AUTH --&gt; SQL
+    CORE --&gt; SQL
+    CORE --&gt; CACHE
+    BILL --&gt; SQL
+    BILL --&gt; MQ
+    NOTIF --&gt; MQ
+    SEARCH --&gt; ES
+    CORE --&gt; OBJ
+
+    MQ --&gt; NOTIF
+    CACHE --&gt; CORE
+    IAM --&gt; POLICY
+    KMS --&gt; SQL
+    KMS --&gt; OBJ
+    POLICY --&gt; API
+    AUDIT --&gt; LOG
+
+    %% Infra i desplegament
+    CI --&gt; REG --&gt; CD --&gt; K8S
+    K8S --&gt; AUTH
+    K8S --&gt; CORE
+    K8S --&gt; BILL
+    K8S --&gt; NOTIF
+    K8S --&gt; SEARCH
+
+    %% Observabilitat
+    AUTH --&gt; MET
+    CORE --&gt; MET
+    BILL --&gt; MET
+    SEARCH --&gt; MET
+    NOTIF --&gt; MET
+
+    AUTH --&gt; LOG
+    CORE --&gt; LOG
+    BILL --&gt; LOG
+    SEARCH --&gt; LOG
+    NOTIF --&gt; LOG
+
+    AUTH --&gt; TRC
+    CORE --&gt; TRC
+    BILL --&gt; TRC
+    SEARCH --&gt; TRC
+    NOTIF --&gt; TRC
+
+    MET --&gt; DASH
+    LOG --&gt; DASH
+    TRC --&gt; DASH
+    DASH --&gt; ALT
+
+    %% Classes
+    class U1,U2,U3 user
+    class CDN,WAF,LB,API edge
+    class AUTH,CORE,BILL,NOTIF,SEARCH app
+    class SQL,CACHE,MQ,OBJ,ES data
+    class IAM,KMS,AUDIT,POLICY sec
+    class K8S,CI,CD,REG infra
+    class MET,LOG,TRC,ALT,DASH obs
+    </pre><blockquote>
+<div><p>✅ Pots enganxar aquest bloc directament al fitxer <code class="docutils literal notranslate"><span class="pre">topic2.md</span></code>.</p>
+</div></blockquote>
+</section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="topic1.html" class="btn btn-neutral float-left" title="Topic 1: Introduction to the Course" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="template.html" class="btn btn-neutral float-right" title="Topic Title" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
