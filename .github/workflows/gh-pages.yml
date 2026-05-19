@@ -15,19 +15,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r manual/requirements.txt
+          # Ajustat a la ruta manual/docs/ segons la teva imatge
+          pip install -r manual/docs/requirements.txt
+
       - name: Build docs
         run: |
+          # 1. Compilar HTML
           sphinx-build -b html manual/docs manual/docs/_build/html
+          # 2. Crear fitxer .nojekyll per als estils CSS
+          touch manual/docs/_build/html/.nojekyll
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: manual/docs/_build/html 
+          publish_dir: manual/docs/_build/html
+          force_orphan: true
