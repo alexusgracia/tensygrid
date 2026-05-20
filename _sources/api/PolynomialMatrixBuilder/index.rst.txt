@@ -152,6 +152,13 @@ Module Contents
 
 
 
+   .. py:method:: op_extraction(problem: Any) -> dict
+      :staticmethod:
+
+
+      Returns the operating point dictionary from a defined VeraGrid problem.
+
+
    .. py:method:: extract_symbols(all_exprs: list, predefined: list | None = None) -> list
 
       Extracts and sorts unique symbolic variables from a list of equations.

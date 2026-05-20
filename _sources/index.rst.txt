@@ -9,8 +9,8 @@ large-scale descriptor systems.
 .. toctree::
    :maxdepth: 2
    :caption: API Reference
+   :glob:
 
-   api/small_signal_tensygrid/index
-   api/PolynomialMatrixBuilder/index
+   api/*/index
 
 

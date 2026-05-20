@@ -47,7 +47,6 @@ Functions
    small_signal_tensygrid.debug_input
    small_signal_tensygrid.define_problem_with_path
    small_signal_tensygrid.define_problem
-   small_signal_tensygrid.op_extraction
    small_signal_tensygrid.solve_problem
    small_signal_tensygrid.main
 
@@ -142,10 +141,6 @@ Module Contents
 .. py:function:: define_problem()
 
    Creates the grid, runs the power flow, and returns the phasor problem.
-
-.. py:function:: op_extraction(problem: VeraGridEngine.api.RmsProblemPhasor) -> dict
-
-   Returns the operating point dictionary from a defined VeraGrid problem.
 
 .. py:function:: solve_problem(problem: Any = None) -> Any
 
