@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TenSyGrid — Documentation &mdash; Manuals v0.1</title>
+  <title>TenSyGrid &mdash; Manuals v0.1</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -21,7 +21,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="PolynomialMatrixBuilder" href="api/PolynomialMatrixBuilder/index.html" /> 
+    <link rel="prev" title="small_signal_tensygrid" href="api/small_signal_tensygrid/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,7 +32,7 @@
 
           
           
-          <a href="#" class="icon icon-home">
+          <a href="index.html" class="icon icon-home">
             Manuals
           </a>
 <div role="search">
@@ -44,7 +44,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="api/PolynomialMatrixBuilder/index.html">PolynomialMatrixBuilder</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/PolynomialMatrixBuilder/index.html#classes">Classes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/PolynomialMatrixBuilder/index.html#module-contents">Module Contents</a><ul>
@@ -131,20 +131,20 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="main.html">TenSyGrid</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="main.html#background">Background</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#repository-structure">Repository Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#installation">Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="main.html#requirements">Requirements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="main.html#setup">Setup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TenSyGrid</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#repository-structure">Repository Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#quick-start">Quick Start</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="main.html#linearization">Linearization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linearization">Linearization</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#features">Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#reference-matlab-toolbox">Reference MATLAB Toolbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reference-matlab-toolbox">Reference MATLAB Toolbox</a></li>
 </ul>
 </li>
 </ul>
@@ -155,15 +155,15 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #0077C8" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Manuals</a>
+          <a href="index.html">Manuals</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">TenSyGrid — Documentation</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">TenSyGrid</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -172,44 +172,125 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="tensygrid-documentation">
-<h1>TenSyGrid — Documentation<a class="headerlink" href="#tensygrid-documentation" title="Link to this heading"></a></h1>
-<p><strong>TenSyGrid</strong> is a Python toolbox for small-signal stability analysis and
-polynomial matrix construction of power systems. It wraps multilinear
-state-space representations and sparse eigenvalue solvers tailored to
-large-scale descriptor systems.</p>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api/PolynomialMatrixBuilder/index.html">PolynomialMatrixBuilder</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/PolynomialMatrixBuilder/index.html#classes">Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/PolynomialMatrixBuilder/index.html#module-contents">Module Contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api/small_signal_tensygrid/index.html">small_signal_tensygrid</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/small_signal_tensygrid/index.html#attributes">Attributes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/small_signal_tensygrid/index.html#functions">Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/small_signal_tensygrid/index.html#module-contents">Module Contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="main.html">TenSyGrid</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="main.html#background">Background</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#repository-structure">Repository Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#quick-start">Quick Start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#features">Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html#reference-matlab-toolbox">Reference MATLAB Toolbox</a></li>
-</ul>
-</li>
-</ul>
+  <section id="tensygrid">
+<h1>TenSyGrid<a class="headerlink" href="#tensygrid" title="Link to this heading"></a></h1>
+<p>Python toolkit for symbolic linearization of nonlinear dynamical systems using the <strong>iMTI / CPN (Canonical Polynomial Network)</strong> representation.</p>
+<p>Given a set of polynomial differential equations, TenSyGrid automatically builds the structural matrices <strong>S</strong> (or S_H / S_W) and <strong>Phi</strong> (or P / Phi_H / Phi_W) used in the CPN formalism, and computes the analytic linearization matrices <strong>E</strong>, <strong>A</strong>, <strong>B</strong>.</p>
+<hr class="docutils" />
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Link to this heading"></a></h2>
+<p>The CPN method represents nonlinear polynomial systems in the form:</p>
+<p>$$
+S \cdot \dot{z} = P \cdot z
+$$</p>
+<p>where $z$ is a vector collecting all monomials that appear in the equations (states, derivatives, inputs, and higher-order product terms). The matrices $S$ and $P$ (or $\Phi$) encode the structure of the system and allow systematic analytic linearization around an operating point.</p>
+<p>For example, the system:</p>
+<p>$$
+\dot{x}_1 = -x_1 + u, \quad \dot{x}_2 = -x_2 + x_1 x_2
+$$</p>
+<p>produces the augmented monomial vector $[\dot{x}_1,, \dot{x}_2,, x_1,, x_2,, u,, x_1 x_2]$ and the corresponding $S$ / $P$ matrices automatically.</p>
+</section>
+<hr class="docutils" />
+<section id="repository-structure">
+<h2>Repository Structure<a class="headerlink" href="#repository-structure" title="Link to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tensygrid/
+├── code/
+│   ├── main.py                          # Entry point and usage examples
+│   ├── MatrixBuilder.py                 # High-level MatrixBuilder class
+│   └── scratches/
+│       ├── PolynomialMatrixBuilder_class.py   # Core implementation (sparse matrices)
+│       ├── tests.py                     # Unit tests for the builder
+│       └── notebook_example.ipynb       # Interactive example notebook
+├── manual/                              # Sphinx documentation source
+├── MTI-toolbox-2-1/                     # Reference MATLAB MTI toolbox
+├── apunts.md                            # Development notes (Catalan)
+└── old_old/                             # Legacy Python implementations
+</pre></div>
 </div>
+</section>
+<hr class="docutils" />
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Python 3.10+</p></li>
+<li><p><a class="reference external" href="https://www.sympy.org/">SymPy</a></p></li>
+<li><p><a class="reference external" href="https://numpy.org/">NumPy</a></p></li>
+<li><p><a class="reference external" href="https://scipy.org/">SciPy</a></p></li>
+</ul>
+</section>
+<section id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone the repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>&lt;repo-url&gt;
+<span class="nb">cd</span><span class="w"> </span>tensygrid
+
+<span class="c1"># Create and activate a virtual environment</span>
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate<span class="w">        </span><span class="c1"># Linux / macOS</span>
+<span class="c1"># .\venv\Scripts\Activate.ps1   # Windows PowerShell</span>
+
+<span class="c1"># Install dependencies</span>
+pip<span class="w"> </span>install<span class="w"> </span>sympy<span class="w"> </span>numpy<span class="w"> </span>scipy
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<p>Equations are passed as strings with the convention that <strong><code class="docutils literal notranslate"><span class="pre">dx&lt;n&gt;</span></code></strong> denotes $\dot{x}_n$:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">code.scratches.PolynomialMatrixBuilder_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">PolynomialMatrixBuilder</span>
+
+<span class="n">eqs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;-dx1 - x1 + u&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;-dx2 - x2 + x1*x2&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">ineqs</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># inequality constraints (optional)</span>
+
+<span class="n">builder</span> <span class="o">=</span> <span class="n">PolynomialMatrixBuilder</span><span class="p">(</span><span class="n">eqs</span><span class="p">,</span> <span class="n">ineqs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;S_H =&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">builder</span><span class="o">.</span><span class="n">S_H</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Phi_H =&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">builder</span><span class="o">.</span><span class="n">Phi_H</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="linearization">
+<h3>Linearization<a class="headerlink" href="#linearization" title="Link to this heading"></a></h3>
+<p>After building the matrices, set an operating point and compute the linearized <strong>E</strong>, <strong>A</strong>, <strong>B</strong> matrices:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">op</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;dx1&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;dx2&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">linearize</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>   <span class="c1"># {&#39;E&#39;: ..., &#39;A&#39;: ..., &#39;B&#39;: ...}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Symbolic parsing</strong> of polynomial equations via SymPy (string or LaTeX input).</p></li>
+<li><p><strong>Automatic monomial extraction</strong> — identifies all product terms and adds them to the augmented state vector.</p></li>
+<li><p><strong>Sparse matrix construction</strong> (SciPy CSC / CSR) for efficiency with large systems.</p></li>
+<li><p><strong>Equality and inequality constraints</strong> (S_H / Phi_H for equalities, S_W / Phi_W for inequalities).</p></li>
+<li><p><strong>Analytic linearization</strong> computing the descriptor system matrices E, A, B at a given operating point.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="reference-matlab-toolbox">
+<h2>Reference MATLAB Toolbox<a class="headerlink" href="#reference-matlab-toolbox" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">MTI-toolbox-2-1/</span></code> folder contains the original MATLAB MTI toolbox used as the reference implementation. The Python code in this repository is a reimplementation of its core linearization routines.</p>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="api/PolynomialMatrixBuilder/index.html" class="btn btn-neutral float-right" title="PolynomialMatrixBuilder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="api/small_signal_tensygrid/index.html" class="btn btn-neutral float-left" title="small_signal_tensygrid" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
