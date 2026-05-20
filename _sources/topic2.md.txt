@@ -1,0 +1,146 @@
+# 🌐 Tema 2 — Flux del Sistema (Mermaid)
+
+Aquest document mostra una visió general d’un sistema modern, des de l’usuari fins a l’observabilitat i el desplegament.
+
+```{mermaid}
+flowchart TB
+    %% --- Estils ---
+    classDef user fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#0D47A1
+    classDef edge fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#4A148C
+    classDef app fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#1B5E20
+    classDef data fill:#FFF8E1,stroke:#F9A825,stroke-width:2px,color:#5D4037
+    classDef infra fill:#ECEFF1,stroke:#546E7A,stroke-width:2px,color:#263238
+    classDef sec fill:#FFEBEE,stroke:#E53935,stroke-width:2px,color:#B71C1C
+    classDef obs fill:#E0F7FA,stroke:#00ACC1,stroke-width:2px,color:#006064
+
+    %% --- Clients ---
+    subgraph C1["👥 Capa de Clients"]
+      U1["Usuari Web"]
+      U2["Usuari Mòbil"]
+      U3["Administrador"]
+    end
+
+    %% --- Edge ---
+    subgraph C2["🌍 Edge & Entrada"]
+      CDN["CDN"]
+      WAF["WAF"]
+      LB["Load Balancer"]
+      API["API Gateway"]
+    end
+
+    %% --- Aplicació ---
+    subgraph C3["⚙️ Serveis d'Aplicació"]
+      AUTH["Servei Auth"]
+      CORE["Servei Core"]
+      BILL["Servei Billing"]
+      NOTIF["Servei Notificacions"]
+      SEARCH["Servei Cerca"]
+    end
+
+    %% --- Dades ---
+    subgraph C4["🗄️ Capa de Dades"]
+      SQL["PostgreSQL"]
+      CACHE["Redis Cache"]
+      MQ["Message Queue"]
+      OBJ["Object Storage"]
+      ES["Search Index"]
+    end
+
+    %% --- Seguretat ---
+    subgraph C5["🔐 Seguretat i Govern"]
+      IAM["IAM / RBAC"]
+      KMS["KMS (Xifrat)"]
+      AUDIT["Audit Logs"]
+      POLICY["Policy Engine"]
+    end
+
+    %% --- Infra ---
+    subgraph C6["☁️ Plataforma"]
+      K8S["Kubernetes"]
+      CI["CI Pipeline"]
+      CD["CD Pipeline"]
+      REG["Container Registry"]
+    end
+
+    %% --- Observabilitat ---
+    subgraph C7["📊 Observabilitat"]
+      MET["Mètriques"]
+      LOG["Logs"]
+      TRC["Tracing"]
+      ALT["Alertes"]
+      DASH["Dashboards"]
+    end
+
+    %% Flux principal
+    U1 --> CDN
+    U2 --> CDN
+    U3 --> CDN
+    CDN --> WAF --> LB --> API
+
+    API --> AUTH
+    API --> CORE
+    API --> BILL
+    API --> SEARCH
+    API --> NOTIF
+
+    AUTH --> IAM
+    AUTH --> SQL
+    CORE --> SQL
+    CORE --> CACHE
+    BILL --> SQL
+    BILL --> MQ
+    NOTIF --> MQ
+    SEARCH --> ES
+    CORE --> OBJ
+
+    MQ --> NOTIF
+    CACHE --> CORE
+    IAM --> POLICY
+    KMS --> SQL
+    KMS --> OBJ
+    POLICY --> API
+    AUDIT --> LOG
+
+    %% Infra i desplegament
+    CI --> REG --> CD --> K8S
+    K8S --> AUTH
+    K8S --> CORE
+    K8S --> BILL
+    K8S --> NOTIF
+    K8S --> SEARCH
+
+    %% Observabilitat
+    AUTH --> MET
+    CORE --> MET
+    BILL --> MET
+    SEARCH --> MET
+    NOTIF --> MET
+
+    AUTH --> LOG
+    CORE --> LOG
+    BILL --> LOG
+    SEARCH --> LOG
+    NOTIF --> LOG
+
+    AUTH --> TRC
+    CORE --> TRC
+    BILL --> TRC
+    SEARCH --> TRC
+    NOTIF --> TRC
+
+    MET --> DASH
+    LOG --> DASH
+    TRC --> DASH
+    DASH --> ALT
+
+    %% Classes
+    class U1,U2,U3 user
+    class CDN,WAF,LB,API edge
+    class AUTH,CORE,BILL,NOTIF,SEARCH app
+    class SQL,CACHE,MQ,OBJ,ES data
+    class IAM,KMS,AUDIT,POLICY sec
+    class K8S,CI,CD,REG infra
+    class MET,LOG,TRC,ALT,DASH obs
+```
+
+> ✅ Pots enganxar aquest bloc directament al fitxer `topic2.md`.
