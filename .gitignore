@@ -51,7 +51,6 @@ desktop.ini
 
 # Sphinx build output
 manual/docs/_build/
-manual/docs/_static/
 manual/docs/_templates/
 
 code/scratches/matrices_output.txt

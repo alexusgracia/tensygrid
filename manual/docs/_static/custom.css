@@ -1,11 +1,31 @@
 /* =======================================================
    Paleta UPC — Pantone 3005 (#0077C8)
    ======================================================= */
+
+/* Forçar mode clar: evita que el dark mode del SO/browser
+   reescrigui colors i faci elements invisibles            */
+html, body {
+    color-scheme: light only;
+    background: #fff;
+    color: #333;
+}
+
 :root {
     --upc-blue: #0077C8;
     --upc-blue-dark: #005a99;
     --upc-blue-darker: #003f6e;
     --upc-blue-light: #e6f3fb;
+}
+
+/* Fons i text del contingut sempre clars */
+.wy-nav-content-wrap,
+.wy-nav-content {
+    background: #fff !important;
+    color: #333 !important;
+}
+
+.rst-content {
+    color: #333 !important;
 }
 
 /* -------------------------------------------------------
@@ -25,6 +45,20 @@
 
 .wy-menu-vertical a {
     color: #cce6f7 !important;
+}
+
+/* Subelements del menú (toctree-l2, l3...) */
+.wy-menu-vertical li.toctree-l2 a,
+.wy-menu-vertical li.toctree-l3 a,
+.wy-menu-vertical li.toctree-l4 a {
+    color: #b3d9f2 !important;
+    background: var(--upc-blue-darker) !important;
+}
+
+.wy-menu-vertical li.toctree-l2.current > a,
+.wy-menu-vertical li.toctree-l3.current > a {
+    background: var(--upc-blue-dark) !important;
+    color: #fff !important;
 }
 
 .wy-menu-vertical li.current>a,
@@ -72,14 +106,14 @@ a:hover {
    ------------------------------------------------------- */
 .rst-content h1,
 .rst-content h2 {
-    color: var(--upc-blue-darker);
+    color: var(--upc-blue-dark) !important;
     border-bottom: 2px solid var(--upc-blue);
     padding-bottom: 0.2em;
 }
 
 .rst-content h3,
 .rst-content h4 {
-    color: var(--upc-blue-dark);
+    color: var(--upc-blue) !important;
 }
 
 /* -------------------------------------------------------
