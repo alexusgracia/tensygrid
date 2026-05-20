@@ -68,6 +68,7 @@ autoapi_options = [
     'undoc-members',
     'show-inheritance',
     'show-module-summary',
+    'preprocess-docstrings',  # Allows more lenient docstring parsing
 ]
 # Documenta només small_signal_tensygrid.py; afegir aquí la resta quan calgui.
 _AUTOAPI_ENABLED = [
@@ -89,6 +90,7 @@ autoapi_ignore = [
     '*/files/*',
     '*/precomputed_builds/*',
     '*/emt/*',
+    '*/venv_bash/*',
 ] + [
     f'*/{name}' for name in _all_py if name not in _AUTOAPI_ENABLED
 ]

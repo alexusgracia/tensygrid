@@ -16,8 +16,14 @@ Set-Location $ScriptDir
 # ---------------------------------------------------------------------------
 # Activar entorn virtual si existeix
 # ---------------------------------------------------------------------------
-if (Test-Path "venv\Scripts\Activate.ps1") {
-    . "venv\Scripts\Activate.ps1"
+$VenvPath = if (Test-Path "venv\Scripts\Activate.ps1") { "venv\Scripts\Activate.ps1" }
+           elseif (Test-Path "..\.venv\Scripts\Activate.ps1") { "..\.venv\Scripts\Activate.ps1" }
+           else { $null }
+
+if ($VenvPath) {
+    . $VenvPath
+} else {
+    Write-Warning "No s'ha trobat cap entorn virtual a 'venv' o '../.venv'"
 }
 
 # ---------------------------------------------------------------------------
