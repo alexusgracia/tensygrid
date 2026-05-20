@@ -1,4 +1,4 @@
-# TenSyGrid
+# Welcome
 
 Python toolkit for symbolic linearization of nonlinear dynamical systems using the **iMTI / CPN (Canonical Polynomial Network)** representation.
 

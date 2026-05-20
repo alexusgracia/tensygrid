@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TenSyGrid &mdash; Manuals v0.1</title>
+  <title>Welcome &mdash; Manuals v0.1</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -21,7 +21,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="small_signal_tensygrid" href="api/small_signal_tensygrid/index.html" /> 
+    <link rel="next" title="PolynomialMatrixBuilder" href="api/PolynomialMatrixBuilder/index.html" />
+    <link rel="prev" title="TenSyGrid — Documentation" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,6 +46,22 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Welcome</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#repository-structure">Repository Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linearization">Linearization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reference-matlab-toolbox">Reference MATLAB Toolbox</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="api/PolynomialMatrixBuilder/index.html">PolynomialMatrixBuilder</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/PolynomialMatrixBuilder/index.html#classes">Classes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/PolynomialMatrixBuilder/index.html#module-contents">Module Contents</a><ul>
@@ -131,22 +148,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TenSyGrid</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#background">Background</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#repository-structure">Repository Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#linearization">Linearization</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reference-matlab-toolbox">Reference MATLAB Toolbox</a></li>
-</ul>
-</li>
 </ul>
 
         </div>
@@ -163,7 +164,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">TenSyGrid</li>
+      <li class="breadcrumb-item active">Welcome</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -172,8 +173,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="tensygrid">
-<h1>TenSyGrid<a class="headerlink" href="#tensygrid" title="Link to this heading"></a></h1>
+  <section id="welcome">
+<h1>Welcome<a class="headerlink" href="#welcome" title="Link to this heading"></a></h1>
 <p>Python toolkit for symbolic linearization of nonlinear dynamical systems using the <strong>iMTI / CPN (Canonical Polynomial Network)</strong> representation.</p>
 <p>Given a set of polynomial differential equations, TenSyGrid automatically builds the structural matrices <strong>S</strong> (or S_H / S_W) and <strong>Phi</strong> (or P / Phi_H / Phi_W) used in the CPN formalism, and computes the analytic linearization matrices <strong>E</strong>, <strong>A</strong>, <strong>B</strong>.</p>
 <hr class="docutils" />
@@ -290,7 +291,8 @@ pip<span class="w"> </span>install<span class="w"> </span>sympy<span class="w"> 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="api/small_signal_tensygrid/index.html" class="btn btn-neutral float-left" title="small_signal_tensygrid" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="TenSyGrid — Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/PolynomialMatrixBuilder/index.html" class="btn btn-neutral float-right" title="PolynomialMatrixBuilder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
