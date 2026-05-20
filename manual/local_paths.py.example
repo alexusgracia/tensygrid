@@ -1,0 +1,23 @@
+# =============================================================================
+# Configuració local de paths — COPIA AQUEST FITXER A local_paths.py
+# (local_paths.py està al .gitignore i NO s'ha de pujar al repositori)
+# =============================================================================
+#
+# Aquest fitxer defineix el path al codi font del projecte tensygrid (VeraGrid)
+# a la teva màquina local. Cada usuari ha de crear el seu propi local_paths.py.
+#
+# INSTRUCCIONS:
+#   1. Copia aquest fitxer: cp local_paths.py.example local_paths.py
+#   2. Edita TENSYGRID_CODE_PATH amb el path de la teva màquina
+#   3. NO puges local_paths.py al repositori
+#
+# ALTERNATIVA: pots exportar la variable d'entorn en lloc d'usar aquest fitxer:
+#   Linux/Mac:  export TENSYGRID_CODE_PATH=/ruta/a/trunk/tensygrid
+#   Windows:    set TENSYGRID_CODE_PATH=C:\ruta\a\trunk\tensygrid
+# =============================================================================
+
+# --- Linux (exemple Alexandre) -----------------------------------------------
+TENSYGRID_CODE_PATH = '/home/alexandre/Desktop/git/VeraGrid/trunk/tensygrid'
+
+# --- Windows (exemple Carlos) -----------------------------------------------
+# TENSYGRID_CODE_PATH = r'C:\Users\Usuario\Desktop\git\VeraGrid\trunk\tensygrid'
