@@ -4,7 +4,8 @@
 
 /* Forçar mode clar: evita que el dark mode del SO/browser
    reescrigui colors i faci elements invisibles            */
-html, body {
+html,
+body {
     color-scheme: light only;
     background: #fff;
     color: #333;
@@ -40,8 +41,8 @@ html, body {
 }
 
 /* Títol del projecte i versió a la capçalera de la barra lateral */
-.wy-side-nav-search > a,
-.wy-side-nav-search > a:visited,
+.wy-side-nav-search>a,
+.wy-side-nav-search>a:visited,
 .wy-side-nav-search .version {
     color: #fff !important;
     font-weight: bold;
@@ -64,7 +65,7 @@ html, body {
 }
 
 /* Ítem actiu de primer nivell */
-.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.current>a,
 .wy-menu-vertical li.on a {
     background: var(--upc-blue) !important;
     color: #fff !important;
@@ -73,8 +74,8 @@ html, body {
 }
 
 /* Ítem actiu de segon nivell */
-.wy-menu-vertical li.toctree-l2.current > a,
-.wy-menu-vertical li.toctree-l3.current > a {
+.wy-menu-vertical li.toctree-l2.current>a,
+.wy-menu-vertical li.toctree-l3.current>a {
     background: #1a8ad4 !important;
     color: #fff !important;
     font-weight: bold;
@@ -86,7 +87,7 @@ html, body {
     color: #fff !important;
 }
 
-.wy-menu-vertical li.toctree-l1.current > a {
+.wy-menu-vertical li.toctree-l1.current>a {
     background: var(--upc-blue-dark) !important;
 }
 

@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PolynomialMatrixBuilder &mdash; Manuals v0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=b2795139" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="small_signal_tensygrid" href="../small_signal_tensygrid/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0077C8" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Manuals
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../small_signal_tensygrid/index.html">small_signal_tensygrid</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../small_signal_tensygrid/index.html#attributes">Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../small_signal_tensygrid/index.html#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../small_signal_tensygrid/index.html#module-contents">Module Contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.project_base"><code class="docutils literal notranslate"><span class="pre">project_base</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.src_path"><code class="docutils literal notranslate"><span class="pre">src_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.grid_folder"><code class="docutils literal notranslate"><span class="pre">grid_folder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.GRID"><code class="docutils literal notranslate"><span class="pre">GRID</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.USE_CACHED_BUILDER"><code class="docutils literal notranslate"><span class="pre">USE_CACHED_BUILDER</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.BUILDER_CACHE_FILE"><code class="docutils literal notranslate"><span class="pre">BUILDER_CACHE_FILE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.REPORT_TIME"><code class="docutils literal notranslate"><span class="pre">REPORT_TIME</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.FAST_MODE"><code class="docutils literal notranslate"><span class="pre">FAST_MODE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.LOGS"><code class="docutils literal notranslate"><span class="pre">LOGS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.FULL_GRID_PATH"><code class="docutils literal notranslate"><span class="pre">FULL_GRID_PATH</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.FAST_GRID_PATH"><code class="docutils literal notranslate"><span class="pre">FAST_GRID_PATH</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.PRINT_ALL_BUSES"><code class="docutils literal notranslate"><span class="pre">PRINT_ALL_BUSES</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.ENABLE_POST_COMPARE_PLOT"><code class="docutils literal notranslate"><span class="pre">ENABLE_POST_COMPARE_PLOT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.RUN_DYNAMIC_STEP"><code class="docutils literal notranslate"><span class="pre">RUN_DYNAMIC_STEP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.RUN_CONSISTENCY_CHECK"><code class="docutils literal notranslate"><span class="pre">RUN_CONSISTENCY_CHECK</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.RUN_PF_LINE_EQ_CHECK"><code class="docutils literal notranslate"><span class="pre">RUN_PF_LINE_EQ_CHECK</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.RUN_EXCITER_DIAGNOSTICS"><code class="docutils literal notranslate"><span class="pre">RUN_EXCITER_DIAGNOSTICS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.PF_LINE_FOCUS_INDEX"><code class="docutils literal notranslate"><span class="pre">PF_LINE_FOCUS_INDEX</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.DYNAMIC_SIM_TIME_FAST"><code class="docutils literal notranslate"><span class="pre">DYNAMIC_SIM_TIME_FAST</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.DYNAMIC_SIM_TIME_FULL"><code class="docutils literal notranslate"><span class="pre">DYNAMIC_SIM_TIME_FULL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.EXEC_METRICS"><code class="docutils literal notranslate"><span class="pre">EXEC_METRICS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.debug_input"><code class="docutils literal notranslate"><span class="pre">debug_input()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.define_problem_with_path"><code class="docutils literal notranslate"><span class="pre">define_problem_with_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.define_problem"><code class="docutils literal notranslate"><span class="pre">define_problem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.op_extraction"><code class="docutils literal notranslate"><span class="pre">op_extraction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.solve_problem"><code class="docutils literal notranslate"><span class="pre">solve_problem()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../small_signal_tensygrid/index.html#small_signal_tensygrid.lp"><code class="docutils literal notranslate"><span class="pre">lp</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PolynomialMatrixBuilder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-contents">Module Contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#PolynomialMatrixBuilder.LoadingSpinner"><code class="docutils literal notranslate"><span class="pre">LoadingSpinner</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.LoadingSpinner.spinner"><code class="docutils literal notranslate"><span class="pre">LoadingSpinner.spinner</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.LoadingSpinner.message"><code class="docutils literal notranslate"><span class="pre">LoadingSpinner.message</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.LoadingSpinner.stop_event"><code class="docutils literal notranslate"><span class="pre">LoadingSpinner.stop_event</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.LoadingSpinner.thread"><code class="docutils literal notranslate"><span class="pre">LoadingSpinner.thread</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.LoadingSpinner.start_time"><code class="docutils literal notranslate"><span class="pre">LoadingSpinner.start_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.LoadingSpinner.start"><code class="docutils literal notranslate"><span class="pre">LoadingSpinner.start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.LoadingSpinner.stop"><code class="docutils literal notranslate"><span class="pre">LoadingSpinner.stop()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#PolynomialMatrixBuilder.ConstraintType"><code class="docutils literal notranslate"><span class="pre">ConstraintType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.ConstraintType.EQUALITY"><code class="docutils literal notranslate"><span class="pre">ConstraintType.EQUALITY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.ConstraintType.INEQUALITY"><code class="docutils literal notranslate"><span class="pre">ConstraintType.INEQUALITY</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.verbose"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.verbose</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.eqs"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.eqs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.ineqs"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.ineqs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.state_vars"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.state_vars</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.algebraic_vars"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.algebraic_vars</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.has_problem"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.has_problem</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.all_symbols"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.all_symbols</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.sym_to_idx"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.sym_to_idx</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.S_H"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.S_H</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.Phi_H"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.Phi_H</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.S_W"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.S_W</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.Phi_W"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.Phi_W</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.E"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.E</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.A"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.A</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.B"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.B</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.EABC"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.EABC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.extract_symbols"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.extract_symbols()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.matrix_creation"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.matrix_creation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.linearize"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.linearize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.save_state_space"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.save_state_space()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.compute_stability"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.compute_stability()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.compute_stability_sparse"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.compute_stability_sparse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.get_participation_mapping"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.get_participation_mapping()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.plot_evolution"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.plot_evolution()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.compute_bifurcation_stability"><code class="docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder.compute_bifurcation_stability()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #0077C8" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Manuals</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">PolynomialMatrixBuilder</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-PolynomialMatrixBuilder">
+<span id="polynomialmatrixbuilder"></span><h1>PolynomialMatrixBuilder<a class="headerlink" href="#module-PolynomialMatrixBuilder" title="Link to this heading"></a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#PolynomialMatrixBuilder.LoadingSpinner" title="PolynomialMatrixBuilder.LoadingSpinner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LoadingSpinner</span></code></a></p></td>
+<td><p>A threaded terminal spinner to show activity during blocking C/Fortran calls.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#PolynomialMatrixBuilder.ConstraintType" title="PolynomialMatrixBuilder.ConstraintType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConstraintType</span></code></a></p></td>
+<td><p>Enum representing the type of constraint to process.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder" title="PolynomialMatrixBuilder.PolynomialMatrixBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PolynomialMatrixBuilder</span></code></a></p></td>
+<td><p>Builds the S_H / Phi_H (and S_W / Phi_W) matrices from a list of</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.LoadingSpinner">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PolynomialMatrixBuilder.</span></span><span class="sig-name descname"><span class="pre">LoadingSpinner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Computing'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#LoadingSpinner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.LoadingSpinner" title="Link to this definition"></a></dt>
+<dd><p>A threaded terminal spinner to show activity during blocking C/Fortran calls.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.LoadingSpinner.spinner">
+<span class="sig-name descname"><span class="pre">spinner</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#LoadingSpinner.spinner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.LoadingSpinner.spinner" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.LoadingSpinner.message">
+<span class="sig-name descname"><span class="pre">message</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Computing'</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#LoadingSpinner.message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.LoadingSpinner.message" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.LoadingSpinner.stop_event">
+<span class="sig-name descname"><span class="pre">stop_event</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#LoadingSpinner.stop_event"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.LoadingSpinner.stop_event" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.LoadingSpinner.thread">
+<span class="sig-name descname"><span class="pre">thread</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#LoadingSpinner.thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.LoadingSpinner.thread" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.LoadingSpinner.start_time">
+<span class="sig-name descname"><span class="pre">start_time</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#LoadingSpinner.start_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.LoadingSpinner.start_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.LoadingSpinner.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#LoadingSpinner.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.LoadingSpinner.start" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.LoadingSpinner.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#LoadingSpinner.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.LoadingSpinner.stop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.ConstraintType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PolynomialMatrixBuilder.</span></span><span class="sig-name descname"><span class="pre">ConstraintType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#ConstraintType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.ConstraintType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enum representing the type of constraint to process.
+Replaces the usage of string options or ambiguous booleans.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.ConstraintType.EQUALITY">
+<span class="sig-name descname"><span class="pre">EQUALITY</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#ConstraintType.EQUALITY"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.ConstraintType.EQUALITY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.ConstraintType.INEQUALITY">
+<span class="sig-name descname"><span class="pre">INEQUALITY</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#ConstraintType.INEQUALITY"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.ConstraintType.INEQUALITY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">PolynomialMatrixBuilder.</span></span><span class="sig-name descname"><span class="pre">PolynomialMatrixBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">problem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eqs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ineqs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_vars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algebraic_vars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder" title="Link to this definition"></a></dt>
+<dd><p>Builds the S_H / Phi_H (and S_W / Phi_W) matrices from a list of
+polynomial equations, and performs analytic linearization using the
+iMTI / CPN representation described in the TenSyGrid papers.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.verbose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.verbose" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.eqs">
+<span class="sig-name descname"><span class="pre">eqs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.eqs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.eqs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.ineqs">
+<span class="sig-name descname"><span class="pre">ineqs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.ineqs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.ineqs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.state_vars">
+<span class="sig-name descname"><span class="pre">state_vars</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.state_vars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.state_vars" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.algebraic_vars">
+<span class="sig-name descname"><span class="pre">algebraic_vars</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.algebraic_vars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.algebraic_vars" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.has_problem">
+<span class="sig-name descname"><span class="pre">has_problem</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.has_problem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.has_problem" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.all_symbols">
+<span class="sig-name descname"><span class="pre">all_symbols</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.all_symbols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.all_symbols" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.sym_to_idx">
+<span class="sig-name descname"><span class="pre">sym_to_idx</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.sym_to_idx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.sym_to_idx" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.S_H">
+<span class="sig-name descname"><span class="pre">S_H</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scipy.sparse.csc_matrix</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.S_H"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.S_H" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.Phi_H">
+<span class="sig-name descname"><span class="pre">Phi_H</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scipy.sparse.csr_matrix</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.Phi_H"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.Phi_H" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.S_W">
+<span class="sig-name descname"><span class="pre">S_W</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scipy.sparse.csc_matrix</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.S_W"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.S_W" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.Phi_W">
+<span class="sig-name descname"><span class="pre">Phi_W</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scipy.sparse.csr_matrix</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.Phi_W"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.Phi_W" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.E">
+<span class="sig-name descname"><span class="pre">E</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scipy.sparse.csr_matrix</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.E"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.E" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.A">
+<span class="sig-name descname"><span class="pre">A</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scipy.sparse.csr_matrix</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.A"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.A" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.B">
+<span class="sig-name descname"><span class="pre">B</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scipy.sparse.csr_matrix</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.B"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.B" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.EABC">
+<span class="sig-name descname"><span class="pre">EABC</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">scipy.sparse.csr_matrix</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.EABC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.EABC" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.extract_symbols">
+<span class="sig-name descname"><span class="pre">extract_symbols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_exprs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predefined</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.extract_symbols"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.extract_symbols" title="Link to this definition"></a></dt>
+<dd><p>Extracts and sorts unique symbolic variables from a list of equations.</p>
+<p>Algorithmically, this function builds the definitive sequence of state variables.
+It uses a set for O(1) deduplication, appending <cite>predefined</cite> symbols first.
+Then, it extracts <cite>free_symbols</cite> from all expressions, actively filtering out
+protected parameters. Finally, it applies the derivative-first sorting logic
+to guarantee a deterministic variable order for matrix and state-space assembly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>all_exprs</strong> (<em>list</em>) – List of symbolic expressions or equations to parse.</p></li>
+<li><p><strong>predefined</strong> (<em>list</em><em> | </em><em>None</em>) – Optional list of symbols to force-include first.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sorted list of all unique, non-protected symbols.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.matrix_creation">
+<span class="sig-name descname"><span class="pre">matrix_creation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_exprs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.matrix_creation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.matrix_creation" title="Link to this definition"></a></dt>
+<dd><p>Assembles the sparse structural matrices S (monomial definitions) and Phi (coefficients)
+from a list of symbolic expressions.</p>
+<p>Algorithmically, this translates symbolic equations into a vectorized numeric format
+required for high-performance evaluation. It parses each equation into terms, extracts
+unique monomials to avoid redundancies, and maps their respective coefficients.
+To optimize memory and conform to pure sparse operations from the ground up, it natively
+constructs Coordinate (COO) arrays before compiling S in CSC format and Phi in CSR format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>all_exprs</strong> (<em>list</em>) – A list of symbolic expressions representing the system equations.</p></li>
+<li><p><strong>parallel</strong> (<em>bool</em>) – If True, use ProcessPoolExecutor via _process_equation_worker.
+Only safe to use after full symbol extraction and lifting (stable sym_to_idx).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the (S, Phi) sparse matrices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.linearize">
+<span class="sig-name descname"><span class="pre">linearize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#PolynomialMatrixBuilder.ConstraintType" title="PolynomialMatrixBuilder.ConstraintType"><span class="pre">ConstraintType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ConstraintType.EQUALITY</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">scipy.sparse.csr_matrix</span></span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.linearize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.linearize" title="Link to this definition"></a></dt>
+<dd><p>Evaluates the numerical linearization of the system around a specified operating point
+to extract the linear state-space matrices (E, A, B).</p>
+<p>Algorithmically, this function dynamically injects the exact numerical values for
+trigonometric proxy states to guarantee consistency at the operating point. It then
+computes the analytical Jacobian (F) of the target structural matrix (S) evaluated
+at the state vector. By projecting this Jacobian through the coefficient matrix (Phi),
+it algebraically computes the global linear state-space block <cite>EABC</cite> (Phi &#64; F^T),
+which dictates the local dynamic behavior of the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v_dict</strong> (<em>dict</em>) – Dictionary containing the numerical values defining the operating point.</p></li>
+<li><p><strong>c_type</strong> (<a class="reference internal" href="#PolynomialMatrixBuilder.ConstraintType" title="PolynomialMatrixBuilder.ConstraintType"><em>ConstraintType</em></a>) – Specifies whether to linearize equality or inequality constraints.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The combined, linearized state-space matrix block EABC.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.save_state_space">
+<span class="sig-name descname"><span class="pre">save_state_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'system'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.save_state_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.save_state_space" title="Link to this definition"></a></dt>
+<dd><p>Serializes the compiled sparse state-space matrices (A and E) to disk.
+This allows for instant loading and eigenvalue analysis in future sessions
+without re-running the power flow or symbolic linearizer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_prefix</strong> – The base name for the saved files.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.compute_stability">
+<span class="sig-name descname"><span class="pre">compute_stability</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.compute_stability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.compute_stability" title="Link to this definition"></a></dt>
+<dd><p>Computes the generalized eigenvalues, eigenvectors, and participation factors
+to evaluate the small-signal stability of the linearized system.</p>
+<p>Algorithmically, this function evaluates the generalized eigenvalue problem (A*v = lambda*E*v).
+Before calling the solver, it performs ‘Singular Pencil Patching’ strictly using
+sparse Coordinate data to neutralize structural null-spaces.</p>
+<p>It natively uses ARPACK sparse eigenvalue decomposition (<cite>eigs</cite>) to find the most
+dominant modes for large systems. For small systems (or strictly singular DAEs where
+ARPACK fails), it seamlessly drops down to dense QZ decomposition to guarantee the
+complete eigenvalue spectrum is found.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.compute_stability_sparse">
+<span class="sig-name descname"><span class="pre">compute_stability_sparse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_modes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.compute_stability_sparse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.compute_stability_sparse" title="Link to this definition"></a></dt>
+<dd><p>Perform stability analysis for large-scale systems using sparse ARPACK.</p>
+<p>This method solves the generalized eigenvalue problem <span class="math notranslate nohighlight">\(Av = \lambda Ev\)</span>
+using the Shift-and-Invert spectral transformation. It computes both right
+and left eigenvectors to derive the Participation Factor matrix, which
+quantifies the influence of state variables on specific system modes.</p>
+<p>The method employs LU factorization (SuperLU) for the linear operator and
+executes right and left eigensolvers in parallel to optimize performance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sigma</strong> (<em>float</em><em> or </em><em>complex</em><em>, </em><em>optional</em>) – The shift point for the Shift-and-Invert transformation. Eigenvalues
+near this point will be found first. Defaults to 2.0.</p></li>
+<li><p><strong>k_modes</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of eigenvalues and eigenvectors to compute. Defaults to 200.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>evals</strong> (<em>numpy.ndarray</em>) – Array of found physical eigenvalues (poles) <span class="math notranslate nohighlight">\(\lambda\)</span>.</p></li>
+<li><p><strong>V</strong> (<em>numpy.ndarray</em>) – Matrix where each column is a right eigenvector corresponding to <cite>evals</cite>.</p></li>
+<li><p><strong>W</strong> (<em>numpy.ndarray</em>) – Matrix where each column is a matched left eigenvector.</p></li>
+<li><p><strong>participation_matrix</strong> (<em>numpy.ndarray</em>) – Matrix of participation factors where entry <span class="math notranslate nohighlight">\(P_{ji}\)</span> represents
+the participation of state <span class="math notranslate nohighlight">\(j\)</span> in mode <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
+<li><p><strong>stable</strong> (<em>bool</em>) – Boolean flag indicating system stability (True if all <span class="math notranslate nohighlight">\(Re(\lambda) \leq 1e-5\)</span>).</p></li>
+<li><p><strong>margin</strong> (<em>float</em>) – The maximum real part among all computed eigenvalues (stability margin).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p><strong>Structural Regularization:</strong> The method automatically patches empty rows/columns
+in the shifted matrix to prevent singularity during LU factorization.</p></li>
+<li><p><strong>Mode Matching:</strong> Since ARPACK may return left and right modes in different
+orders, the Hungarian Algorithm (Linear Sum Assignment) is used to align
+them based on eigenvalue proximity.</p></li>
+<li><p><strong>Participation Factors:</strong> Calculated as <span class="math notranslate nohighlight">\(P_{ji} = \frac{w_{ji} v_{ji}}{w_i^H v_i}\)</span>.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.get_participation_mapping">
+<span class="sig-name descname"><span class="pre">get_participation_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">participation_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.02</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.get_participation_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.get_participation_mapping" title="Link to this definition"></a></dt>
+<dd><p>Maps the raw participation matrix to the exact physical state variables for each dynamic mode.
+Filters out derivative and input tokens to match the true dimensions of the state-space.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.plot_evolution">
+<span class="sig-name descname"><span class="pre">plot_evolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evecs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.plot_evolution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.plot_evolution" title="Link to this definition"></a></dt>
+<dd><p>Plots the time evolution of specified variables based on the linear state-space modes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t_f</strong> – Final simulation time.</p></li>
+<li><p><strong>timestep</strong> – Time step for the plot.</p></li>
+<li><p><strong>v_dict</strong> – Dictionary of the initial physical states (absolute or deviation).</p></li>
+<li><p><strong>evals</strong> – 1D array of eigenvalues.</p></li>
+<li><p><strong>evecs</strong> – 2D array of right eigenvectors (shape: n_states x n_modes).</p></li>
+<li><p><strong>variables</strong> – List of variable names (str) to plot.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PolynomialMatrixBuilder.PolynomialMatrixBuilder.compute_bifurcation_stability">
+<span class="sig-name descname"><span class="pre">compute_bifurcation_stability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pf_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evecs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">margin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_margin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/PolynomialMatrixBuilder.html#PolynomialMatrixBuilder.compute_bifurcation_stability"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PolynomialMatrixBuilder.PolynomialMatrixBuilder.compute_bifurcation_stability" title="Link to this definition"></a></dt>
+<dd><p>Mathematically evaluates if perturbations in critical modes (near bifurcation)
+decay within a tolerance limit after a time t_margin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pf_map</strong> – Dictionary returned by <cite>get_participation_mapping</cite>.</p></li>
+<li><p><strong>evals</strong> – 1D array of eigenvalues.</p></li>
+<li><p><strong>evecs</strong> – 2D matrix of right eigenvectors.</p></li>
+<li><p><strong>margin</strong> – Real part threshold to consider a mode as “critical” (near the imaginary axis).</p></li>
+<li><p><strong>tolerance</strong> – Maximum allowed deviation at t = t_margin for the perturbation to be considered decayed.</p></li>
+<li><p><strong>t_margin</strong> – Time in the future (seconds) where the envelope is analytically evaluated.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing the report of evaluated variables and their alarm status.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../small_signal_tensygrid/index.html" class="btn btn-neutral float-left" title="small_signal_tensygrid" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Carlos Herrera Vázquez, Alexandre Gràcia-Calvo &amp; Eduardo Prieto-Araujo.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
