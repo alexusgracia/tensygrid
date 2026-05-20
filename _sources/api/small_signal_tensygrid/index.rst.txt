@@ -10,7 +10,6 @@ small_signal_tensygrid
    This script creates the phasor problem manually and injects it into the SmallSignalStabilityRmsDriver.
 
 
-
 Attributes
 ----------
 
@@ -135,16 +134,13 @@ Module Contents
 
    Function to debug
 
-
 .. py:function:: define_problem_with_path(grid_path)
 
    Creates the grid, runs the power flow, and returns the phasor problem.
 
-
 .. py:function:: define_problem()
 
    Creates the grid, runs the power flow, and returns the phasor problem.
-
 
 .. py:function:: solve_problem(problem: Any = None) -> Any
 

@@ -21,7 +21,6 @@ Module Contents
 
    A threaded terminal spinner to show activity during blocking C/Fortran calls.
 
-
    .. py:attribute:: spinner
 
 
@@ -47,14 +46,13 @@ Module Contents
    .. py:method:: stop()
 
 
-.. py:class:: ConstraintType
+.. py:class:: ConstraintType(*args, **kwds)
 
    Bases: :py:obj:`enum.Enum`
 
 
    Enum representing the type of constraint to process.
    Replaces the usage of string options or ambiguous booleans.
-
 
    .. py:attribute:: EQUALITY
       :value: 1
@@ -71,7 +69,6 @@ Module Contents
    Builds the S_H / Phi_H (and S_W / Phi_W) matrices from a list of
    polynomial equations, and performs analytic linearization using the
    iMTI / CPN representation described in the TenSyGrid papers.
-
 
    .. py:attribute:: verbose
       :type:  bool
@@ -162,7 +159,6 @@ Module Contents
       Returns the operating point dictionary from a defined VeraGrid problem.
 
 
-
    .. py:method:: extract_symbols(all_exprs: list, predefined: list | None = None) -> list
 
       Extracts and sorts unique symbolic variables from a list of equations.
@@ -179,7 +175,6 @@ Module Contents
       :type predefined: list | None
       :return: A sorted list of all unique, non-protected symbols.
       :rtype: list
-
 
 
    .. py:method:: matrix_creation(all_exprs: list, parallel: bool = False) -> tuple
@@ -202,7 +197,6 @@ Module Contents
       :rtype: tuple
 
 
-
    .. py:method:: linearize(v_dict: dict, c_type: ConstraintType = ConstraintType.EQUALITY) -> scipy.sparse.csr_matrix
 
       Evaluates the numerical linearization of the system around a specified operating point
@@ -223,7 +217,6 @@ Module Contents
       :rtype: np.ndarray
 
 
-
    .. py:method:: save_state_space(file_prefix: str = 'system') -> None
 
       Serializes the compiled sparse state-space matrices (A and E) to disk.
@@ -231,7 +224,6 @@ Module Contents
       without re-running the power flow or symbolic linearizer.
 
       :param file_prefix: The base name for the saved files.
-
 
 
    .. py:method:: compute_stability() -> Tuple[Optional[numpy.ndarray], Optional[numpy.ndarray], Optional[numpy.ndarray], Optional[numpy.ndarray], bool, Optional[float]]
@@ -247,7 +239,6 @@ Module Contents
       dominant modes for large systems. For small systems (or strictly singular DAEs where
       ARPACK fails), it seamlessly drops down to dense QZ decomposition to guarantee the
       complete eigenvalue spectrum is found.
-
 
 
    .. py:method:: compute_stability_sparse(sigma=2.0, k_modes=200)
@@ -278,22 +269,18 @@ Module Contents
 
       .. rubric:: Notes
 
-      Structural Regularization: The method automatically patches empty rows/columns
-      in the shifted matrix to prevent singularity during LU factorization.
-
-      Mode Matching: Since ARPACK may return left and right modes in different
-      orders, the Hungarian Algorithm (Linear Sum Assignment) is used to align
-      them based on eigenvalue proximity.
-
-      Participation Factors: Calculated as P_ji = w_ji * v_ji / (w_i^H * v_i).
-
+      - **Structural Regularization:** The method automatically patches empty rows/columns
+        in the shifted matrix to prevent singularity during LU factorization.
+      - **Mode Matching:** Since ARPACK may return left and right modes in different
+        orders, the Hungarian Algorithm (Linear Sum Assignment) is used to align
+        them based on eigenvalue proximity.
+      - **Participation Factors:** Calculated as :math:`P_{ji} = \frac{w_{ji} v_{ji}}{w_i^H v_i}`.
 
 
    .. py:method:: get_participation_mapping(evals: numpy.ndarray, participation_matrix: numpy.ndarray, threshold: float = 0.02) -> dict
 
       Maps the raw participation matrix to the exact physical state variables for each dynamic mode.
       Filters out derivative and input tokens to match the true dimensions of the state-space.
-
 
 
    .. py:method:: plot_evolution(t_f: float, timestep: float, v_dict: dict, evals: numpy.ndarray, evecs: numpy.ndarray, variables: list = None)
@@ -306,7 +293,6 @@ Module Contents
       :param evals: 1D array of eigenvalues.
       :param evecs: 2D array of right eigenvectors (shape: n_states x n_modes).
       :param variables: List of variable names (str) to plot.
-
 
 
    .. py:method:: compute_bifurcation_stability(pf_map: dict, evals: numpy.ndarray, evecs_right: numpy.ndarray, evecs_left: numpy.ndarray, E_matrix: scipy.sparse.csc_matrix, margin: float = 0.1, tolerance: float = 0.001, t_margin: float = 5.0) -> dict
@@ -323,6 +309,5 @@ Module Contents
       :param tolerance: Maximum allowed deviation at t = t_margin for the perturbation to be considered decayed.
       :param t_margin: Time in the future (seconds) where the envelope is analytically evaluated.
       :return: Dictionary containing the report of evaluated variables and their alarm status.
-
 
 

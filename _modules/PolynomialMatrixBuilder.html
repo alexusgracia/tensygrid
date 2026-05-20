@@ -2273,14 +2273,12 @@ window.runMermaid = runMermaid;</script>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
-<span class="sd">        Structural Regularization: The method automatically patches empty rows/columns</span>
-<span class="sd">        in the shifted matrix to prevent singularity during LU factorization.</span>
-
-<span class="sd">        Mode Matching: Since ARPACK may return left and right modes in different</span>
-<span class="sd">        orders, the Hungarian Algorithm (Linear Sum Assignment) is used to align</span>
-<span class="sd">        them based on eigenvalue proximity.</span>
-
-<span class="sd">        Participation Factors: Calculated as P_ji = w_ji * v_ji / (w_i^H * v_i).</span>
+<span class="sd">        - **Structural Regularization:** The method automatically patches empty rows/columns</span>
+<span class="sd">          in the shifted matrix to prevent singularity during LU factorization.</span>
+<span class="sd">        - **Mode Matching:** Since ARPACK may return left and right modes in different</span>
+<span class="sd">          orders, the Hungarian Algorithm (Linear Sum Assignment) is used to align</span>
+<span class="sd">          them based on eigenvalue proximity.</span>
+<span class="sd">        - **Participation Factors:** Calculated as :math:`P_{ji} = \\frac{w_{ji} v_{ji}}{w_i^H v_i}`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[+] Starting sparse ARPACK analysis (Shift-and-Invert, sigma=</span><span class="si">{</span><span class="n">sigma</span><span class="si">}</span><span class="s2">, k=</span><span class="si">{</span><span class="n">k_modes</span><span class="si">}</span><span class="s2">)...&quot;</span><span class="p">)</span>
         <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -2493,10 +2491,10 @@ window.runMermaid = runMermaid;</script>
                 <span class="c1"># We take the real part since complex conjugate pairs cancel each other out</span>
                 <span class="n">evolution</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mode_coeffs</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">evals</span> <span class="o">*</span> <span class="n">t</span><span class="p">)))</span>
 
-            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_steps</span><span class="p">,</span> <span class="n">evolution</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$\Delta$ </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_steps</span><span class="p">,</span> <span class="n">evolution</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">Delta$ </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
         <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Deviation from Operating Point ($\Delta x$)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Deviation from Operating Point ($</span><span class="se">\\</span><span class="s2">Delta x$)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Linear Dynamic Evolution (Small Signal)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>

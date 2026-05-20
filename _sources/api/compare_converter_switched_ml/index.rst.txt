@@ -1,0 +1,37 @@
+compare_converter_switched_ml
+=============================
+
+.. py:module:: compare_converter_switched_ml
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   compare_converter_switched_ml.ensure_repo_import_paths
+   compare_converter_switched_ml.print_sampled_comparison
+   compare_converter_switched_ml.print_ml_equation_diagnostics
+   compare_converter_switched_ml.print_newton_residual_diagnostics
+   compare_converter_switched_ml.fail_if_residual_too_large
+   compare_converter_switched_ml.plot_comparison
+   compare_converter_switched_ml.main
+
+
+Module Contents
+---------------
+
+.. py:function:: ensure_repo_import_paths() -> None
+
+.. py:function:: print_sampled_comparison(ref_trace: dynamics_emt.support.switched_converter_handover_case.SwitchedConverterHandoverTrace, ml_trace: dynamics_emt.support.switched_converter_handover_case.SwitchedConverterHandoverTrace) -> None
+
+.. py:function:: print_ml_equation_diagnostics(ml_trace: dynamics_emt.support.switched_converter_handover_case.SwitchedConverterHandoverTrace) -> None
+
+.. py:function:: print_newton_residual_diagnostics(collector: VeraGridEngine.Utils.Symbolic.diagnostic.NewtonTraceCollector, limit: int = 8) -> None
+
+.. py:function:: fail_if_residual_too_large(collector: VeraGridEngine.Utils.Symbolic.diagnostic.NewtonTraceCollector, max_residual_inf: float = 1000000.0, max_state_residual_inf: float = 100.0) -> None
+
+.. py:function:: plot_comparison(ref_trace: dynamics_emt.support.switched_converter_handover_case.SwitchedConverterHandoverTrace, ml_trace: dynamics_emt.support.switched_converter_handover_case.SwitchedConverterHandoverTrace) -> None
+
+.. py:function:: main() -> None
+
