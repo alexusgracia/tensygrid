@@ -39,36 +39,54 @@ html, body {
     background: var(--upc-blue) !important;
 }
 
+/* Títol del projecte i versió a la capçalera de la barra lateral */
+.wy-side-nav-search > a,
+.wy-side-nav-search > a:visited,
+.wy-side-nav-search .version {
+    color: #fff !important;
+    font-weight: bold;
+}
+
 .wy-side-nav-search input[type=text] {
     border-color: var(--upc-blue-light);
 }
 
 .wy-menu-vertical a {
-    color: #cce6f7 !important;
+    color: #fff !important;
 }
 
 /* Subelements del menú (toctree-l2, l3...) */
 .wy-menu-vertical li.toctree-l2 a,
 .wy-menu-vertical li.toctree-l3 a,
 .wy-menu-vertical li.toctree-l4 a {
-    color: #b3d9f2 !important;
+    color: #e0f0fb !important;
     background: var(--upc-blue-darker) !important;
 }
 
-.wy-menu-vertical li.toctree-l2.current > a,
-.wy-menu-vertical li.toctree-l3.current > a {
-    background: var(--upc-blue-dark) !important;
-    color: #fff !important;
-}
-
-.wy-menu-vertical li.current>a,
+/* Ítem actiu de primer nivell */
+.wy-menu-vertical li.current > a,
 .wy-menu-vertical li.on a {
     background: var(--upc-blue) !important;
     color: #fff !important;
     border-left: 4px solid #fff;
+    font-weight: bold;
 }
 
-.wy-menu-vertical li.toctree-l1.current>a {
+/* Ítem actiu de segon nivell */
+.wy-menu-vertical li.toctree-l2.current > a,
+.wy-menu-vertical li.toctree-l3.current > a {
+    background: #1a8ad4 !important;
+    color: #fff !important;
+    font-weight: bold;
+}
+
+/* Hover sobre qualsevol element */
+.wy-menu-vertical a:hover {
+    background: var(--upc-blue) !important;
+    color: #fff !important;
+}
+
+.wy-menu-vertical li.toctree-l1.current > a {
     background: var(--upc-blue-dark) !important;
 }
 
@@ -77,6 +95,11 @@ html, body {
    ------------------------------------------------------- */
 .wy-nav-top {
     background: var(--upc-blue) !important;
+    color: #fff !important;
+}
+
+.wy-nav-top a {
+    color: #fff !important;
 }
 
 /* -------------------------------------------------------
