@@ -1,0 +1,189 @@
+/* =======================================================
+   Paleta UPC — Pantone 3005 (#0077C8)
+   ======================================================= */
+
+/* Forçar mode clar: evita que el dark mode del SO/browser
+   reescrigui colors i faci elements invisibles            */
+html, body {
+    color-scheme: light only;
+    background: #fff;
+    color: #333;
+}
+
+:root {
+    --upc-blue: #0077C8;
+    --upc-blue-dark: #005a99;
+    --upc-blue-darker: #003f6e;
+    --upc-blue-light: #e6f3fb;
+}
+
+/* Fons i text del contingut sempre clars */
+.wy-nav-content-wrap,
+.wy-nav-content {
+    background: #fff !important;
+    color: #333 !important;
+}
+
+.rst-content {
+    color: #333 !important;
+}
+
+/* -------------------------------------------------------
+   Barra lateral (navegació)
+   ------------------------------------------------------- */
+.wy-nav-side {
+    background: var(--upc-blue-darker) !important;
+}
+
+.wy-side-nav-search {
+    background: var(--upc-blue) !important;
+}
+
+/* Títol del projecte i versió a la capçalera de la barra lateral */
+.wy-side-nav-search > a,
+.wy-side-nav-search > a:visited,
+.wy-side-nav-search .version {
+    color: #fff !important;
+    font-weight: bold;
+}
+
+.wy-side-nav-search input[type=text] {
+    border-color: var(--upc-blue-light);
+}
+
+.wy-menu-vertical a {
+    color: #fff !important;
+}
+
+/* Subelements del menú (toctree-l2, l3...) */
+.wy-menu-vertical li.toctree-l2 a,
+.wy-menu-vertical li.toctree-l3 a,
+.wy-menu-vertical li.toctree-l4 a {
+    color: #e0f0fb !important;
+    background: var(--upc-blue-darker) !important;
+}
+
+/* Ítem actiu de primer nivell */
+.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.on a {
+    background: var(--upc-blue) !important;
+    color: #fff !important;
+    border-left: 4px solid #fff;
+    font-weight: bold;
+}
+
+/* Ítem actiu de segon nivell */
+.wy-menu-vertical li.toctree-l2.current > a,
+.wy-menu-vertical li.toctree-l3.current > a {
+    background: #1a8ad4 !important;
+    color: #fff !important;
+    font-weight: bold;
+}
+
+/* Hover sobre qualsevol element */
+.wy-menu-vertical a:hover {
+    background: var(--upc-blue) !important;
+    color: #fff !important;
+}
+
+.wy-menu-vertical li.toctree-l1.current > a {
+    background: var(--upc-blue-dark) !important;
+}
+
+/* -------------------------------------------------------
+   Capçalera superior (barra de versió/títol mòbil)
+   ------------------------------------------------------- */
+.wy-nav-top {
+    background: var(--upc-blue) !important;
+    color: #fff !important;
+}
+
+.wy-nav-top a {
+    color: #fff !important;
+}
+
+/* -------------------------------------------------------
+   Botons (anterior/següent) i enllaços
+   ------------------------------------------------------- */
+a,
+a:visited {
+    color: var(--upc-blue) !important;
+}
+
+a:hover {
+    color: var(--upc-blue-dark) !important;
+}
+
+.btn-neutral {
+    background: var(--upc-blue) !important;
+    color: #fff !important;
+    border: none;
+}
+
+.btn-neutral:hover {
+    background: var(--upc-blue-dark) !important;
+}
+
+/* -------------------------------------------------------
+   Títols principals
+   ------------------------------------------------------- */
+.rst-content h1,
+.rst-content h2 {
+    color: var(--upc-blue-dark) !important;
+    border-bottom: 2px solid var(--upc-blue);
+    padding-bottom: 0.2em;
+}
+
+.rst-content h3,
+.rst-content h4 {
+    color: var(--upc-blue) !important;
+}
+
+/* -------------------------------------------------------
+   Responsivitat: el contingut ocupa tota l'amplada útil
+   ------------------------------------------------------- */
+.wy-nav-content {
+    max-width: 100% !important;
+}
+
+@media (max-width: 768px) {
+    .wy-nav-content {
+        padding: 1em !important;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* -------------------------------------------------------
+   Millores visuals generals
+   ------------------------------------------------------- */
+/* Tipografia més llegible */
+.rst-content {
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* Codi inline més destacat */
+.rst-content code.literal {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 0 4px;
+    font-size: 0.92em;
+}
+
+/* Blocs de codi amb scroll horitzontal en pantalles petites */
+.highlight pre {
+    overflow-x: auto;
+    white-space: pre;
+}
+
+/* Diagrames Mermaid centrats */
+.mermaid {
+    text-align: center;
+    margin: 1.5em 0;
+}
