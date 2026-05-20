@@ -11,7 +11,8 @@ large-scale descriptor systems.
    :caption: API Reference
    :glob:
 
-   api/*/index
    main
+   api/*/index
+   
 
 
