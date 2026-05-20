@@ -12,5 +12,6 @@ large-scale descriptor systems.
    :glob:
 
    api/*/index
+   main
 
 
