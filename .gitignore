@@ -52,6 +52,10 @@ desktop.ini
 # Sphinx build output
 manual/docs/_build/
 manual/docs/_templates/
+manual/docs/api/
+
+# Configuració local de paths (cada usuari té el seu)
+manual/docs/local_paths.py
 
 code/scratches/matrices_output.txt
 manual/venv

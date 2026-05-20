@@ -2,3 +2,5 @@ sphinx
 myst-parser
 sphinx_rtd_theme
 sphinxcontrib-mermaid
+sphinx-autoapi
+ghp-import

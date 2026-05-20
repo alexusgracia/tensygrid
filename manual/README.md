@@ -198,3 +198,73 @@ If you have suggestions, corrections, or improvements for this project, feel fre
 
 This template was created at CITCEA, which is a research group at UPC (Universitat Politècnica de Catalunya). If you have any questions or suggestions, feel free to contact me at alexandre.gracia[at]upc.edu
 
+---
+
+## Automatic API documentation from Python source code
+
+This manual is configured to automatically generate API documentation from the Python source code of the **tensygrid** project (VeraGrid). The documentation is extracted from the docstrings in the source files using [`sphinx-autoapi`](https://sphinx-autoapi.readthedocs.io/).
+
+Because each developer has the code on a different path on their machine, **you need to configure the path once** before building the documentation locally.
+
+### Step 1 — Configure your local path
+
+You have two options. Choose one:
+
+#### Option A: `local_paths.py` file (recommended)
+
+1. Copy the example file:
+
+   ```bash
+   # Linux / Mac
+   cp docs/local_paths.py.example docs/local_paths.py
+
+   # Windows (PowerShell)
+   Copy-Item docs\local_paths.py.example docs\local_paths.py
+   ```
+
+2. Open `docs/local_paths.py` and edit the path for your machine:
+
+   ```python
+   # Linux / Mac
+   TENSYGRID_CODE_PATH = '/home/youruser/path/to/VeraGrid/trunk/tensygrid'
+
+   # Windows
+   TENSYGRID_CODE_PATH = r'C:\Users\youruser\path\to\VeraGrid\trunk\tensygrid'
+   ```
+
+   > **Important:** `local_paths.py` is in `.gitignore` — it will **never** be committed. Each developer keeps their own version locally.
+
+#### Option B: environment variable
+
+Set the variable before running `./build.sh`:
+
+```bash
+# Linux / Mac (add to ~/.bashrc or ~/.zshrc to make it permanent)
+export TENSYGRID_CODE_PATH=/home/youruser/path/to/VeraGrid/trunk/tensygrid
+
+# Windows (Command Prompt)
+set TENSYGRID_CODE_PATH=C:\Users\youruser\path\to\VeraGrid\trunk\tensygrid
+
+# Windows (PowerShell)
+$env:TENSYGRID_CODE_PATH = "C:\Users\youruser\path\to\VeraGrid\trunk\tensygrid"
+```
+
+### Step 2 — Build the documentation
+
+```bash
+./build.sh
+```
+
+If the path is not configured, a warning will appear and the documentation will build without the API section. No errors will occur.
+
+### What gets generated
+
+Once configured, a new **API Reference** section will appear in the documentation with:
+- All classes and their methods
+- All functions with their parameters and return values
+- All docstrings rendered with full formatting (NumPy and Google style supported)
+- Links to the source code (`[source]` buttons)
+
+The generated `docs/api/` folder is also gitignored (it is regenerated on every build).
+
+
