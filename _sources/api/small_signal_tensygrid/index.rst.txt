@@ -1,0 +1,154 @@
+small_signal_tensygrid
+======================
+
+.. py:module:: small_signal_tensygrid
+
+.. autoapi-nested-parse::
+
+   Small Signal Analysis for Phasor-based RMS Grid.
+
+   This script creates the phasor problem manually and injects it into the SmallSignalStabilityRmsDriver.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   small_signal_tensygrid.project_base
+   small_signal_tensygrid.src_path
+   small_signal_tensygrid.grid_folder
+   small_signal_tensygrid.GRID
+   small_signal_tensygrid.USE_CACHED_BUILDER
+   small_signal_tensygrid.BUILDER_CACHE_FILE
+   small_signal_tensygrid.REPORT_TIME
+   small_signal_tensygrid.FAST_MODE
+   small_signal_tensygrid.LOGS
+   small_signal_tensygrid.FULL_GRID_PATH
+   small_signal_tensygrid.FAST_GRID_PATH
+   small_signal_tensygrid.PRINT_ALL_BUSES
+   small_signal_tensygrid.ENABLE_POST_COMPARE_PLOT
+   small_signal_tensygrid.RUN_DYNAMIC_STEP
+   small_signal_tensygrid.RUN_CONSISTENCY_CHECK
+   small_signal_tensygrid.RUN_PF_LINE_EQ_CHECK
+   small_signal_tensygrid.RUN_EXCITER_DIAGNOSTICS
+   small_signal_tensygrid.PF_LINE_FOCUS_INDEX
+   small_signal_tensygrid.DYNAMIC_SIM_TIME_FAST
+   small_signal_tensygrid.DYNAMIC_SIM_TIME_FULL
+   small_signal_tensygrid.EXEC_METRICS
+   small_signal_tensygrid.lp
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   small_signal_tensygrid.debug_input
+   small_signal_tensygrid.define_problem_with_path
+   small_signal_tensygrid.define_problem
+   small_signal_tensygrid.solve_problem
+   small_signal_tensygrid.main
+
+
+Module Contents
+---------------
+
+.. py:data:: project_base
+
+.. py:data:: src_path
+
+.. py:data:: grid_folder
+
+.. py:data:: GRID
+   :value: 'IEEE 118.xlsx'
+
+
+.. py:data:: USE_CACHED_BUILDER
+   :value: False
+
+
+.. py:data:: BUILDER_CACHE_FILE
+   :value: 'trunk/tensygrid/precomputed_builds/IEEE 118.xlsx.pkl'
+
+
+.. py:data:: REPORT_TIME
+   :value: False
+
+
+.. py:data:: FAST_MODE
+   :value: False
+
+
+.. py:data:: LOGS
+   :value: False
+
+
+.. py:data:: FULL_GRID_PATH
+   :value: ''
+
+
+.. py:data:: FAST_GRID_PATH
+   :value: ''
+
+
+.. py:data:: PRINT_ALL_BUSES
+   :value: False
+
+
+.. py:data:: ENABLE_POST_COMPARE_PLOT
+   :value: False
+
+
+.. py:data:: RUN_DYNAMIC_STEP
+   :value: False
+
+
+.. py:data:: RUN_CONSISTENCY_CHECK
+   :value: False
+
+
+.. py:data:: RUN_PF_LINE_EQ_CHECK
+   :value: False
+
+
+.. py:data:: RUN_EXCITER_DIAGNOSTICS
+   :value: False
+
+
+.. py:data:: PF_LINE_FOCUS_INDEX
+   :value: 0
+
+
+.. py:data:: DYNAMIC_SIM_TIME_FAST
+   :value: 0.05
+
+
+.. py:data:: DYNAMIC_SIM_TIME_FULL
+   :value: 0.2
+
+
+.. py:data:: EXEC_METRICS
+
+.. py:function:: debug_input(input_bool)
+
+   Function to debug
+
+
+.. py:function:: define_problem_with_path(grid_path)
+
+   Creates the grid, runs the power flow, and returns the phasor problem.
+
+
+.. py:function:: define_problem()
+
+   Creates the grid, runs the power flow, and returns the phasor problem.
+
+
+.. py:function:: solve_problem(problem: Any = None) -> Any
+
+.. py:function:: main()
+
+.. py:data:: lp
+

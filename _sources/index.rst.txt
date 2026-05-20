@@ -6,11 +6,11 @@ polynomial matrix construction of power systems. It wraps multilinear
 state-space representations and sparse eigenvalue solvers tailored to
 large-scale descriptor systems.
 
-.. note::
-   API documentation is generated only when the `TENSYGRID_CODE_PATH`
-   variable is configured in `manual/docs/local_paths.py` or as an environment
-   variable. If you want to build API docs, copy
-   ``local_paths.py.example`` to ``local_paths.py`` and set the path to your
-   TensyGrid source tree.
+.. toctree::
+   :maxdepth: 2
+   :caption: API Reference
+   :glob:
+
+   api/*/index
 
 
